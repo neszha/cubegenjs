@@ -8,11 +8,11 @@ import browserObfuscatorConfig from './configs/obfuscator.browser-config'
  * Core class for obfuscate JavaScript source code.
  */
 export class CubegenObfuscator {
-    sourceCode: string
+    sourceCodePath: string
     private inputOptions: ObfuscatorOptions
 
-    constructor (sourceCode: string, target: CubegenObfuscatorTarget) {
-        this.sourceCode = sourceCode
+    constructor (sourceCodePath: string, target: CubegenObfuscatorTarget) {
+        this.sourceCodePath = sourceCodePath
 
         // load default config options.
         this.inputOptions = (target === CubegenObfuscatorTarget.NODE) ? nodeObfuscatorConfig : browserObfuscatorConfig
@@ -37,7 +37,7 @@ export class CubegenObfuscator {
      * @returns string
      */
     obfuscate (saveToPath?: string): string {
-        const obfuscation = JavaScriptObfuscator.obfuscate(this.sourceCode, this.inputOptions)
+        const obfuscation = JavaScriptObfuscator.obfuscate(this.sourceCodePath, this.inputOptions)
         const outputCode = obfuscation.getObfuscatedCode()
         if (saveToPath) fs.writeFileSync(saveToPath, outputCode)
         return outputCode
