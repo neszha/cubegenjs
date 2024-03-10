@@ -25,8 +25,8 @@ class CubegenObfuscator {
      */
     setCustomConfig (configOptions: ObfuscatorOptions): void {
         this.inputOptions = {
-            ...configOptions,
-            ...this.inputOptions
+            ...this.inputOptions,
+            ...configOptions
         }
     }
 

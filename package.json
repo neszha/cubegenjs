@@ -13,9 +13,11 @@
   "author": "Fanesa Hadi Pramana",
   "license": "MIT",
   "dependencies": {
+    "crypto-js": "^4.2.0",
     "javascript-obfuscator": "^4.1.0"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.25",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
