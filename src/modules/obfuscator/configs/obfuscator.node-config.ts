@@ -1,6 +1,6 @@
-import { type ObfuscatorOptions } from 'javascript-obfuscator'
+import { type CubegenObfuscatorConfig } from '../types/obfuscator'
 
-const nodeObfuscatorConfig: ObfuscatorOptions = {
+const nodeObfuscatorConfig: CubegenObfuscatorConfig = {
     optionsPreset: 'medium-obfuscation',
     target: 'node',
     seed: 0,

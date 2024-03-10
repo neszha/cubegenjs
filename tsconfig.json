@@ -2,8 +2,8 @@
   "exclude": [
     "examples",
     "node_modules",
-    "*.config.js",
-    "src/modules/obfuscator/templates/**/*"
+    "jest.config.js",
+    "src/modules/obfuscator/test/templates/**/*"
   ],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */

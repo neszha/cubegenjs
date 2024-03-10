@@ -2,18 +2,18 @@ import fs from 'fs'
 import path from 'path'
 import { SHA256 } from 'crypto-js'
 import { execSync } from 'child_process'
-import CubegenObfuscator from './obfuscator'
-import { CubegenObfuscatorTarget } from './types/obfuscator.enum'
+import { CubegenObfuscator } from '../obfuscator'
+import { CubegenObfuscatorTarget } from '../types/obfuscator.enum'
 
-const ROOT_PATH = process.cwd()
-const CUBEGEN_TEMP = path.resolve(ROOT_PATH, '.cubegen')
+const MODULE_PATH_DIR = path.resolve(__dirname, '../')
+const MODULE_TEMP_PATH_DIR = path.resolve(MODULE_PATH_DIR, '.cubegen')
 
 describe('Test Obfucation Module for Node: hello-word.test-template.js', () => {
     let sourceCode: string = ''
-    const sourceCodePath = path.resolve(ROOT_PATH, 'src/modules/obfuscator/templates/hello-word.test-template.js')
+    const sourceCodePath = path.resolve(MODULE_PATH_DIR, 'test/templates/hello-word.test-template.js')
 
     beforeAll(() => {
-        if (!fs.existsSync(CUBEGEN_TEMP)) fs.mkdirSync(CUBEGEN_TEMP)
+        if (!fs.existsSync(MODULE_TEMP_PATH_DIR)) fs.mkdirSync(MODULE_TEMP_PATH_DIR)
         sourceCode = fs.readFileSync(sourceCodePath, 'utf8')
     })
 
@@ -70,7 +70,7 @@ describe('Test Obfucation Module for Node: hello-word.test-template.js', () => {
     })
 
     it('Obfuscator output code can be run with JavaScript engine', () => {
-        const outputPath = path.resolve(CUBEGEN_TEMP, 'hello-word.test-template.js')
+        const outputPath = path.resolve(MODULE_TEMP_PATH_DIR, 'hello-word.test-template.js')
         const obfuscator = new CubegenObfuscator(sourceCode, CubegenObfuscatorTarget.NODE)
         obfuscator.obfuscate(outputPath)
 
@@ -83,10 +83,10 @@ describe('Test Obfucation Module for Node: hello-word.test-template.js', () => {
 
 describe('Test Obfucation Module for Browser: hello-word.test-template.js', () => {
     let sourceCode: string = ''
-    const sourceCodePath = path.resolve(ROOT_PATH, 'src/modules/obfuscator/templates/hello-word.test-template.js')
+    const sourceCodePath = path.resolve(MODULE_PATH_DIR, 'test/templates/hello-word.test-template.js')
 
     beforeAll(() => {
-        if (!fs.existsSync(CUBEGEN_TEMP)) fs.mkdirSync(CUBEGEN_TEMP)
+        if (!fs.existsSync(MODULE_TEMP_PATH_DIR)) fs.mkdirSync(MODULE_TEMP_PATH_DIR)
         sourceCode = fs.readFileSync(sourceCodePath, 'utf8')
     })
 
@@ -143,7 +143,7 @@ describe('Test Obfucation Module for Browser: hello-word.test-template.js', () =
     })
 
     it('Obfuscator output code can be run with JavaScript engine', () => {
-        const outputPath = path.resolve(CUBEGEN_TEMP, 'hello-word.test-template.js')
+        const outputPath = path.resolve(MODULE_TEMP_PATH_DIR, 'hello-word.test-template.js')
         const obfuscator = new CubegenObfuscator(sourceCode, CubegenObfuscatorTarget.BROWSER)
         obfuscator.obfuscate(outputPath)
 
@@ -156,10 +156,10 @@ describe('Test Obfucation Module for Browser: hello-word.test-template.js', () =
 
 describe('Test Obfucation Module for Node: md5.test-template.js', () => {
     let sourceCode: string = ''
-    const sourceCodePath = path.resolve(ROOT_PATH, 'src/modules/obfuscator/templates/md5.test-template.js')
+    const sourceCodePath = path.resolve(MODULE_PATH_DIR, 'test/templates/md5.test-template.js')
 
     beforeAll(() => {
-        if (!fs.existsSync(CUBEGEN_TEMP)) fs.mkdirSync(CUBEGEN_TEMP)
+        if (!fs.existsSync(MODULE_TEMP_PATH_DIR)) fs.mkdirSync(MODULE_TEMP_PATH_DIR)
         sourceCode = fs.readFileSync(sourceCodePath, 'utf8')
     })
 
@@ -170,7 +170,7 @@ describe('Test Obfucation Module for Node: md5.test-template.js', () => {
     })
 
     it('Obfuscator output code can be run with JavaScript engine', () => {
-        const outputPath = path.resolve(CUBEGEN_TEMP, 'md5.test-template.js')
+        const outputPath = path.resolve(MODULE_TEMP_PATH_DIR, 'md5.test-template.js')
         const obfuscator = new CubegenObfuscator(sourceCode, CubegenObfuscatorTarget.NODE)
         obfuscator.obfuscate(outputPath)
 
@@ -183,10 +183,10 @@ describe('Test Obfucation Module for Node: md5.test-template.js', () => {
 
 describe('Test Obfucation Module for Browser: md5.test-template.js', () => {
     let sourceCode: string = ''
-    const sourceCodePath = path.resolve(ROOT_PATH, 'src/modules/obfuscator/templates/md5.test-template.js')
+    const sourceCodePath = path.resolve(MODULE_PATH_DIR, 'test/templates/md5.test-template.js')
 
     beforeAll(() => {
-        if (!fs.existsSync(CUBEGEN_TEMP)) fs.mkdirSync(CUBEGEN_TEMP)
+        if (!fs.existsSync(MODULE_TEMP_PATH_DIR)) fs.mkdirSync(MODULE_TEMP_PATH_DIR)
         sourceCode = fs.readFileSync(sourceCodePath, 'utf8')
     })
 
@@ -197,7 +197,7 @@ describe('Test Obfucation Module for Browser: md5.test-template.js', () => {
     })
 
     it('Obfuscator output code can be run with JavaScript engine', () => {
-        const outputPath = path.resolve(CUBEGEN_TEMP, 'md5.test-template.js')
+        const outputPath = path.resolve(MODULE_TEMP_PATH_DIR, 'md5.test-template.js')
         const obfuscator = new CubegenObfuscator(sourceCode, CubegenObfuscatorTarget.BROWSER)
         obfuscator.obfuscate(outputPath)
 

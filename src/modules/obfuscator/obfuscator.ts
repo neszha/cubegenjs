@@ -7,7 +7,7 @@ import browserObfuscatorConfig from './configs/obfuscator.browser-config'
 /**
  * Core class for obfuscate JavaScript source code.
  */
-class CubegenObfuscator {
+export class CubegenObfuscator {
     sourceCode: string
     private inputOptions: ObfuscatorOptions
 
@@ -43,5 +43,3 @@ class CubegenObfuscator {
         return outputCode
     }
 }
-
-export default CubegenObfuscator

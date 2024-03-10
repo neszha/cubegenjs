@@ -1,6 +1,6 @@
-import { type ObfuscatorOptions } from 'javascript-obfuscator'
+import { type CubegenObfuscatorConfig } from '../types/obfuscator'
 
-const browserObfuscatorConfig: ObfuscatorOptions = {
+const browserObfuscatorConfig: CubegenObfuscatorConfig = {
     optionsPreset: 'medium-obfuscation',
     target: 'browser',
     seed: 0,
