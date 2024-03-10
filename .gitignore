@@ -1,5 +1,6 @@
 dist
 .cubegen
+.DS_Store
 
 # Logs
 logs
