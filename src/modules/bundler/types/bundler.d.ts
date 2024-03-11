@@ -13,5 +13,6 @@ export interface CubegenBundlerOptions {
 export interface CubegenBundlerResponseData {
     hash: string // SHA256
     buildTime: number // in ms
+    sourcePath: string
     ouputPath: string
 }

@@ -1,9 +1,9 @@
 import path from 'path'
 import fs from 'fs-extra'
+import { SHA256 } from 'crypto-js'
 import { Parcel } from '@parcel/core'
 import type { BuildSuccessEvent } from '@parcel/types'
 import { type PercelOptions, type CubegenBundlerOptions, type CubegenBundlerResponseData } from './types/bundler'
-import { SHA256 } from 'crypto-js'
 
 const MODULE_PATH_DIR = __dirname
 const MODULE_TEMP_PATH_DIR = path.resolve(MODULE_PATH_DIR, '.cubegen')
@@ -52,6 +52,7 @@ export class CubegenBundler {
             buildResponses.push({
                 hash: bundleHash,
                 buildTime: buildObject.buildTime,
+                sourcePath: this.percelOptions.entries as string,
                 ouputPath: outputPath
             })
         }
