@@ -1,9 +1,10 @@
 import path from 'path'
 import fs from 'fs-extra'
+import crypto from 'crypto'
 import { SHA256 } from 'crypto-js'
 import { Parcel } from '@parcel/core'
 import type { BuildSuccessEvent } from '@parcel/types'
-import { type PercelOptions, type CubegenBundlerOptions, type CubegenBundlerResponseData } from './types/bundler'
+import { type PercelOptions, type CubegenBundlerOptions, type CubegenBundlerResponse, type FilePath, type CubegenBundlerEntryResponse, type CubegenBundlerStaticDirResponse } from './types/bundler'
 
 const MODULE_PATH_DIR = path.resolve(__dirname, '../')
 const MODULE_PARCEL_CACHE_PATH_DIR = path.resolve(MODULE_PATH_DIR, '.cache')
@@ -38,34 +39,28 @@ export class CubegenBundler {
         }
     }
 
-    async build (): Promise<CubegenBundlerResponseData[]> {
+    async build (): Promise<CubegenBundlerResponse> {
         // initialization before run builder.
-        const buildResponses: CubegenBundlerResponseData[] = []
         this.initialization()
+        const buildResponse: CubegenBundlerResponse = {
+            hashProject: '',
+            entries: [],
+            staticDirs: []
+        }
 
         // run script bundler each entry file.
-        for (const entry of this.options.entries) {
-            this.setPercelOptions(entry)
-            const buildObject = await this.bundingWithParcel()
-            const bundleRaw = this.getBundleFileFormTemp()
-            const outputPath = this.writeBundleToOutputPath(entry, bundleRaw)
-            const bundleHash = SHA256(bundleRaw).toString()
-            buildResponses.push({
-                fromEntry: entry,
-                hash: `sha256:${bundleHash}`,
-                buildTime: buildObject.buildTime,
-                sourcePath: this.percelOptions.entries as string,
-                ouputPath: outputPath
-            })
-        }
+        buildResponse.entries = await this.bundleEntryFile(this.options.entries)
 
         // move static content.
         if (this.options.staticDirs !== undefined) {
-            await this.moveStaticDirectories(this.options.staticDirs)
+            buildResponse.staticDirs = await this.moveStaticDirectories(this.options.staticDirs)
         }
 
+        // get hash data of project.
+        buildResponse.hashProject = this.getHashOfOutputProject(this.options.outDir)
+
         // done
-        return buildResponses
+        return buildResponse
     }
 
     private initialization (): void {
@@ -82,9 +77,23 @@ export class CubegenBundler {
         fs.mkdirSync(this.options.outDir, { recursive: true })
     }
 
-    private setPercelOptions (entry: string): void {
-        // set entry file path.
-        this.percelOptions.entries = path.resolve(this.options.rootDir, entry)
+    private async bundleEntryFile (entries: FilePath[]): Promise<CubegenBundlerEntryResponse[]> {
+        const bundleEntriesResponse: CubegenBundlerEntryResponse[] = []
+        for (const entry of entries) {
+            this.percelOptions.entries = path.join(this.options.rootDir, entry)
+            const buildObject = await this.bundingWithParcel()
+            const bundleRaw = this.getBundleFileFormTemp()
+            const outputPath = this.writeBundleToOutputPath(entry, bundleRaw)
+            const bundleHash = SHA256(bundleRaw).toString()
+            bundleEntriesResponse.push({
+                fromEntry: entry,
+                hash: `sha256:${bundleHash}`,
+                buildTime: buildObject.buildTime,
+                sourcePath: this.percelOptions.entries,
+                ouputPath: outputPath
+            })
+        }
+        return bundleEntriesResponse
     }
 
     private async bundingWithParcel (): Promise<BuildSuccessEvent> {
@@ -100,7 +109,7 @@ export class CubegenBundler {
     }
 
     private getBundleFileFormTemp (): string {
-        const files: string[] = fs.readdirSync(MODULE_BUNDLER_CACHE_PATH_DIR)
+        const files: FilePath[] = fs.readdirSync(MODULE_BUNDLER_CACHE_PATH_DIR)
         const filePath = path.resolve(MODULE_BUNDLER_CACHE_PATH_DIR, files[0] ?? 'unknow.file')
         if (!fs.existsSync(filePath)) {
             console.error('Error when reading bundle file in temporary.')
@@ -124,7 +133,8 @@ export class CubegenBundler {
         return outputPath
     }
 
-    private async moveStaticDirectories (publicDirs: string[]): Promise<void> {
+    private async moveStaticDirectories (publicDirs: FilePath[]): Promise<CubegenBundlerStaticDirResponse[]> {
+        const staticDirResponse: CubegenBundlerStaticDirResponse[] = []
         for (const dirName of publicDirs) {
             // check source dir.
             const pathSourceDir = path.join(this.options.rootDir, dirName)
@@ -133,6 +143,34 @@ export class CubegenBundler {
             // copy public dir.
             const pathDestinationDir = path.join(this.options.outDir, dirName)
             await fs.copy(pathSourceDir, pathDestinationDir, { overwrite: true })
+
+            // save meta data.
+            staticDirResponse.push({
+                fromStaticDir: dirName,
+                sourceDirPath: pathSourceDir,
+                ouputDirPath: pathDestinationDir
+            })
         }
+        return staticDirResponse
+    }
+
+    private getHashOfOutputProject (outDir: FilePath): string {
+        const hash = crypto.createHash('sha256')
+        const traverseDirectory = (currentDir: FilePath): void => {
+            const files = fs.readdirSync(currentDir)
+            files.sort()
+            for (const file of files) {
+                const filePath = path.join(currentDir, file)
+                const stat = fs.statSync(filePath)
+                if (stat.isDirectory()) {
+                    traverseDirectory(filePath)
+                } else if (stat.isFile()) {
+                    const fileData = fs.readFileSync(filePath)
+                    hash.update(fileData)
+                }
+            }
+        }
+        traverseDirectory(outDir)
+        return `sha256:${hash.digest('hex')}`
     }
 }

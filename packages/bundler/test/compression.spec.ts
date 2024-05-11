@@ -1,7 +1,7 @@
 import path from 'path'
 import fs from 'fs-extra'
 import { CubegenBundler } from '../src/index'
-import { type CubegenBundlerResponseData } from '../src/types/bundler'
+import { type CubegenBundlerResponse } from '../src/types/bundler'
 
 const MODULE_PATH_DIR = path.resolve(__dirname, '../')
 const MODULE_TEMP_PATH_DIR = path.join(MODULE_PATH_DIR, '.test-temp')
@@ -17,11 +17,11 @@ describe('Test Compression Bundler Module', () => {
     })
 
     it('Calculate compression ratio.', async () => {
-        const result: CubegenBundlerResponseData[] = await bundler.build()
+        const result: CubegenBundlerResponse = await bundler.build()
 
         // calculate file size.
         const compressionData: any[] = []
-        for (const item of result) {
+        for (const item of result.entries) {
             // get file size.
             const sourceFileSize = fs.statSync(item.sourcePath).size
             const outputFileSize = fs.statSync(item.ouputPath).size
@@ -34,7 +34,7 @@ describe('Test Compression Bundler Module', () => {
             })
 
             // comparing.
-            // expect(outputFileSize < sourceFileSize).toEqual(true)
+            expect(outputFileSize < sourceFileSize).toEqual(true)
         }
 
         // Show data.

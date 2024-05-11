@@ -1,20 +1,34 @@
 import type { InitialParcelOptions } from '@parcel/types'
 
+export type FilePath = string
+
 export interface PercelOptions extends InitialParcelOptions {
-    entries: string | string[]
+    entries: FilePath | FilePath[]
 }
 
 export interface CubegenBundlerOptions {
-    rootDir: string
-    outDir: string
-    entries: string[] // relative with rootDir
-    staticDirs?: string[] // relative with rootDir
+    rootDir: FilePath
+    outDir: FilePath
+    entries: FilePath[] // relative with rootDir
+    staticDirs?: FilePath[] // relative with rootDir
 }
 
-export interface CubegenBundlerResponseData {
+export interface CubegenBundlerEntryResponse {
     fromEntry: string
     hash: string // SHA256
     buildTime: number // in ms
-    sourcePath: string
-    ouputPath: string
+    sourcePath: FilePath
+    ouputPath: FilePath
+}
+
+export interface CubegenBundlerStaticDirResponse {
+    fromStaticDir: string
+    sourceDirPath: FilePath
+    ouputDirPath: FilePath
+}
+
+export interface CubegenBundlerResponse {
+    hashProject: string // SHA256
+    entries: CubegenBundlerEntryResponse[]
+    staticDirs: CubegenBundlerStaticDirResponse[]
 }
