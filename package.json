@@ -2,7 +2,8 @@
   "name": "cubegen",
   "version": "0.1.0",
   "description": "Protecting and Optimizing your JavaScript Source Code",
-  "main": "dist/index.js",
+  "main": "index.js",
+  "typings": "dist/index.d.js",
   "engines": {
     "node": ">= 18.0.0"
   },
@@ -14,7 +15,11 @@
   "author": "Fanesa Hadi Pramana",
   "license": "MIT",
   "dependencies": {
-    "fs-extra": "^11.2.0"
+    "bundler": "^0.1.0",
+    "crypto-js": "^4.2.0",
+    "fs-extra": "^11.2.0",
+    "node-protector": "^0.1.0",
+    "obfuscator": "^0.1.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
