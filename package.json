@@ -36,6 +36,7 @@
   },
   "workspaces": [
     "packages/bundler",
-    "packages/obfuscator"
+    "packages/obfuscator",
+    "packages/node-protector"
   ]
 }
