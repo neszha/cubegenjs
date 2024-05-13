@@ -1,7 +1,6 @@
 import path from 'path'
 import fs from 'fs-extra'
 import crypto from 'crypto'
-import { SHA256 } from 'crypto-js'
 import { Parcel } from '@parcel/core'
 import type { BuildSuccessEvent } from '@parcel/types'
 import { type PercelOptions, type CubegenBundlerOptions, type CubegenBundlerResponse, type FilePath, type CubegenBundlerEntryResponse, type CubegenBundlerStaticDirResponse } from './types/bundler'
@@ -84,7 +83,7 @@ export class CubegenBundler {
             const buildObject = await this.bundingWithParcel()
             const bundleRaw = this.getBundleFileFormTemp()
             const outputPath = this.writeBundleToOutputPath(entry, bundleRaw)
-            const bundleHash = SHA256(bundleRaw).toString()
+            const bundleHash = crypto.createHash('sha256').update(bundleRaw).digest('hex')
             bundleEntriesResponse.push({
                 fromEntry: entry,
                 hash: `sha256:${bundleHash}`,
