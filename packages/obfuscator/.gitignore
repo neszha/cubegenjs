@@ -1,3 +1,2 @@
-.bundler-cache
-.cache
+.obfuscator-cache
 .test-temp

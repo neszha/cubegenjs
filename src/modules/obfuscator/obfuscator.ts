@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from 'fs-extra'
 import JavaScriptObfuscator, { type ObfuscatorOptions } from 'javascript-obfuscator'
 import { CubegenObfuscatorTarget } from './types/obfuscator.enum'
 import nodeObfuscatorConfig from './configs/obfuscator.node-config'

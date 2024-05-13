@@ -5,7 +5,9 @@
     "main": "dist/index.js",
     "typings": "dist/index.d.js",
     "scripts": {
-        "s": "echo \"Error: no test specified\" && exit 1"
+        "build": "tsc -p tsconfig.prod.json",
+        "build:watch": "tsc --watch -p tsconfig.prod.json",
+        "test": "jest"
     },
     "author": "Fanesa Hadi Pramana",
     "license": "ISC",
