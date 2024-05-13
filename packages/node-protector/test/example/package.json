@@ -1,0 +1,7 @@
+{
+    "name": "example-test",
+    "version": "0.1.0",
+    "description": "",
+    "main": "server.js",
+    "type": "module"
+}

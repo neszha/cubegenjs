@@ -13,6 +13,6 @@
     },
     "exclude": [
         "dist",
-        "examples"
+        "example"
     ]
 }

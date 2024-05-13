@@ -1,8 +1,8 @@
 import path from 'path'
 import fs from 'fs-extra'
 import { createHash } from 'crypto'
-import JavaScriptObfuscator, { type ObfuscatorOptions } from 'javascript-obfuscator'
-import { type CubegenObfuscatorResponse, type FilePath } from './types/Obfuscator'
+import JavaScriptObfuscator from 'javascript-obfuscator'
+import { type CubegenObfuscatorOptions, type CubegenObfuscatorResponse, type FilePath } from './types/Obfuscator'
 import obfuscatorDefaultConfig from './configs/obfuscator.default-config'
 import { type CubegenObfuscatorEnvironmentTarget } from './enums/ObfuscatorEnum'
 
@@ -14,7 +14,7 @@ const MODULE_OBFUSCATOR_CACHE_PATH_DIR = path.resolve(MODULE_PATH_DIR, '.obfusca
  */
 export class CubegenObfuscator {
     sourceCodePath: FilePath
-    private inputOptions: ObfuscatorOptions
+    private inputOptions: CubegenObfuscatorOptions
 
     constructor (sourceCodePath: FilePath, environmentTarget: CubegenObfuscatorEnvironmentTarget) {
         this.sourceCodePath = sourceCodePath
@@ -32,12 +32,12 @@ export class CubegenObfuscator {
     /**
      * Set new config or custom options.
      *
-     * @param configOptions
+     * @param options
      */
-    setCustomConfig (configOptions: ObfuscatorOptions): void {
+    setCustomConfig (options: CubegenObfuscatorOptions): void {
         this.inputOptions = {
             ...this.inputOptions,
-            ...configOptions
+            ...options
         }
     }
 
