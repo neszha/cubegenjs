@@ -2,6 +2,7 @@
     "extends": "./tsconfig.json",
     "exclude": [
         "dist",
-        "test"
+        "test",
+        "jest.config.js"
     ]
 }
