@@ -40,6 +40,7 @@
     "cubegen": "bin/cubegen.js"
   },
   "workspaces": [
-    "packages/bundler"
+    "packages/bundler",
+    "packages/obfuscator"
   ]
 }
