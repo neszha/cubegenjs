@@ -1,6 +1,7 @@
 .nx
 dist
 .DS_Store
+.npm-publish
 
 # Logs
 logs
