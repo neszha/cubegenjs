@@ -1,13 +1,13 @@
 {
   "name": "cubegen",
   "version": "0.1.0",
-  "description": "Bundling and Protecting your JavaScript Source Code",
-  "main": "index.js",
+  "description": "Protecting and Optimizing your JavaScript Source Code",
+  "main": "dist/index.js",
   "engines": {
     "node": ">= 18.0.0"
   },
   "scripts": {
-    "build": "lerna run build",
+    "build": "lerna run build && tsc -p tsconfig.prod.json",
     "test": "lerna run test"
   },
   "repository": "neszha/cubegen",
