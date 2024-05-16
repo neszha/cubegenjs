@@ -27,6 +27,9 @@ export class CubegenBundler {
             shouldDisableCache: true,
             targets: {
                 default: {
+                    context: 'node',
+                    outputFormat: 'esmodule',
+                    includeNodeModules: true,
                     distDir: MODULE_BUNDLER_CACHE_PATH_DIR
                 }
             },

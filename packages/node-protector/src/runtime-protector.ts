@@ -61,6 +61,13 @@ void (async () => {
         }, 2500)
     })
 
+    // Only show builder options.
+    // if (process.env.SNOW_BUILDER_OPTIONS_IS_TRUE === 'SNOW_BUILDER_OPTIONS_IS_TRUE') {
+    //     console.log('show bundler')
+    //     return
+    // }
+    // console.log(process)
+
     // Call onStart lifecycle.
     event.emit('start')
 

@@ -84,3 +84,19 @@ describe('Test Functional Bundler Module', () => {
         expect(outputSourceCodeEntry3).toEqual(outputBundleCodeEntry3)
     })
 })
+
+describe('Test Bundler Result Work for NodeJS Environment', () => {
+    const bundler = new CubegenBundler({
+        rootDir: path.resolve(MODULE_PATH_DIR, 'test/examples/node-code'),
+        outDir: path.resolve(MODULE_TEMP_PATH_DIR, 'out-test-02'),
+        entries: [
+            'node.js'
+        ]
+    })
+
+    it('Success maintain argv functionality', async () => {
+        const result = await bundler.build()
+        const execResult = execSync(`node ${result.entries[0].ouputPath} test_argv`, { encoding: 'utf-8' })
+        expect(execResult).toEqual('test_argv\n')
+    })
+})
