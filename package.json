@@ -10,7 +10,12 @@
     },
     "scripts": {
         "clear:builder": "gulp clear-builder-directory",
-        "build": "gulp clear-builder-directory && lerna run build && tsc -p tsconfig.prod.json && gulp build-npm-publish-directory",
+        "build": "npm run clear:builder && npm run build:bundler && npm run build:obfuscator && npm run build:node-protector && npm run build:root-module && npm run build:npm-publish",
+        "build:root-module": "tsc -p tsconfig.prod.json",
+        "build:bundler": "lerna run build --scope=@cubegen/bundler",
+        "build:obfuscator": "lerna run build --scope=@cubegen/obfuscator",
+        "build:node-protector": "lerna run build --scope=@cubegen/node-protector",
+        "build:npm-publish": "gulp build-npm-publish-directory",
         "test": "lerna run test"
     },
     "repository": "neszha/cubegen",
@@ -21,9 +26,11 @@
         "@cubegen/node-protector": "^0.1.0",
         "@cubegen/obfuscator": "^0.1.0",
         "crypto-js": "^4.2.0",
+        "events": "^3.3.0",
         "fs-extra": "^11.2.0"
     },
     "devDependencies": {
+        "@types/events": "^3.0.3",
         "@types/fs-extra": "^11.0.4",
         "@types/jest": "^29.5.12",
         "@types/node": "^20.11.25",

@@ -4,8 +4,10 @@
  * Handle user configuration to protect NodeJS source code.
  */
 
-import { onModifiedCallbackEcecution, onStartCallbackEcecution } from './runtime-protector'
+import { event as EventEmitter, onModifiedCallbackEcecution, onStartCallbackEcecution } from './runtime-protector'
 import { type CubegenNodeModificationProtectionOptions, type CubegenNodeBuilderOptions, type SyncFunctionCallback } from './types/NodeProtector'
+
+export const event = EventEmitter
 
 /**
  * Builder Options.

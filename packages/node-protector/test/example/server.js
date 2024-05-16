@@ -9,5 +9,4 @@ const server = http.createServer((req, res) => {
 const PORT = 3000
 server.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`)
-    process.exit()
 })

@@ -1,4 +1,4 @@
-import { onModified, setBuilderOptions, setModificationProtectionOptions } from '@cubegen/node-protector'
+import { onModified, setBuilderOptions, setModificationProtectionOptions, onStart } from '@cubegen/node-protector'
 
 /**
  * Builder Options.
@@ -21,7 +21,14 @@ setBuilderOptions({
 })
 
 /**
- * Modified Lifecyles.
+ * Run action after node protector is started.
+ */
+onStart(() => {
+    console.log('exec: onStart')
+})
+
+/**
+ * Modification Protection.
  *
  * Set enable to true to enable modification protection.
  */
@@ -30,13 +37,5 @@ setModificationProtectionOptions({
 })
 onModified(() => {
     console.log('exec: onModified')
-})
-
-/**
- * Start Lifecyles.
- *
- * Run action when node protector starting.
- */
-onStart(() => {
-    console.log('exec: onStart')
+    process.exit()
 })
