@@ -94,9 +94,15 @@ describe('Test Bundler Result Work for NodeJS Environment', () => {
         ]
     })
 
-    it('Success maintain argv functionality', async () => {
+    it('Success maintain argv and write file functionality', async () => {
         const result = await bundler.build()
+
+        // Check argv output.
         const execResult = execSync(`node ${result.entries[0].ouputPath} test_argv`, { encoding: 'utf-8' })
         expect(execResult).toEqual('test_argv\n')
+
+        // Check file created.
+        const outFilePath = path.join(process.cwd(), '.cache/node.txt')
+        expect(fs.existsSync(outFilePath)).toEqual(true)
     })
 })
