@@ -28,7 +28,7 @@ export class CubegenBundler {
             targets: {
                 default: {
                     context: 'node',
-                    outputFormat: 'esmodule',
+                    outputFormat: 'commonjs',
                     includeNodeModules: true,
                     distDir: MODULE_BUNDLER_CACHE_PATH_DIR
                 }
@@ -60,6 +60,11 @@ export class CubegenBundler {
 
         // get hash data of project.
         buildResponse.hashProject = this.getHashOfOutputProject(this.options.outDir)
+
+        // Generate package json.
+        if (this.options.packageJson !== undefined) {
+            this.generatePackageJson()
+        }
 
         // done
         return buildResponse
@@ -174,5 +179,22 @@ export class CubegenBundler {
         }
         traverseDirectory(outDir)
         return `sha256:${hash.digest('hex')}`
+    }
+
+    private generatePackageJson (): void {
+        if (this.options.packageJson === undefined) return
+        const { type, hideDependencies, hideDevDependencies } = this.options.packageJson
+
+        // Read original package.json.
+        const packageJsonString = fs.readFileSync(path.join(this.options.rootDir, 'package.json'), 'utf8')
+        const packageJson = JSON.parse(packageJsonString)
+
+        // Manipulate package.json.
+        packageJson.type = type
+        if (hideDependencies) delete packageJson.dependencies
+        if (hideDevDependencies) delete packageJson.devDependencies
+
+        // Write new package.json.
+        fs.writeFileSync(path.join(this.options.outDir, 'package.json'), JSON.stringify(packageJson, null, 4), 'utf8')
     }
 }

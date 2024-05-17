@@ -41,4 +41,8 @@
 
 import axios from 'axios'
 
-console.log(axios.get('ifconfig.me/ip'))
+axios.get('https://ifconfig.me/all.json').then((response) => {
+    console.log(response.data)
+}).catch((error) => {
+    console.log(error)
+})

@@ -2,6 +2,7 @@
 
 import { Command } from 'commander'
 import builder from '../cli/builder.js'
+import { type CmdBuildOptions } from './types/Command.js'
 
 /**
  * Initialize.
@@ -16,8 +17,9 @@ program.name('cubegen')
  */
 program.command('build')
     .description('Building your code to distribution code.')
-    .action(async (str, options): Promise<void> => {
-        await builder.build()
+    .option('-r, --root <string>', 'Root project directory', './')
+    .action(async (options: CmdBuildOptions): Promise<void> => {
+        await builder.build(options)
     })
 
 /**
