@@ -2,13 +2,25 @@ import path from 'path'
 import fs from 'fs-extra'
 import { execSync } from 'child_process'
 import { CubegenBundler } from '@cubegen/bundler'
+import { CubegenObfuscator } from '@cubegen/obfuscator'
 import { type FilePath, type CmdBuildOptions } from '../bin/types/Command.js'
+import { type CubegenNodeBuilderOptions } from '@cubegen/node-protector/dist/types/NodeProtector.js'
+import { CubegenObfuscatorEnvironmentTarget } from '@cubegen/obfuscator/dist/enums/ObfuscatorEnum.js'
+import { type CubegenObfuscatorResponse } from '@cubegen/obfuscator/dist/types/Obfuscator.js'
+import { type CubegenBundlerOptions } from '@cubegen/bundler/dist/types/Bundler.js'
+
+let builderOptions: CubegenNodeBuilderOptions
 
 export default {
     cacheDir: '' as string,
     options: {
         root: ''
     } satisfies CmdBuildOptions,
+    protector: {
+        fileName: null as string | null,
+        backupPath: null as FilePath | null,
+        bundledPath: null as FilePath | null
+    },
 
     /**
      * Build source code to distribution code.
@@ -16,7 +28,10 @@ export default {
     async build (options: CmdBuildOptions): Promise<void> {
         this.options = options
         this.init()
-        await this.getConfigCodeProject()
+        await this.bundleAndGetConfigCodeProject()
+        await this.obfuscateRuntimeProtector()
+        await this.bundleProject()
+        this.restoreBackupProtectorConfig()
     },
 
     /**
@@ -32,7 +47,7 @@ export default {
     /**
      * Find and get file `protector.cg.js` or `protector.cg.ts` in project directory.
      */
-    async getConfigCodeProject (): Promise<void> {
+    async bundleAndGetConfigCodeProject (): Promise<void> {
         // Check root directory.
         if (!fs.existsSync(this.options.root)) {
             console.error('No such directory: ', this.options.root)
@@ -40,39 +55,86 @@ export default {
         }
 
         // Find code config.
-        let useRelativePath: FilePath | null = null
         const jsConfigFilename = 'protector.cg.js'
         const tsConfigFilename = 'protector.cg.ts'
         if (fs.existsSync(path.join(this.options.root, jsConfigFilename))) {
-            useRelativePath = jsConfigFilename
+            this.protector.fileName = jsConfigFilename
         } else if (fs.existsSync(path.join(this.options.root, tsConfigFilename))) {
-            useRelativePath = tsConfigFilename
+            this.protector.fileName = tsConfigFilename
         }
-        if (useRelativePath == null) {
+        if (this.protector.fileName == null) {
             console.error('Can not find `protector.cg.js` or `protector.cg.ts` in project directory.')
             process.exit()
         }
 
         // Bundling code config.
-        const bundler = new CubegenBundler({
+        const bundlerOptions: CubegenBundlerOptions = {
             rootDir: this.options.root,
             outDir: path.join(this.cacheDir, 'bundled'),
             entries: [
-                useRelativePath
+                this.protector.fileName
             ],
             packageJson: {
                 type: 'commonjs',
                 hideDependencies: true,
                 hideDevDependencies: true
             }
-        })
+        }
+        const bundler = new CubegenBundler(bundlerOptions)
         const bundlerResult = await bundler.build()
         const bundledPath = bundlerResult.entries[0].ouputPath
+        this.protector.bundledPath = bundledPath
 
         // Get builder options from code config.
-        console.log(bundlerResult)
-        // const codeConfigRaw = fs.readFileSync(bundlerResult.entries[0].ouputPath, 'utf8')
-        // const res = execSync(`node ${bundledPath} --get-options`, { encoding: 'utf8', input: 'asdf' })
-        // console.log(res)
+        const builderOptionsJsonString = execSync(`node ${bundledPath} --get-options`, { encoding: 'utf8' })
+        builderOptions = JSON.parse(builderOptionsJsonString) as CubegenNodeBuilderOptions
+    },
+
+    /**
+     * Obfuscate protector config file.
+     */
+    async obfuscateRuntimeProtector (): Promise<CubegenObfuscatorResponse> {
+        if (this.protector.fileName == null || this.protector.bundledPath == null) {
+            throw new Error('Error when geting protector path info.')
+        }
+
+        // Backup protector config file.
+        const protectorPath = path.join(this.options.root, this.protector.fileName)
+        this.protector.backupPath = `${protectorPath}.bak`
+        fs.copyFileSync(protectorPath, this.protector.backupPath)
+
+        // Obfuscate protector config file.
+        const obfuscator = new CubegenObfuscator(this.protector.bundledPath, CubegenObfuscatorEnvironmentTarget.NODE)
+        const result: CubegenObfuscatorResponse = obfuscator.transform()
+
+        // Overwrite original protector config file with obfuscated code.
+        fs.copyFileSync(result.outputTempPath, protectorPath)
+
+        // Done.
+        return result
+    },
+
+    /**
+     * Bundling project with bundler module.
+     */
+    async bundleProject (): Promise<void> {
+        const bundlerOptions: CubegenBundlerOptions = builderOptions.codeBundlingOptions
+        bundlerOptions.rootDir = path.resolve(this.options.root, bundlerOptions.rootDir)
+        bundlerOptions.outDir = path.resolve(this.options.root, bundlerOptions.outDir)
+        const bundler = new CubegenBundler(bundlerOptions)
+        try {
+            const bundlerResult = await bundler.build()
+            console.log(bundlerResult)
+        } catch (error) {
+            console.error(error)
+        }
+    },
+
+    /**
+     * Restore original protector config file.
+     */
+    restoreBackupProtectorConfig (): void {
+        if (this.protector.backupPath === null) return
+        fs.moveSync(this.protector.backupPath, this.protector.backupPath.replace('.bak', ''), { overwrite: true })
     }
 }

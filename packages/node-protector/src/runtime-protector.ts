@@ -1,12 +1,23 @@
 import EventEmitter from 'events'
-import { type CubegenNodeModificationProtectionOptions, type SyncFunctionCallback } from './types/NodeProtector'
+import { type CubegenNodeBuilderOptions, type CubegenNodeModificationProtectionOptions, type SyncFunctionCallback } from './types/NodeProtector'
 
 let protectorIsReady: boolean = false
+let builderOptions: CubegenNodeBuilderOptions | any = {}
 
 /**
  * Initialize event emitter.
  */
 export const event = new EventEmitter()
+
+/**
+ * Builder Options.
+ */
+export const setBuilderOptions = (options: CubegenNodeBuilderOptions): void => {
+    builderOptions = {
+        ...builderOptions,
+        ...options
+    }
+}
 
 /**
  * Node Protector Lifecycles: onStart.
@@ -61,12 +72,11 @@ void (async () => {
         }, 2500)
     })
 
-    // Only show builder options.
-    // if (process.env.SNOW_BUILDER_OPTIONS_IS_TRUE === 'SNOW_BUILDER_OPTIONS_IS_TRUE') {
-    //     console.log('show bundler')
-    //     return
-    // }
-    // console.log(process)
+    // Show builder options for builder tools.
+    if (process.argv[2] === '--get-options') {
+        console.log(JSON.stringify(builderOptions))
+        return
+    }
 
     // Call onStart lifecycle.
     event.emit('start')
