@@ -1,4 +1,5 @@
 import EventEmitter from 'events'
+import { builder } from './index'
 import { type CubegenNodeBuilderOptions, type CubegenNodeModificationProtectionOptions, type SyncFunctionCallback } from './types/NodeProtector'
 
 let protectorIsReady: boolean = false
@@ -86,3 +87,10 @@ void (async () => {
 
     // Run event loop.
 })()
+
+/**
+ * Export default.
+ */
+export default {
+    builder
+}

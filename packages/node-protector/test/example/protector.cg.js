@@ -1,4 +1,4 @@
-import { builder, onModified, setModificationProtectionOptions, onStart } from '../../../node-protector/dist/index.js'
+import { builder, onModified, setModificationProtectionOptions, onStart } from '@cubegen/node-protector/dist/esm/index.js'
 
 /**
  * Builder Options.

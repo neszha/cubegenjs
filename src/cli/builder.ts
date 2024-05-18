@@ -4,10 +4,10 @@ import { execSync } from 'child_process'
 import { CubegenBundler } from '@cubegen/bundler'
 import { CubegenObfuscator } from '@cubegen/obfuscator'
 import { type FilePath, type CmdBuildOptions } from '../bin/types/Command.js'
-import { type CubegenNodeBuilderOptions } from '@cubegen/node-protector/dist/types/NodeProtector.js'
-import { CubegenObfuscatorEnvironmentTarget } from '@cubegen/obfuscator/dist/enums/ObfuscatorEnum.js'
-import { type CubegenObfuscatorResponse } from '@cubegen/obfuscator/dist/types/Obfuscator.js'
 import { type CubegenBundlerOptions } from '@cubegen/bundler/dist/types/Bundler.js'
+import { type CubegenObfuscatorResponse } from '@cubegen/obfuscator/dist/types/Obfuscator.js'
+import { CubegenObfuscatorEnvironmentTarget } from '@cubegen/obfuscator/dist/enums/ObfuscatorEnum.js'
+import { type CubegenNodeBuilderOptions } from '@cubegen/node-protector/dist/types/NodeProtector.js'
 
 let builderOptions: CubegenNodeBuilderOptions
 
@@ -75,7 +75,7 @@ export default {
                 this.protector.fileName
             ],
             packageJson: {
-                type: 'commonjs',
+                type: 'module',
                 hideDependencies: true,
                 hideDevDependencies: true
             }
@@ -131,7 +131,7 @@ export default {
      * Restore original protector config file.
      */
     restoreBackupProtectorConfig (): void {
-        if (this.protector.backupPath === null) return
-        fs.moveSync(this.protector.backupPath, this.protector.backupPath.replace('.bak', ''), { overwrite: true })
+        // if (this.protector.backupPath === null) return
+        // fs.moveSync(this.protector.backupPath, this.protector.backupPath.replace('.bak', ''), { overwrite: true })
     }
 }

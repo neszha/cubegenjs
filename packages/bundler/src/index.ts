@@ -28,13 +28,19 @@ export class CubegenBundler {
             targets: {
                 default: {
                     context: 'node',
-                    outputFormat: 'commonjs',
+                    engines: {
+                        node: '>= 18'
+                    },
+                    outputFormat: 'esmodule',
                     includeNodeModules: true,
                     distDir: MODULE_BUNDLER_CACHE_PATH_DIR
                 }
             },
             defaultTargetOptions: {
-                outputFormat: 'commonjs',
+                engines: {
+                    node: '>= 18'
+                },
+                outputFormat: 'esmodule',
                 shouldOptimize: true,
                 sourceMaps: false,
                 shouldScopeHoist: true
