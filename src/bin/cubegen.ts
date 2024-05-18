@@ -2,7 +2,7 @@
 
 import { Command } from 'commander'
 import builder from '../cli/builder.js'
-import { type CmdBuildOptions } from './types/Command.js'
+import { type CmdBuildOptions } from '../types/Command.js'
 
 /**
  * Initialize.

@@ -1,13 +1,16 @@
 import path from 'path'
 import fs from 'fs-extra'
+import { createHash, randomInt } from 'crypto'
 import { execSync } from 'child_process'
+import randomString from 'randomstring'
 import { CubegenBundler } from '@cubegen/bundler'
 import { CubegenObfuscator } from '@cubegen/obfuscator'
-import { type FilePath, type CmdBuildOptions } from '../bin/types/Command.js'
-import { type CubegenBundlerOptions } from '@cubegen/bundler/dist/types/Bundler.js'
+import { type FilePath, type CmdBuildOptions } from '../types/Command.js'
+import { type CubegenBundlerResponse, type CubegenBundlerOptions } from '@cubegen/bundler/dist/types/Bundler.js'
 import { type CubegenObfuscatorResponse } from '@cubegen/obfuscator/dist/types/Obfuscator.js'
 import { CubegenObfuscatorEnvironmentTarget } from '@cubegen/obfuscator/dist/enums/ObfuscatorEnum.js'
 import { type CubegenNodeBuilderOptions } from '@cubegen/node-protector/dist/types/NodeProtector.js'
+import { type CubegenJson } from '../types/CobegenJson.js'
 
 let builderOptions: CubegenNodeBuilderOptions
 
@@ -21,6 +24,7 @@ export default {
         backupPath: null as FilePath | null,
         bundledPath: null as FilePath | null
     },
+    privateKeys: [] as string[],
 
     /**
      * Build source code to distribution code.
@@ -29,9 +33,11 @@ export default {
         this.options = options
         this.init()
         await this.bundleAndGetConfigCodeProject()
+        this.generateRandomPrivateKeys()
         await this.obfuscateRuntimeProtector()
-        await this.bundleProject()
+        const bundleResponse = await this.bundleProject()
         this.restoreBackupProtectorConfig()
+        this.createCubgenJson(bundleResponse)
     },
 
     /**
@@ -91,6 +97,26 @@ export default {
     },
 
     /**
+     * Generate random private keys to inject in protector file.
+     */
+    generateRandomPrivateKeys (): void {
+        if (this.protector.bundledPath == null) return
+
+        // Generate random private keys.
+        this.privateKeys = []
+        for (let i = 0; i < 2; i++) {
+            const randomKey = randomString.generate(randomInt(128))
+            this.privateKeys.push(randomKey)
+        }
+
+        // Inject random private keys into bundled files.
+        let bundledRawCode = fs.readFileSync(this.protector.bundledPath, { encoding: 'utf8' })
+        bundledRawCode = bundledRawCode.replace('%PRIVATE_KEY_1%', this.privateKeys[0])
+        bundledRawCode = bundledRawCode.replace('%PRIVATE_KEY_2%', this.privateKeys[1])
+        fs.writeFileSync(this.protector.bundledPath, bundledRawCode, 'utf-8')
+    },
+
+    /**
      * Obfuscate protector config file.
      */
     async obfuscateRuntimeProtector (): Promise<void> {
@@ -114,17 +140,13 @@ export default {
     /**
      * Bundling project with bundler module.
      */
-    async bundleProject (): Promise<void> {
+    async bundleProject (): Promise<CubegenBundlerResponse> {
         const bundlerOptions: CubegenBundlerOptions = builderOptions.codeBundlingOptions
         bundlerOptions.rootDir = path.resolve(this.options.root, bundlerOptions.rootDir)
         bundlerOptions.outDir = path.resolve(this.options.root, bundlerOptions.outDir)
         const bundler = new CubegenBundler(bundlerOptions)
-        try {
-            const bundlerResult = await bundler.build()
-            console.log(bundlerResult)
-        } catch (error) {
-            console.error(error)
-        }
+        const bundlerResult = await bundler.build()
+        return bundlerResult
     },
 
     /**
@@ -133,5 +155,26 @@ export default {
     restoreBackupProtectorConfig (): void {
         if (this.protector.backupPath === null) return
         fs.moveSync(this.protector.backupPath, this.protector.backupPath.replace('.bak', ''), { overwrite: true })
+    },
+
+    /**
+     * Generate meta data.
+     */
+    createCubgenJson (bundleResponse: CubegenBundlerResponse): void {
+        const cubgenMeta: CubegenJson = {
+            hashProject: bundleResponse.hashProject,
+            signatures: []
+        }
+        for (const entryData of bundleResponse.entries) {
+            const plainTextArray = this.privateKeys.concat(entryData.hash.replace('sha256:', ''))
+            const singnatureContent = plainTextArray.join('.')
+            const hash = createHash('sha512').update(singnatureContent)
+            cubgenMeta.signatures.push({
+                entryName: entryData.fromEntry,
+                signature: `sha512:${hash.digest('hex')}`
+            })
+        }
+        const metaPath = path.join(builderOptions.codeBundlingOptions.outDir, 'cubegen-lock.json')
+        fs.writeFileSync(metaPath, JSON.stringify(cubgenMeta, null, 4), 'utf8')
     }
 }

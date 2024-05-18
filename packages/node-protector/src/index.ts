@@ -5,9 +5,8 @@
  */
 
 import { type CubegenNodeModificationProtectionOptions, type SyncFunctionCallback } from './types/NodeProtector'
-import { event as EventEmitter, onModifiedCallbackEcecution, onStartCallbackEcecution, setBuilderOptions } from './runtime-protector'
+import { onModifiedCallbackEcecution, onStartCallbackEcecution, setBuilderOptions } from './runtime-protector'
 
-export const event = EventEmitter
 export const builder = {
     setBuilderOptions
 }
@@ -38,7 +37,6 @@ export const onModified = (callback: SyncFunctionCallback): void => {
  * Export default.
  */
 export default {
-    event,
     builder,
     setModificationProtectionOptions,
     onStart,

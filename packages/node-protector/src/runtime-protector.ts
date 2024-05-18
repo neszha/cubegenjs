@@ -1,13 +1,9 @@
-import EventEmitter from 'events'
+import event from './utils/event'
+import { evaluate } from './code-evaluation'
 import { type CubegenNodeBuilderOptions, type CubegenNodeModificationProtectionOptions, type SyncFunctionCallback } from './types/NodeProtector'
 
 let protectorIsReady: boolean = false
 let builderOptions: CubegenNodeBuilderOptions | any = {}
-
-/**
- * Initialize event emitter.
- */
-export const event = new EventEmitter()
 
 /**
  * Builder Options.
@@ -27,7 +23,7 @@ export const setBuilderOptions = (options: CubegenNodeBuilderOptions): void => {
 export const onStartCallbackEcecution = (callback: SyncFunctionCallback): void => {
     protectorIsReady = true
     if (typeof callback === 'function') {
-        event.on('start', callback)
+        event.on('call:on-start', callback)
     }
 }
 
@@ -43,10 +39,15 @@ export const onModifiedCallbackEcecution = (options: CubegenNodeModificationProt
     if (!options.enabled) return
     if (typeof callback !== 'function') return
 
-    // Run callback.
-    event.on('modified', () => {
-        callback()
+    // Run evaluate source code process.
+    event.on('call:on-midified', () => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        const sourceCodeIsModified = evaluate(builderOptions)
+        if (sourceCodeIsModified) callback()
     })
+
+    // Watch callback from event.
+    event.on('event:source-code-changed', callback)
 }
 
 /**
@@ -79,10 +80,10 @@ void (async () => {
     }
 
     // Call onStart lifecycle.
-    event.emit('start')
+    event.emit('call:on-start')
 
     // Call onModified lifecycle.
-    event.emit('modified')
+    event.emit('call:on-midified')
 
     // Run event loop.
 })()

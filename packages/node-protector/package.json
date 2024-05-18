@@ -7,7 +7,7 @@
     "typings": "dist/index.d.js",
     "scripts": {
         "build": "tsc -p tsconfig.prod.json && tsc -p tsconfig.esm.json",
-        "build:watch": "tsc --watch -p tsconfig.prod.json"
+        "build:watch": "tsc --watch -p tsconfig.esm.json"
     },
     "author": "Fanesa Hadi Pramana",
     "license": "ISC"
