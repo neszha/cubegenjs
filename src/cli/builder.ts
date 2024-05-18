@@ -131,7 +131,7 @@ export default {
      * Restore original protector config file.
      */
     restoreBackupProtectorConfig (): void {
-        // if (this.protector.backupPath === null) return
-        // fs.moveSync(this.protector.backupPath, this.protector.backupPath.replace('.bak', ''), { overwrite: true })
+        if (this.protector.backupPath === null) return
+        fs.moveSync(this.protector.backupPath, this.protector.backupPath.replace('.bak', ''), { overwrite: true })
     }
 }

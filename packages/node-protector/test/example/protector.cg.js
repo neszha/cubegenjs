@@ -1,4 +1,4 @@
-import { builder, onModified, setModificationProtectionOptions, onStart } from '@cubegen/node-protector/dist/esm/index.js'
+import { builder, onModified, setModificationProtectionOptions, onStart } from '@cubegen/node-protector'
 
 /**
  * Builder Options.
@@ -15,7 +15,7 @@ const builderOptions = {
             'public'
         ],
         packageJson: {
-            type: 'commonjs',
+            type: 'module',
             hideDependencies: false,
             hideDevDependencies: true
         }

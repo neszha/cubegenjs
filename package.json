@@ -11,8 +11,8 @@
     "scripts": {
         "clear:builder": "gulp clear-builder-directory",
         "build": "npm run clear:builder && npm run build:bundler && npm run build:obfuscator && npm run build:node-protector && npm run build:root-module && npm run build:npm-publish",
-        "build:root-module": "tsc -p tsconfig.prod.json",
-        "build:watch": "tsc --watch -p tsconfig.prod.json",
+        "build:root-module": "tsc -p tsconfig.prod.json && tsc -p tsconfig.esm.json",
+        "build:watch": "tsc --watch -p tsconfig.esm.json",
         "build:bundler": "lerna run build --scope=@cubegen/bundler",
         "build:obfuscator": "lerna run build --scope=@cubegen/obfuscator",
         "build:node-protector": "lerna run build --scope=@cubegen/node-protector",
@@ -48,7 +48,7 @@
         "typescript": "^5.4.2"
     },
     "bin": {
-        "cubegen": "dist/bin/cubegen.js"
+        "cubegen": "dist/esm/bin/cubegen.js"
     },
     "workspaces": [
         "packages/bundler",

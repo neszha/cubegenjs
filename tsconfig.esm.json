@@ -1,0 +1,20 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "module": "ESNext",
+        "target": "ES6",
+        "moduleResolution": "Node",
+        "rootDirs": [
+            "src",
+            "test"
+        ],
+        "outDir": "dist/esm",
+        "declaration": true
+    },
+    "exclude": [
+        "dist",
+        "packages",
+        "gulpfile.js",
+        "jest.config.js"
+    ]
+}

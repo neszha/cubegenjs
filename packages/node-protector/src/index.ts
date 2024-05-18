@@ -33,3 +33,14 @@ export const onStart = (callback: SyncFunctionCallback): void => {
 export const onModified = (callback: SyncFunctionCallback): void => {
     onModifiedCallbackEcecution(modificationProtectionOptions, callback)
 }
+
+/**
+ * Export default.
+ */
+export default {
+    event,
+    builder,
+    setModificationProtectionOptions,
+    onStart,
+    onModified
+}

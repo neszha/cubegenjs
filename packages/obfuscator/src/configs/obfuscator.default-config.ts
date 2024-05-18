@@ -16,22 +16,25 @@ export default {
     numbersToExpressions: true,
     transformObjectKeys: true,
     splitStrings: true,
-    splitStringsChunkLength: 3,
+    splitStringsChunkLength: 10,
 
     // Renaming
-    renameGlobals: true,
-    renameProperties: true,
+    renameGlobals: true, // This option MAY break your code
+    renameProperties: false, // This option MAY break your code
     renamePropertiesMode: 'safe',
     identifierNamesGenerator: 'mangled-shuffled',
 
     // String Array
     stringArray: true,
-    stringArrayThreshold: 0.2,
+    stringArrayThreshold: 1,
     stringArrayCallsTransform: true,
-    stringArrayCallsTransformThreshold: 0.5,
-    stringArrayEncoding: [],
+    stringArrayCallsTransformThreshold: 1,
+    stringArrayEncoding: [
+        'base64'
+    ],
     stringArrayIndexesType: [
-        'hexadecimal-number'
+        'hexadecimal-number',
+        'hexadecimal-numeric-string'
     ],
     stringArrayIndexShift: true,
     stringArrayRotate: true,
@@ -41,7 +44,7 @@ export default {
     stringArrayWrappersParametersMaxCount: 5,
     stringArrayWrappersType: 'function',
 
-    // Simplifying
+    // Simplify
     compact: true,
     simplify: true
 
