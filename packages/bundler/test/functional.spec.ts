@@ -18,7 +18,7 @@ describe('Test Functional Bundler Module', () => {
         ],
         staticDirs: ['assets', 'public'],
         packageJson: {
-            type: 'commonjs',
+            type: 'module',
             hideDependencies: false,
             hideDevDependencies: false
         }
