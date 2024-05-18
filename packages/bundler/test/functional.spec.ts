@@ -2,13 +2,13 @@ import path from 'path'
 import fs from 'fs-extra'
 import { execSync } from 'child_process'
 import { CubegenBundler } from '../src/index'
-import { type CubegenBundlerResponse } from './types/Bundler'
+import { type CubegenBundlerOptions, type CubegenBundlerResponse } from './types/Bundler'
 
 const MODULE_PATH_DIR = path.resolve(__dirname, '../')
 const MODULE_TEMP_PATH_DIR = path.join(MODULE_PATH_DIR, '.test-temp')
 
 describe('Test Functional Bundler Module', () => {
-    const bundler = new CubegenBundler({
+    const bundlerOptions: CubegenBundlerOptions = {
         rootDir: path.resolve(MODULE_PATH_DIR, 'test/examples/source-code'),
         outDir: path.resolve(MODULE_TEMP_PATH_DIR, 'out-test-01'),
         entries: [
@@ -16,8 +16,14 @@ describe('Test Functional Bundler Module', () => {
             'nested/main.ts',
             'worker/index.js'
         ],
-        staticDirs: ['assets', 'public']
-    })
+        staticDirs: ['assets', 'public'],
+        packageJson: {
+            type: 'commonjs',
+            hideDependencies: false,
+            hideDevDependencies: false
+        }
+    }
+    const bundler = new CubegenBundler(bundlerOptions)
 
     it('Success bundling typescript and javascript source code input', async () => {
         const result: CubegenBundlerResponse = await bundler.build()
@@ -44,6 +50,10 @@ describe('Test Functional Bundler Module', () => {
         // check static dir result  exits.
         expect(fs.existsSync(staticDirs[0].ouputDirPath)).toEqual(true)
         expect(fs.existsSync(staticDirs[1].ouputDirPath)).toEqual(true)
+
+        // Check packages.json output.
+        const packageJsonPath = path.join(bundlerOptions.outDir, 'package.json')
+        expect(fs.existsSync(packageJsonPath)).toEqual(true)
     })
 
     it('Bundling successful to remove comment string', async () => {

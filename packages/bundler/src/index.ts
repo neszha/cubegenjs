@@ -34,8 +34,10 @@ export class CubegenBundler {
                 }
             },
             defaultTargetOptions: {
+                outputFormat: 'commonjs',
                 shouldOptimize: true,
-                sourceMaps: false
+                sourceMaps: false,
+                shouldScopeHoist: true
             },
             cacheDir: MODULE_PARCEL_CACHE_PATH_DIR
         }
@@ -185,8 +187,15 @@ export class CubegenBundler {
         if (this.options.packageJson === undefined) return
         const { type, hideDependencies, hideDevDependencies } = this.options.packageJson
 
+        // Check package.json path.
+        const packageJsonPath = path.join(this.options.rootDir, 'package.json')
+        if (!fs.existsSync(packageJsonPath)) {
+            console.error('Error when reading package.json in root project.')
+            process.exit()
+        }
+
         // Read original package.json.
-        const packageJsonString = fs.readFileSync(path.join(this.options.rootDir, 'package.json'), 'utf8')
+        const packageJsonString = fs.readFileSync(packageJsonPath, 'utf8')
         const packageJson = JSON.parse(packageJsonString)
 
         // Manipulate package.json.
