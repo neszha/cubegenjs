@@ -4,6 +4,7 @@ import { builder, onModified, setModificationProtectionOptions, onStart } from '
  * Builder Options.
  */
 const builderOptions = {
+    targetEnvironment: 'node',
     codeBundlingOptions: {
         rootDir: './',
         outDir: './dist',

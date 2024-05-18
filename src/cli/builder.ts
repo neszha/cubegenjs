@@ -93,7 +93,7 @@ export default {
     /**
      * Obfuscate protector config file.
      */
-    async obfuscateRuntimeProtector (): Promise<CubegenObfuscatorResponse> {
+    async obfuscateRuntimeProtector (): Promise<void> {
         if (this.protector.fileName == null || this.protector.bundledPath == null) {
             throw new Error('Error when geting protector path info.')
         }
@@ -109,9 +109,6 @@ export default {
 
         // Overwrite original protector config file with obfuscated code.
         fs.copyFileSync(result.outputTempPath, protectorPath)
-
-        // Done.
-        return result
     },
 
     /**

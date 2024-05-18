@@ -3,7 +3,13 @@ import { type CubegenObfuscatorOptions } from '@cubegen/obfuscator/dist/types/Ob
 
 export type SyncFunctionCallback = () => void
 
+export enum TargetEnvironment {
+    NODE = 'NODE',
+    BROWSER = 'BROWSER'
+}
+
 export interface CubegenNodeBuilderOptions {
+    targetEnvironment: TargetEnvironment
     codeBundlingOptions: CubegenBundlerOptions
     codeObfuscationOptions: CubegenObfuscatorOptions
 }
