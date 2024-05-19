@@ -1,9 +1,9 @@
 import fs from 'fs'
 import path from 'path'
-import event from './utils/event'
-import { type CubegenJson } from './types/CobegenJson'
-import { type CubegenNodeBuilderOptions } from './types/NodeProtector'
+import event from './event'
 import { createHash } from 'crypto'
+import { type CubegenJson } from '../interfaces/CobegenJson'
+import { type NodeProtectorBuilderOptions } from '../interfaces/NodeProtector'
 
 const privateKey1: string = '%PRIVATE_KEY_1%'
 
@@ -13,7 +13,7 @@ const privateKey1: string = '%PRIVATE_KEY_1%'
  * @return true if source code is modified
  * @return false and send event on source code modified
  */
-export const evaluateCodeMofied = (options: CubegenNodeBuilderOptions, privateKey2: string = '%PRIVATE_KEY_2%'): boolean => {
+export const evaluateCodeMofied = (options: NodeProtectorBuilderOptions, privateKey2: string = '%PRIVATE_KEY_2%'): boolean => {
     try {
         // Get signnatures from cubegen-lock.json.
         const lockPath: string = path.join(options.codeBundlingOptions.outDir, 'cubegen-lock.json')

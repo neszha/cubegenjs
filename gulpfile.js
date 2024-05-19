@@ -13,9 +13,9 @@ task('clear-builder-directory', async () => {
         'dist'
     ], { force: true })
 
-    // utils module.
+    // common module.
     await deleteAsync([
-        'packages/_utils/dist'
+        'packages/common/dist'
     ], { force: true })
 
     // bundler module.
@@ -53,9 +53,9 @@ task('build-npm-publish-directory', async () => {
     await src('LICENSE').pipe(dest('.npm-publish/'))
     await src('README.md').pipe(dest('.npm-publish/'))
 
-    // utils module.
-    await src('packages/_utils/package.json').pipe(dest('.npm-publish/packages/_utils/'))
-    await src('packages/_utils/dist/**/*').pipe(dest('.npm-publish/packages/_utils/dist'))
+    // common module.
+    await src('packages/common/package.json').pipe(dest('.npm-publish/packages/common/'))
+    await src('packages/common/dist/**/*').pipe(dest('.npm-publish/packages/common/dist'))
 
     // bundler module.
     await src('packages/bundler/package.json').pipe(dest('.npm-publish/packages/bundler/'))

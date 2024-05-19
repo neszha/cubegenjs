@@ -1,5 +1,5 @@
 {
-  "name": "@cubegen/utils",
+  "name": "@cubegen/common",
   "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",

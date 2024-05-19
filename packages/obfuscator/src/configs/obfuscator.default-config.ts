@@ -1,9 +1,8 @@
 import { type ObfuscatorOptions } from 'javascript-obfuscator'
-import { CubegenObfuscatorEnvironmentTarget } from '../enums/ObfuscatorEnum'
 
 export default {
     // Environment Target
-    target: CubegenObfuscatorEnvironmentTarget.NODE,
+    target: 'node',
 
     // Random Generator
     seed: 0,
