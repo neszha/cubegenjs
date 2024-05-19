@@ -7,8 +7,15 @@ import { task, src, dest, series } from 'gulp'
 task('clear-builder-directory', async () => {
     // root module.
     await deleteAsync([
-        'dist',
-        '.npm-publish'
+        '.cache',
+        '.cubegen-cache',
+        '.npm-publish',
+        'dist'
+    ], { force: true })
+
+    // utils module.
+    await deleteAsync([
+        'packages/_utils/dist'
     ], { force: true })
 
     // bundler module.
@@ -45,6 +52,10 @@ task('build-npm-publish-directory', async () => {
     await src('package.json').pipe(dest('.npm-publish/'))
     await src('LICENSE').pipe(dest('.npm-publish/'))
     await src('README.md').pipe(dest('.npm-publish/'))
+
+    // utils module.
+    await src('packages/_utils/package.json').pipe(dest('.npm-publish/packages/_utils/'))
+    await src('packages/_utils/dist/**/*').pipe(dest('.npm-publish/packages/_utils/dist'))
 
     // bundler module.
     await src('packages/bundler/package.json').pipe(dest('.npm-publish/packages/bundler/'))
