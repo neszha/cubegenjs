@@ -9,7 +9,8 @@ const builderOptions = {
         rootDir: './',
         outDir: './dist',
         entries: [
-            'server.js'
+            'server.js',
+            'worker.js'
         ],
         staticDirs: [
             'public'
@@ -22,7 +23,7 @@ const builderOptions = {
     },
     codeObfuscationOptions: {
         target: 'node',
-        seed: 0
+        seed: 'abc'
     }
 }
 builder.setBuilderOptions(builderOptions)
@@ -31,7 +32,7 @@ builder.setBuilderOptions(builderOptions)
  * Run action after node protector is started.
  */
 onStart(() => {
-    console.log('exec: onStart')
+    console.log('Runtime protector is starting.')
 })
 
 /**
@@ -43,5 +44,16 @@ setModificationProtectionOptions({
     enabled: true
 })
 onModified(() => {
-    console.log('exec: onModified')
+    console.log('Source code is changed.')
 })
+
+/**
+ * Protected methods.
+ *
+ * Create your own protected methods.
+ */
+export const methods = {
+    myPrivateMethod () {
+        console.log('My private method executed.')
+    }
+}

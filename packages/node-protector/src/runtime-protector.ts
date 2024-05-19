@@ -1,5 +1,5 @@
 import event from './utils/event'
-import { evaluate } from './code-evaluation'
+import { evaluateCodeMofied } from './code-evaluation'
 import { type CubegenNodeBuilderOptions, type CubegenNodeModificationProtectionOptions, type SyncFunctionCallback } from './types/NodeProtector'
 
 let protectorIsReady: boolean = false
@@ -42,7 +42,7 @@ export const onModifiedCallbackEcecution = (options: CubegenNodeModificationProt
     // Run evaluate source code process.
     event.on('call:on-midified', () => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        const sourceCodeIsModified = evaluate(builderOptions)
+        const sourceCodeIsModified = evaluateCodeMofied(builderOptions)
         if (sourceCodeIsModified) callback()
     })
 

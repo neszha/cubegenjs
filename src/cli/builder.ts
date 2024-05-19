@@ -5,12 +5,12 @@ import { execSync } from 'child_process'
 import randomString from 'randomstring'
 import { CubegenBundler } from '@cubegen/bundler'
 import { CubegenObfuscator } from '@cubegen/obfuscator'
-import { type FilePath, type CmdBuildOptions } from '../types/Command.js'
-import { type CubegenBundlerResponse, type CubegenBundlerOptions } from '@cubegen/bundler/dist/types/Bundler.js'
-import { type CubegenObfuscatorResponse } from '@cubegen/obfuscator/dist/types/Obfuscator.js'
-import { CubegenObfuscatorEnvironmentTarget } from '@cubegen/obfuscator/dist/enums/ObfuscatorEnum.js'
-import { type CubegenNodeBuilderOptions } from '@cubegen/node-protector/dist/types/NodeProtector.js'
 import { type CubegenJson } from '../types/CobegenJson.js'
+import { type FilePath, type CmdBuildOptions } from '../types/Command.js'
+import { type CubegenObfuscatorResponse } from '@cubegen/obfuscator/dist/types/Obfuscator.js'
+import { type CubegenNodeBuilderOptions } from '@cubegen/node-protector/dist/types/NodeProtector.js'
+import { CubegenObfuscatorEnvironmentTarget } from '@cubegen/obfuscator/dist/enums/ObfuscatorEnum.js'
+import { type CubegenBundlerResponse, type CubegenBundlerOptions } from '@cubegen/bundler/dist/types/Bundler.js'
 
 let builderOptions: CubegenNodeBuilderOptions
 

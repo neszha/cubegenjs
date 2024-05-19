@@ -4,12 +4,9 @@
  * Handle user configuration to protect NodeJS source code.
  */
 
+import { event as eventEmiter } from './utils/event'
 import { type CubegenNodeModificationProtectionOptions, type SyncFunctionCallback } from './types/NodeProtector'
 import { onModifiedCallbackEcecution, onStartCallbackEcecution, setBuilderOptions } from './runtime-protector'
-
-export const builder = {
-    setBuilderOptions
-}
 
 /**
  * Node Protector: Modification protection.
@@ -34,9 +31,18 @@ export const onModified = (callback: SyncFunctionCallback): void => {
 }
 
 /**
+ * Export untils.
+ */
+export const event = eventEmiter
+export const builder = {
+    setBuilderOptions
+}
+
+/**
  * Export default.
  */
 export default {
+    event,
     builder,
     setModificationProtectionOptions,
     onStart,
