@@ -5,7 +5,7 @@ import {
     onStart,
     onModified,
     onIntervalCall
-} from '@cubegen/node-protector'
+} from '@cubegenjs/node-protector'
 
 /**
  * Builder Options.

@@ -1,6 +1,6 @@
-import { type TargetEnvironment } from '@cubegen/common/dist/interfaces/Global'
-import { type CubegenBundlerOptions } from '@cubegen/bundler/dist/types/Bundler'
-import { type CubegenObfuscatorOptions } from '@cubegen/obfuscator/dist/types/Obfuscator'
+import { type TargetEnvironment } from '@cubegenjs/common/dist/interfaces/Global'
+import { type CubegenBundlerOptions } from '@cubegenjs/bundler/dist/types/Bundler'
+import { type CubegenObfuscatorOptions } from '@cubegenjs/obfuscator/dist/types/Obfuscator'
 
 export type SyncFunctionCallback = () => void
 

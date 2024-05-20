@@ -1,5 +1,5 @@
 {
-    "name": "@cubegen/obfuscator",
+    "name": "@cubegenjs/obfuscator",
     "version": "0.1.0",
     "description": "",
     "main": "dist/index.js",

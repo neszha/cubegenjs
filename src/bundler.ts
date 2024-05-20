@@ -1,3 +1,3 @@
-import CubegenBundler from '@cubegen/bundler'
+import CubegenBundler from '@cubegenjs/bundler'
 
 export default CubegenBundler

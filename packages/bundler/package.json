@@ -1,5 +1,5 @@
 {
-    "name": "@cubegen/bundler",
+    "name": "@cubegenjs/bundler",
     "version": "0.1.0",
     "description": "",
     "main": "dist/index.js",

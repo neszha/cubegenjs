@@ -1,7 +1,7 @@
 .nx
 dist
 .DS_Store
-.npm-publish
+.npm-dist
 .cubegen-cache
 
 # Logs

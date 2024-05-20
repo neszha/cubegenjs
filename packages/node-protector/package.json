@@ -1,5 +1,5 @@
 {
-    "name": "@cubegen/node-protector",
+    "name": "@cubegenjs/node-protector",
     "version": "0.1.0",
     "description": "",
     "main": "dist/index.js",

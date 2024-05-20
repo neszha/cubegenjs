@@ -1,3 +1,3 @@
-import CubegenNodeProtector from '@cubegen/node-protector'
+import CubegenNodeProtector from '@cubegenjs/node-protector'
 
 export default CubegenNodeProtector

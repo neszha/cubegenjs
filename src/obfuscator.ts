@@ -1,3 +1,3 @@
-import CubegenObfuscator from '@cubegen/obfuscator'
+import CubegenObfuscator from '@cubegenjs/obfuscator'
 
 export default CubegenObfuscator
