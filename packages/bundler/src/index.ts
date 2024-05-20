@@ -23,7 +23,7 @@ export class CubegenBundler {
         this.percelOptions = {
             entries: '',
             defaultConfig: '@parcel/config-default',
-            mode: 'production',
+            mode: (options.buildMode === 'development') ? 'development' : 'production',
             shouldDisableCache: true,
             targets: {
                 default: {
@@ -41,7 +41,7 @@ export class CubegenBundler {
                     node: '>= 18'
                 },
                 outputFormat: 'esmodule',
-                shouldOptimize: true,
+                shouldOptimize: (options.buildMode === 'production' || options.buildMode === undefined),
                 sourceMaps: false,
                 shouldScopeHoist: true
             },

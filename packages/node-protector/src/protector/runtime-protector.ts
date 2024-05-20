@@ -1,14 +1,14 @@
-import event from './utils/event'
+import event from './event'
 import { evaluateCodeMofied } from './code-evaluation'
-import { type CubegenNodeBuilderOptions, type CubegenNodeModificationProtectionOptions, type SyncFunctionCallback } from './types/NodeProtector'
+import { type NodeProtectorBuilderOptions, type CubegenNodeModificationProtectionOptions, type SyncFunctionCallback } from '../interfaces/NodeProtector'
 
 let protectorIsReady: boolean = false
-let builderOptions: CubegenNodeBuilderOptions | any = {}
+let builderOptions: NodeProtectorBuilderOptions | any = {}
 
 /**
  * Builder Options.
  */
-export const setBuilderOptions = (options: CubegenNodeBuilderOptions): void => {
+export const setBuilderOptions = (options: NodeProtectorBuilderOptions): void => {
     builderOptions = {
         ...builderOptions,
         ...options

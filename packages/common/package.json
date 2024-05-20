@@ -1,0 +1,17 @@
+{
+  "name": "@cubegen/common",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.js",
+  "scripts": {
+      "build": "tsc -p tsconfig.prod.json",
+      "build:watch": "tsc --watch -p tsconfig.prod.json"
+  },
+  "author": "Fanesa Hadi Pramana",
+  "license": "ISC",
+  "devDependencies": {
+      "@types/node": "^20.12.11",
+      "typescript": "^5.4.5"
+  }
+}

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander'
-import builder from '../cli/builder.js'
-import { type CmdBuildOptions } from '../types/Command.js'
+import { CubegenBuilder } from '../commands/build.js'
+import { type CmdBuildOptions } from '../interfaces/Command.js'
 
 /**
  * Initialize.
@@ -13,13 +13,14 @@ program.name('cubegen')
     .version('0.1.0')
 
 /**
- * Builder command.
+ * Build command.
  */
 program.command('build')
-    .description('Building your code to distribution code.')
-    .option('-r, --root <string>', 'Root project directory', './')
+    .description('Building your project to distribution code.')
+    .option('-r, --root <string>', 'Relative root project directory', './')
     .action(async (options: CmdBuildOptions): Promise<void> => {
-        await builder.build(options)
+        const builder = new CubegenBuilder(options)
+        await builder.build()
     })
 
 /**

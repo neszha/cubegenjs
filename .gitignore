@@ -2,6 +2,7 @@
 dist
 .DS_Store
 .npm-publish
+.cubegen-cache
 
 # Logs
 logs
