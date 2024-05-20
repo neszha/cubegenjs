@@ -1,6 +1,6 @@
 import event from './event'
 import { evaluateCodeMofied } from './code-evaluation'
-import { type NodeProtectorBuilderOptions, type CubegenNodeModificationProtectionOptions, type SyncFunctionCallback } from '../interfaces/NodeProtector'
+import { type NodeProtectorBuilderOptions, type CubegenNodeModificationProtectionOptions, type SyncFunctionCallback, type NodeProtectorEventLoopOptions } from '../interfaces/NodeProtector'
 
 let protectorIsReady: boolean = false
 let builderOptions: NodeProtectorBuilderOptions | any = {}
@@ -51,6 +51,29 @@ export const onModifiedCallbackEcecution = (options: CubegenNodeModificationProt
 }
 
 /**
+ * Node Protector Lifecycles: onIntervalCall.
+ *
+ * Lifecycle call every 5 seconds (default).
+ */
+export const onIntervalCallCallbackEcecution = (options: NodeProtectorEventLoopOptions, callback: SyncFunctionCallback): void => {
+    protectorIsReady = true
+
+    // Validate params.
+    if (!options.enabled) return
+    if (typeof callback !== 'function') return
+
+    // Run event loop.
+    event.on('call:on-interval-call', () => {
+        setInterval(() => {
+            event.emit('event:interval-call')
+        }, options.eventLoopInterval ?? 5000)
+    })
+
+    // Watch callback from event.
+    event.on('event:interval-call', callback)
+}
+
+/**
  * Runtime Protector.
  */
 void (async () => {
@@ -86,4 +109,5 @@ void (async () => {
     event.emit('call:on-midified')
 
     // Run event loop.
+    event.emit('call:on-interval-call')
 })()

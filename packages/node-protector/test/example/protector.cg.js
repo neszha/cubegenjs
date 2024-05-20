@@ -1,4 +1,11 @@
-import { builder, onModified, setModificationProtectionOptions, onStart } from '@cubegen/node-protector'
+import {
+    builder,
+    setModificationProtectionOptions,
+    setEventLoopOptions,
+    onStart,
+    onModified,
+    onIntervalCall
+} from '@cubegen/node-protector'
 
 /**
  * Builder Options.
@@ -48,12 +55,14 @@ onModified(() => {
 })
 
 /**
- * Protected methods.
+ * Event loop call interval.
  *
- * Create your own protected methods.
+ * Set enable to true to enable event loop.
  */
-export const methods = {
-    myPrivateMethod () {
-        console.log('My private method executed.')
-    }
-}
+setEventLoopOptions({
+    enabled: true,
+    eventLoopInterval: 5000 // in miliseconds.
+})
+onIntervalCall(() => {
+    console.log('Interval call.')
+})
