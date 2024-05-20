@@ -1,6 +1,6 @@
 {
     "name": "cubegenjs",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Protecting and Optimizing your JavaScript Source Code",
     "main": "index.js",
     "typings": "index.d.js",
@@ -8,6 +8,13 @@
     "engines": {
         "node": ">= 18.0.0"
     },
+    "keywords": [
+        "cubegen",
+        "cubegenjs",
+        "builder",
+        "obfuscator",
+        "protector"
+    ],
     "scripts": {
         "clear:builder": "gulp clear:builder-directory",
         "build": "npm run clear:builder && npm run build:common && npm run build:bundler && npm run build:obfuscator && npm run build:node-protector && npm run build:root-module && npm run build:npm-dist",
