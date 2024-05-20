@@ -1,9 +1,14 @@
 {
     "name": "@cubegenjs/bundler",
-    "version": "0.1.0",
-    "description": "",
+    "version": "0.1.0-dev-1",
+    "description": "Bundler Module for CubegenJS",
     "main": "dist/index.js",
     "typings": "dist/index.d.js",
+    "keywords": [
+        "cubegen",
+        "cubegenjs",
+        "bundler"
+    ],
     "scripts": {
         "build": "tsc -p tsconfig.prod.json",
         "build:watch": "tsc --watch -p tsconfig.prod.json",
