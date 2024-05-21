@@ -1,6 +1,6 @@
 {
     "name": "cubegenjs",
-    "version": "0.1.1",
+    "version": "0.1.0-experimental-1",
     "description": "Cube Generator: Protecting and Optimizing your JavaScript Source Code",
     "main": "index.js",
     "typings": "index.d.js",
