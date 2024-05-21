@@ -15,11 +15,6 @@ task('clear:builder-directory', async () => {
         'dist'
     ], { force: true })
 
-    // common module.
-    await deleteAsync([
-        'packages/common/dist'
-    ], { force: true })
-
     // bundler module.
     await deleteAsync([
         'packages/bundler/.bundler-cache',
@@ -54,10 +49,6 @@ task('build:npm-dist-directory', async () => {
     await src('LICENSE').pipe(dest('.npm-dist/'))
     await src('package.json').pipe(dest('.npm-dist/'))
     await src('README.md').pipe(dest('.npm-dist/'))
-
-    // common module.
-    await src('packages/common/package.json').pipe(dest('.npm-dist/packages/common/'))
-    await src('packages/common/dist/**/*').pipe(dest('.npm-dist/packages/common/dist'))
 
     // bundler module.
     await src('packages/bundler/package.json').pipe(dest('.npm-dist/packages/bundler/'))

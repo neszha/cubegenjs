@@ -1,7 +1,5 @@
 import { type ObfuscatorOptions } from 'javascript-obfuscator'
-import { type TargetEnvironment } from '@cubegenjs/common/dist/interfaces/Global'
-
-export type FilePath = string
+import { type TargetEnvironment, type FilePath } from './Common'
 
 export type ObfuscatorTargetEnvironment = TargetEnvironment
 

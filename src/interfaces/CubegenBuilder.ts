@@ -1,5 +1,5 @@
-import { type FilePath } from '@cubegenjs/common/dist/interfaces/Global'
 import { type NodeProtectorBuilderOptions } from '@cubegenjs/node-protector/dist/interfaces/NodeProtector'
+import { type FilePath } from './Common'
 
 export type CubgenBuilderOptions = NodeProtectorBuilderOptions
 

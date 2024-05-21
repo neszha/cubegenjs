@@ -6,11 +6,11 @@ import randomString from 'randomstring'
 import { CubegenBundler } from '@cubegenjs/bundler'
 import { createHash, randomInt } from 'crypto'
 import { CubegenObfuscator } from '@cubegenjs/obfuscator'
-import { type CubegenJson } from '@cubegenjs/common/dist/interfaces/CobegenJson'
+import { type CubegenJson } from '../interfaces/CobegenJson'
 import { type NodeProtectorBuilderCacheOptions } from '../interfaces/CubegenBuilder'
-import { type CubegenObfuscatorResponse } from '@cubegenjs/obfuscator/dist/types/Obfuscator'
+import { type CubegenObfuscatorResponse } from '@cubegenjs/obfuscator/dist/interfaces/Obfuscator'
 import { type NodeProtectorBuilderOptions } from '@cubegenjs/node-protector/dist/interfaces/NodeProtector'
-import { type CubegenBundlerOptions, type CubegenBundlerResponse } from '@cubegenjs/bundler/dist/types/Bundler'
+import { type CubegenBundlerOptions, type CubegenBundlerResponse } from '@cubegenjs/bundler/dist/interfaces/Bundler'
 
 export class NodeBuilder {
     options: NodeProtectorBuilderOptions

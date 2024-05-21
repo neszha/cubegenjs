@@ -2,8 +2,9 @@ import path from 'path'
 import fs from 'fs-extra'
 import { createHash } from 'crypto'
 import JavaScriptObfuscator from 'javascript-obfuscator'
+import { type FilePath } from './interfaces/Common'
 import obfuscatorDefaultConfig from './configs/obfuscator.default-config'
-import { type ObfuscatorTargetEnvironment, type CubegenObfuscatorOptions, type CubegenObfuscatorResponse, type FilePath } from './types/Obfuscator'
+import { type ObfuscatorTargetEnvironment, type CubegenObfuscatorOptions, type CubegenObfuscatorResponse } from './interfaces/Obfuscator'
 
 const MODULE_PATH_DIR = path.resolve(__dirname, '../')
 const MODULE_OBFUSCATOR_CACHE_PATH_DIR = path.resolve(MODULE_PATH_DIR, '.obfuscator-cache')
