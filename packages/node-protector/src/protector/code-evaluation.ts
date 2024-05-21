@@ -1,9 +1,8 @@
 import fs from 'fs'
 import path from 'path'
-import event from './event'
 import { createHash } from 'crypto'
+import event from './event'
 import { type CubegenJson } from '../interfaces/CobegenJson'
-import { type NodeProtectorBuilderOptions } from '../interfaces/NodeProtector'
 
 const privateKey1: string = '%PRIVATE_KEY_1%'
 
@@ -13,10 +12,13 @@ const privateKey1: string = '%PRIVATE_KEY_1%'
  * @return true if source code is modified
  * @return false and send event on source code modified
  */
-export const evaluateCodeMofied = (options: NodeProtectorBuilderOptions, privateKey2: string = '%PRIVATE_KEY_2%'): boolean => {
+export const evaluateCodeMofied = (privateKey2: string = '%PRIVATE_KEY_2%'): boolean => {
     try {
         // Get signnatures from cubegen-lock.json.
-        const lockPath: string = path.join(options.codeBundlingOptions.outDir, 'cubegen-lock.json')
+        const lockPath: string = path.join(process.cwd(), 'cubegen-lock.json')
+        if (!fs.existsSync(lockPath)) {
+            throw new Error('Error when reading cubegen-lock.json in root project.')
+        }
         const cubegenLockJsonString = fs.readFileSync(lockPath, 'utf-8')
         const { signatures } = JSON.parse(cubegenLockJsonString) as CubegenJson
 

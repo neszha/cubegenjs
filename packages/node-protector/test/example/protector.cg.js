@@ -22,9 +22,10 @@ const builderOptions = {
         staticDirs: [
             'public'
         ],
+        buildMode: 'production',
         packageJson: {
             type: 'module',
-            hideDependencies: false,
+            hideDependencies: true,
             hideDevDependencies: true
         }
     },
@@ -53,6 +54,7 @@ setModificationProtectionOptions({
 })
 onModified(() => {
     console.log('Source code is changed.')
+    process.exit()
 })
 
 /**

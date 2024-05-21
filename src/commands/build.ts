@@ -19,10 +19,12 @@ export class CubegenBuilder {
 
     constructor (options: CmdBuildOptions) {
         this.options = options
+        this.options.root = path.join(options.root)
         this.cacheDir = path.join(this.options.root, '.cubegen-cache')
     }
 
     async build (): Promise<void> {
+        const startTime = new Date().getTime()
         this.init()
         await this.bundleProtectorAndGetBuilderOptionsJson()
         if (this.builderOptions == null || this.protectorBundledPath == null || this.protectorFileName == null) return
@@ -39,7 +41,9 @@ export class CubegenBuilder {
         } else if (this.builderOptions.targetEnvironment === 'browser') {
             // Next session.
         }
-        console.log('.', chalk.green('Done.'))
+        const endTime = new Date().getTime() - startTime
+        const durationInSeconds = endTime / 1000
+        console.log('.', `Done in ${durationInSeconds.toFixed(1)}s`)
     }
 
     init (): void {

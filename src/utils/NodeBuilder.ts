@@ -35,7 +35,7 @@ export class NodeBuilder {
     }
 
     private async generateRandomPrivateKeys (): Promise<void> {
-        const spinner = ora('Generate random private keys...').start()
+        const spinner = ora('Generate private keys and inject into protector...').start()
         const { protector } = this.cacheOptions
 
         // Generate random private keys.
@@ -48,10 +48,13 @@ export class NodeBuilder {
         let bundledRawCode = await fs.readFile(protector.bundledPath, { encoding: 'utf8' })
         bundledRawCode = bundledRawCode.replace('%PRIVATE_KEY_1%', this.privateKeys[0])
         bundledRawCode = bundledRawCode.replace('%PRIVATE_KEY_2%', this.privateKeys[1])
-        await fs.writeFile(protector.bundledPath, bundledRawCode, 'utf-8')
+
+        // Activate onMidified protection.
+        bundledRawCode = bundledRawCode.replace('%ON_MODIFIED_DEVELOPMENT_MODE%', 'ON_MODIFIED_ACTIVATED')
 
         // Done.
-        spinner.text = 'Generated random private keys.'
+        await fs.writeFile(protector.bundledPath, bundledRawCode, 'utf-8')
+        spinner.text = 'Private keys is injected into protector.'
         spinner.succeed()
     }
 
@@ -77,13 +80,17 @@ export class NodeBuilder {
     }
 
     private async bundleProject (): Promise<CubegenBundlerResponse> {
+        const spinner = ora('Bundle your project code...').start()
         const { rootProject } = this.cacheOptions
         const bundlerOptions: CubegenBundlerOptions = this.options.codeBundlingOptions
+        const outDirRelative = path.join(rootProject, bundlerOptions.outDir)
         bundlerOptions.rootDir = path.resolve(rootProject, bundlerOptions.rootDir)
         bundlerOptions.outDir = path.resolve(rootProject, bundlerOptions.outDir)
         bundlerOptions.buildMode = 'production'
         const bundler = new CubegenBundler(bundlerOptions)
         const bundlerResult = await bundler.build()
+        spinner.text = 'Bundle your project code saved in ' + chalk.green(outDirRelative)
+        spinner.succeed()
         return bundlerResult
     }
 
@@ -110,7 +117,7 @@ export class NodeBuilder {
         }
         const metaPath = path.join(this.options.codeBundlingOptions.outDir, 'cubegen-lock.json')
         fs.writeFileSync(metaPath, JSON.stringify(cubgenMeta, null, 4), 'utf8')
-        spinner.text = 'Signatures source code saved in ' + chalk.green('cubegen-lock.json')
+        spinner.text = 'Signatures of your code saved in ' + chalk.green('cubegen-lock.json')
         spinner.succeed()
     }
 }

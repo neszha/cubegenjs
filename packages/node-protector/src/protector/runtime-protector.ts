@@ -39,10 +39,14 @@ export const onModifiedCallbackEcecution = (options: CubegenNodeModificationProt
     if (!options.enabled) return
     if (typeof callback !== 'function') return
 
+    // Block lifecycles in development mode.
+    const onModifiedMode = '%ON_MODIFIED_DEVELOPMENT_MODE%'
+    if (onModifiedMode === '%ON_MODIFIED_DEVELOPMENT_MODE%') return
+
     // Run evaluate source code process.
     event.on('call:on-midified', () => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        const sourceCodeIsModified = evaluateCodeMofied(builderOptions)
+        const sourceCodeIsModified = evaluateCodeMofied()
         if (sourceCodeIsModified) callback()
     })
 
