@@ -5,9 +5,9 @@ import fs from 'fs-extra'
 import { execSync } from 'child_process'
 import { CubegenBundler } from '@cubegenjs/bundler'
 import { NodeBuilder } from '../utils/NodeBuilder.js'
+import { type FilePath } from '../interfaces/Common.js'
 import { type CmdBuildOptions } from '../interfaces/Command'
-import { type FilePath } from '@cubegenjs/common/src/interfaces/Global'
-import { type CubegenBundlerOptions } from '@cubegenjs/bundler/src/types/Bundler'
+import { type CubegenBundlerOptions } from '@cubegenjs/bundler/src/interfaces/Bundler'
 import { type NodeProtectorBuilderCacheOptions, type CubgenBuilderOptions } from '../interfaces/CubegenBuilder'
 
 export class CubegenBuilder {
