@@ -39,11 +39,12 @@ export class CubegenBuilder {
         } else if (this.builderOptions.targetEnvironment === 'browser') {
             // Next session.
         }
-        console.log(chalk.green('  Done.'))
+        console.log('.', chalk.green('Done.'))
     }
 
     init (): void {
-        const spinner = ora('Run cubgen builder...').start()
+        console.log('. Starting building process.')
+        const spinner = ora('Run cubegen builder...').start()
         if (!fs.existsSync(this.cacheDir)) {
             fs.mkdirSync(this.cacheDir)
         }

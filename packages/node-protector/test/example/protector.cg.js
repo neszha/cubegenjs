@@ -46,6 +46,7 @@ onStart(() => {
  * Modification Protection.
  *
  * Set enable to true to enable modification protection.
+ * In development mode, the onModified lifecycle is not called.
  */
 setModificationProtectionOptions({
     enabled: true

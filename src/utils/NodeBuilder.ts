@@ -110,7 +110,7 @@ export class NodeBuilder {
         }
         const metaPath = path.join(this.options.codeBundlingOptions.outDir, 'cubegen-lock.json')
         fs.writeFileSync(metaPath, JSON.stringify(cubgenMeta, null, 4), 'utf8')
-        spinner.text = 'Signatures source code safe in ' + chalk.green('cubegen-lock.json')
+        spinner.text = 'Signatures source code saved in ' + chalk.green('cubegen-lock.json')
         spinner.succeed()
     }
 }
