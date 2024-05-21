@@ -1,14 +1,32 @@
 {
     "name": "@cubegenjs/node-protector",
     "version": "0.1.0-experimental-1",
-    "description": "",
+    "description": "Internal module node protector for cubegenjs packages",
     "main": "dist/index.js",
     "module": "dist/esm/index.js",
     "typings": "dist/index.d.js",
+    "keywords": [
+        "cubegen",
+        "cubegenjs",
+        "node-protector"
+    ],
     "scripts": {
         "build": "tsc -p tsconfig.prod.json && tsc -p tsconfig.esm.json",
         "build:watch": "tsc --watch -p tsconfig.esm.json"
     },
+    "dependencies": {
+        "@cubegenjs/bundler": "^0.1.0-experimental-1",
+        "@cubegenjs/obfuscator": "^0.1.0-experimental-1"
+    },
+    "devDependencies": {
+        "@types/fs-extra": "^11.0.4",
+        "@types/node": "^20.12.11",
+        "typescript": "^5.4.5"
+    },
     "author": "Fanesa Hadi Pramana",
-    "license": "ISC"
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/neszha/cubegenjs/issues"
+    },
+    "homepage": "https://github.com/neszha/cubegenjs#readme"
 }
