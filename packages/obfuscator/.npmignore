@@ -1,0 +1,5 @@
+.obfuscator-cache
+src
+test
+jest.*
+tsconfig.*
