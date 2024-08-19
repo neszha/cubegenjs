@@ -19,14 +19,16 @@ export class CubegenObfuscator {
     constructor (sourceCodePath: FilePath, environmentTarget: ObfuscatorTargetEnvironment) {
         this.sourceCodePath = sourceCodePath
 
-        // set default config options.
+        // Set default config options.
         this.inputOptions = {
             ...obfuscatorDefaultConfig,
             target: environmentTarget
         }
 
-        // setup cache directory.
-        if (!fs.existsSync(MODULE_OBFUSCATOR_CACHE_PATH_DIR)) fs.mkdirSync(MODULE_OBFUSCATOR_CACHE_PATH_DIR)
+        // Setup cache directory.
+        if (!fs.existsSync(MODULE_OBFUSCATOR_CACHE_PATH_DIR)) {
+            fs.mkdirSync(MODULE_OBFUSCATOR_CACHE_PATH_DIR)
+        }
     }
 
     /**
@@ -47,29 +49,29 @@ export class CubegenObfuscator {
      * @returns CubegenObfuscatorResponse
      */
     transform (): CubegenObfuscatorResponse {
-        // read source code.
+        // Read source code.
         const filename = path.basename(this.sourceCodePath)
         const sourceCode = fs.readFileSync(this.sourceCodePath, 'utf8')
 
-        // run obfuscation.
+        // Run obfuscation.
         const obfuscation = JavaScriptObfuscator.obfuscate(sourceCode, this.inputOptions)
         const outputCode = obfuscation.getObfuscatedCode()
 
-        // write output code to temporary file.
+        // Write output code to temporary file.
         const outputCodeHash = createHash('sha256').update(outputCode).digest('hex')
         const hash8 = outputCodeHash.slice(outputCodeHash.length - 8, outputCodeHash.length)
         const filenameCache = filename.replace('.js', `.${hash8}.js`)
         const outputTempPath = path.join(MODULE_OBFUSCATOR_CACHE_PATH_DIR, filenameCache)
         fs.writeFileSync(outputTempPath, outputCode, 'utf8')
 
-        // generate response data.
+        // Build response data.
         const obfuscationResult: CubegenObfuscatorResponse = {
             hash: outputCodeHash,
             outputTempPath,
             outputCode
         }
 
-        // done.
+        // Done.
         return obfuscationResult
     }
 }

@@ -43,7 +43,7 @@ export default {
     stringArrayWrappersParametersMaxCount: 5,
     stringArrayWrappersType: 'function',
 
-    // Simplify
+    // Minifier
     compact: true,
     simplify: true
 
