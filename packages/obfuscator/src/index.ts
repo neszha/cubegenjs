@@ -16,7 +16,7 @@ export class CubegenObfuscator {
     sourceCodePath: FilePath
     private inputOptions: CubegenObfuscatorOptions
 
-    constructor (sourceCodePath: FilePath, environmentTarget: ObfuscatorTargetEnvironment) {
+    constructor (sourceCodePath: FilePath, environmentTarget: ObfuscatorTargetEnvironment = 'node') {
         this.sourceCodePath = sourceCodePath
 
         // Set default config options.
@@ -44,9 +44,18 @@ export class CubegenObfuscator {
     }
 
     /**
+     * Get obfuscator config options.
+     *
+     * @return CubegenObfuscatorOptions
+     */
+    getConfig (): CubegenObfuscatorOptions {
+        return this.inputOptions
+    }
+
+    /**
      * Transform source code with obfuscator tool.
      *
-     * @returns CubegenObfuscatorResponse
+     * @return CubegenObfuscatorResponse
      */
     transform (): CubegenObfuscatorResponse {
         // Read source code.
@@ -66,7 +75,7 @@ export class CubegenObfuscator {
 
         // Build response data.
         const obfuscationResult: CubegenObfuscatorResponse = {
-            hash: outputCodeHash,
+            hash: 'sha256:' + outputCodeHash,
             outputTempPath,
             outputCode
         }
