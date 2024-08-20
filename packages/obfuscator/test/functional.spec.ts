@@ -46,7 +46,7 @@ describe('Test Class Cubegen Obfuscator Module', () => {
     })
 })
 
-describe('Test Functional Obfuscator Module', () => {
+describe('Test Output Project Obfuscator Module', () => {
     describe('Test obfucation with code file hello-word.sample-test.js', () => {
         it('Obfuscator successful to hide "Hello" & "World" & remove comment string', () => {
             const obfuscator = new CubegenObfuscator(sampleTestHelloWordPath)
