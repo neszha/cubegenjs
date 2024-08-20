@@ -1,8 +1,5 @@
 import type { InitialParcelOptions } from '@parcel/types'
-
-export type FilePath = string
-
-export type BuildMode = 'production' | 'development'
+import { type BuildMode, type FilePath } from './Common'
 
 export interface PercelOptions extends InitialParcelOptions {
     entries: FilePath | FilePath[]
@@ -23,6 +20,11 @@ export interface CubegenBundlerOptions {
     buildMode?: BuildMode
 }
 
+export interface CustomCubegenBundlerOptions {
+    packageJson?: BundlerPackageJson
+    buildMode?: BuildMode
+}
+
 export interface CubegenBundlerEntryResponse {
     fromEntry: string
     hash: string // SHA256
@@ -38,7 +40,7 @@ export interface CubegenBundlerStaticDirResponse {
 }
 
 export interface CubegenBundlerResponse {
-    hashProject: string // SHA256
+    hash: string // SHA256
     entries: CubegenBundlerEntryResponse[]
     staticDirs: CubegenBundlerStaticDirResponse[]
 }

@@ -7,7 +7,7 @@ import { type CubegenBundlerOptions, type CubegenBundlerResponse } from '../src/
 const MODULE_PATH_DIR = path.resolve(__dirname, '../')
 const MODULE_TEMP_PATH_DIR = path.join(MODULE_PATH_DIR, '.test-temp')
 
-describe('Test Functional Bundler Module', () => {
+describe('Test Class Cubegen Bundler Module', () => {
     const bundlerOptions: CubegenBundlerOptions = {
         rootDir: path.resolve(MODULE_PATH_DIR, 'test/examples/source-code'),
         outDir: path.resolve(MODULE_TEMP_PATH_DIR, 'out-test-01'),
@@ -23,14 +23,40 @@ describe('Test Functional Bundler Module', () => {
             hideDevDependencies: false
         }
     }
-    const bundler = new CubegenBundler(bundlerOptions)
 
-    it('Success bundling typescript and javascript source code input', async () => {
+    it('Success initialize bundler class', () => {
+        const bundler = new CubegenBundler(bundlerOptions)
+
+        // Check class object properties.
+        expect(bundler).toHaveProperty('inputOptions')
+        expect(bundler).toHaveProperty('percelOptions')
+        expect(bundler).toHaveProperty('getInputOptions')
+        expect(bundler).toHaveProperty('setConstomInputOptions')
+        expect(bundler).toHaveProperty('build')
+    })
+
+    it('Success custom input options', () => {
+        const bundler = new CubegenBundler(bundlerOptions)
+        const originalInputOptions = bundler.getInputOptions()
+        bundler.setConstomInputOptions({
+            packageJson: {
+                type: 'module',
+                hideDependencies: true,
+                hideDevDependencies: true
+            },
+            buildMode: 'production'
+        })
+        const newInputOptions = bundler.getInputOptions()
+        expect(originalInputOptions).not.toEqual(newInputOptions)
+    })
+
+    it('Success build project to distribution project', async () => {
+        const bundler = new CubegenBundler(bundlerOptions)
         const result: CubegenBundlerResponse = await bundler.build()
 
-        // check response data.
-        const { hashProject, entries, staticDirs } = result
-        expect(typeof hashProject).toEqual('string')
+        // Check response data.
+        const { hash, entries, staticDirs } = result
+        expect(hash).toContain('sha256:')
         expect(Array.isArray(entries)).toEqual(true)
         expect(Array.isArray(staticDirs)).toEqual(true)
         expect(entries[0]).toHaveProperty('fromEntry')
@@ -55,6 +81,26 @@ describe('Test Functional Bundler Module', () => {
         const packageJsonPath = path.join(bundlerOptions.outDir, 'package.json')
         expect(fs.existsSync(packageJsonPath)).toEqual(true)
     })
+})
+
+describe('Test Output Project Bundler Module', () => {
+    const bundlerOptions: CubegenBundlerOptions = {
+        rootDir: path.resolve(MODULE_PATH_DIR, 'test/examples/source-code'),
+        outDir: path.resolve(MODULE_TEMP_PATH_DIR, 'out-test-02'),
+        entries: [
+            'main.ts',
+            'nested/main.ts',
+            'worker/index.js'
+        ],
+        staticDirs: ['assets', 'public'],
+        packageJson: {
+            type: 'commonjs',
+            hideDependencies: false,
+            hideDevDependencies: false
+        }
+    }
+    const bundler = new CubegenBundler(bundlerOptions)
+    const inputOptions = bundler.getInputOptions()
 
     it('Bundling successful to remove comment string', async () => {
         const result: CubegenBundlerResponse = await bundler.build()
@@ -79,28 +125,41 @@ describe('Test Functional Bundler Module', () => {
 
         // check main.ts entry.
         const outputSourceCodeEntry1 = execSync(`ts-node ${entries[0].sourcePath}`, { encoding: 'utf-8' })
-        const outputBundleCodeEntry1 = execSync(`node ${entries[0].ouputPath}`, { encoding: 'utf-8' })
+        const outputBundleCodeEntry1 = execSync('node main.js', {
+            cwd: inputOptions.outDir,
+            encoding: 'utf-8'
+        })
         expect(outputSourceCodeEntry1).toEqual(outputBundleCodeEntry1)
 
         // check nested/main.ts entry.
         const outputSourceCodeEntry2 = execSync(`ts-node ${entries[1].sourcePath}`, { encoding: 'utf-8' })
-        const outputBundleCodeEntry2 = execSync(`node ${entries[1].ouputPath}`, { encoding: 'utf-8' })
+        const outputBundleCodeEntry2 = execSync('node nested/main.js', {
+            cwd: inputOptions.outDir,
+            encoding: 'utf-8'
+        })
         expect(outputSourceCodeEntry2).toEqual(outputBundleCodeEntry2)
 
         // check worker/index.js entry.
         const sourceDir3 = path.dirname(entries[2].sourcePath)
         const outputSourceCodeEntry3 = execSync(`cd ${sourceDir3} && node ${entries[2].sourcePath}`, { encoding: 'utf-8' })
-        const outputBundleCodeEntry3 = execSync(`node ${entries[2].ouputPath}`, { encoding: 'utf-8' })
+        const outputBundleCodeEntry3 = execSync('node worker/index.js', {
+            cwd: inputOptions.outDir,
+            encoding: 'utf-8'
+        })
         expect(outputSourceCodeEntry3).toEqual(outputBundleCodeEntry3)
     })
 })
 
-describe('Test Bundler Result Work for NodeJS Environment', () => {
+describe('Test Bundler Result Work Running with NodeJS Engine', () => {
     const bundler = new CubegenBundler({
         rootDir: path.resolve(MODULE_PATH_DIR, 'test/examples/node-code'),
-        outDir: path.resolve(MODULE_TEMP_PATH_DIR, 'out-test-02'),
+        outDir: path.resolve(MODULE_TEMP_PATH_DIR, 'out-test-03'),
         entries: [
-            'node.js'
+            'argv.js',
+            'file-system.js'
+        ],
+        staticDirs: [
+            'data'
         ],
         packageJson: {
             type: 'module',
@@ -108,12 +167,27 @@ describe('Test Bundler Result Work for NodeJS Environment', () => {
             hideDevDependencies: false
         }
     })
+    const inputOptions = bundler.getInputOptions()
 
-    it('Success maintain argv functionality', async () => {
-        const result = await bundler.build()
+    it('Success use argv function', async () => {
+        await bundler.build()
 
-        // Check argv output.
-        const execResult = execSync(`node ${result.entries[0].ouputPath} test_argv`, { encoding: 'utf-8' })
+        // Check exec output.
+        const execResult = execSync('node argv.js test_argv', {
+            cwd: inputOptions.outDir,
+            encoding: 'utf-8'
+        })
         expect(execResult).toEqual('test_argv\n')
+    })
+
+    it('Success use file-system function', async () => {
+        await bundler.build()
+
+        // Check exec output.
+        const execResult = execSync('node file-system.js', {
+            cwd: inputOptions.outDir,
+            encoding: 'utf-8'
+        })
+        expect(execResult).toEqual('Hello, World!\n')
     })
 })
