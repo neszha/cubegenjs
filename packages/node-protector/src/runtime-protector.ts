@@ -1,6 +1,6 @@
 import EventEmitter from 'events'
-import state from './state'
 import { type NodeProtectorModifiedCodeOptions, type NodeProtectorIntervalCallOptions, type SyncFunctionCallback } from './interfaces/NodeProtector'
+import state from './state'
 
 /**
  * Initialization event emiter.

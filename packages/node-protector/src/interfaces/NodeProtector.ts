@@ -1,9 +1,10 @@
-import { type CubegenBundlerOptions } from '@cubegenjs/bundler/dist/interfaces/Bundler'
 import { type CubegenObfuscatorOptions } from '@cubegenjs/obfuscator/dist/interfaces/Obfuscator'
+import { type CubegenBundlerOptions } from '@cubegenjs/bundler/dist/interfaces/Bundler'
 
 export type SyncFunctionCallback = () => void
 
 export interface NodeProtectorBuilderOptions {
+    appKey: string
     codeBundlingOptions: CubegenBundlerOptions
     codeObfuscationOptions: CubegenObfuscatorOptions
 }
