@@ -1,66 +1,23 @@
 /**
- * Node Protector Interfaces.
+ * Node Protector Lifecycle Interfaces.
  *
- * Handle user configuration to protect NodeJS source code.
+ * Handle user custom configuration to protect NodeJS source code.
  */
 
-import { event as eventEmiter } from './protector/event'
-import { type NodeProtectorEventLoopOptions, type CubegenNodeModificationProtectionOptions, type SyncFunctionCallback } from './interfaces/NodeProtector'
-import { onIntervalCallCallbackEcecution, onModifiedCallbackEcecution, onStartCallbackEcecution, setBuilderOptions } from './protector/runtime-protector'
-
-/**
- * Node Protector: Modification protection options interface.
- */
-let modificationProtectionOptions: CubegenNodeModificationProtectionOptions
-export const setModificationProtectionOptions = (options: CubegenNodeModificationProtectionOptions): void => {
-    modificationProtectionOptions = {
-        ...modificationProtectionOptions,
-        ...options
-    }
-}
-
-/**
- * Node Protector: Event loop options interface.
- */
-let eventLoopOptions: NodeProtectorEventLoopOptions
-export const setEventLoopOptions = (options: NodeProtectorEventLoopOptions): void => {
-    eventLoopOptions = {
-        ...eventLoopOptions,
-        ...options
-    }
-}
+import { type NodeProtectorIntervalCallOptions, type SyncFunctionCallback, type NodeProtectorModifiedCodeOptions } from './interfaces/NodeProtector'
+import { onIntervalCallCallbackExecution, onModifiedCodeCallbackExecution, onStartCallbackExecution } from './runtime-protector'
 
 /**
  * Node Protector Lifecycles.
  */
 export const onStart = (callback: SyncFunctionCallback): void => {
-    onStartCallbackEcecution(callback)
+    onStartCallbackExecution(callback)
 }
 
-export const onModified = (callback: SyncFunctionCallback): void => {
-    onModifiedCallbackEcecution(modificationProtectionOptions, callback)
+export const onModifiedCode = (options: NodeProtectorModifiedCodeOptions, callback: SyncFunctionCallback): void => {
+    onModifiedCodeCallbackExecution(options, callback)
 }
 
-export const onIntervalCall = (callback: SyncFunctionCallback): void => {
-    onIntervalCallCallbackEcecution(eventLoopOptions, callback)
-}
-
-/**
- * Export untils.
- */
-export const event = eventEmiter
-export const builder = {
-    setBuilderOptions
-}
-
-/**
- * Export default.
- */
-export default {
-    event,
-    builder,
-    setModificationProtectionOptions,
-    setEventLoopOptions,
-    onStart,
-    onModified
+export const onIntervalCall = (options: NodeProtectorIntervalCallOptions, callback: SyncFunctionCallback): void => {
+    onIntervalCallCallbackExecution(options, callback)
 }

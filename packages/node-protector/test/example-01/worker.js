@@ -1,4 +1,4 @@
-import './protector.cg.js'
+// import './cg.protector.js/index.js'
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const sayHello = (message) => {

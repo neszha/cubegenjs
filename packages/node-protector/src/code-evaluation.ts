@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { createHash } from 'crypto'
 import event from './event'
-import { type CubegenJson } from '../interfaces/CobegenJson'
+import { type CubegenJson } from './interfaces/CobegenJson'
 
 const privateKey1: string = '%PRIVATE_KEY_1%'
 
