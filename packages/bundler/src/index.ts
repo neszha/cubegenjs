@@ -3,27 +3,28 @@ import fs from 'fs-extra'
 import crypto from 'crypto'
 import { Parcel } from '@parcel/core'
 import type { BuildSuccessEvent } from '@parcel/types'
-import { type PercelOptions, type CubegenBundlerOptions, type CubegenBundlerResponse, type FilePath, type CubegenBundlerEntryResponse, type CubegenBundlerStaticDirResponse } from './interfaces/Bundler'
+import { type FilePath } from './interfaces/Common'
+import { type PercelOptions, type CubegenBundlerOptions, type CubegenBundlerResponse, type CubegenBundlerEntryResponse, type CubegenBundlerStaticDirResponse, type CustomCubegenBundlerOptions } from './interfaces/Bundler'
 
 const MODULE_PATH_DIR = path.resolve(__dirname, '../')
 const MODULE_PARCEL_CACHE_PATH_DIR = path.resolve(MODULE_PATH_DIR, '.cache')
 const MODULE_BUNDLER_CACHE_PATH_DIR = path.resolve(MODULE_PATH_DIR, '.bundler-cache')
 
 /**
- * JavaScript and TypeScript Bundler Class.
+ * JavaScript Bundler Class with Parcel.
  */
 export class CubegenBundler {
-    options: CubegenBundlerOptions
-    percelOptions: PercelOptions
+    private inputOptions: CubegenBundlerOptions
+    private readonly percelOptions: PercelOptions
 
-    constructor (options: CubegenBundlerOptions) {
-        this.options = options
+    constructor (inputOptions: CubegenBundlerOptions) {
+        this.inputOptions = inputOptions
 
         // Set default percel options.
         this.percelOptions = {
             entries: '',
             defaultConfig: '@parcel/config-default',
-            mode: (options.buildMode === 'development') ? 'development' : 'production',
+            mode: (inputOptions.buildMode === 'development') ? 'development' : 'production',
             shouldDisableCache: true,
             targets: {
                 default: {
@@ -41,7 +42,7 @@ export class CubegenBundler {
                     node: '>= 18'
                 },
                 outputFormat: 'esmodule',
-                shouldOptimize: (options.buildMode === 'production' || options.buildMode === undefined),
+                shouldOptimize: (inputOptions.buildMode === 'production' || inputOptions.buildMode === undefined),
                 sourceMaps: false,
                 shouldScopeHoist: true
             },
@@ -49,28 +50,50 @@ export class CubegenBundler {
         }
     }
 
+    /**
+     * Get input options.
+     */
+    getInputOptions (): CubegenBundlerOptions {
+        return this.inputOptions
+    }
+
+    /**
+     * Constom input options.
+     *
+     * @param constomInputOptions
+     */
+    setConstomInputOptions (constomInputOptions: CustomCubegenBundlerOptions): void {
+        this.inputOptions = {
+            ...this.inputOptions,
+            ...constomInputOptions
+        }
+    }
+
+    /**
+     * Bundling JavaScript source code.
+     */
     async build (): Promise<CubegenBundlerResponse> {
-        // initialization before run builder.
-        this.initialization()
+        // Initialization before run builder.
+        this.initDirectoryBuilder()
         const buildResponse: CubegenBundlerResponse = {
-            hashProject: '',
+            hash: '',
             entries: [],
             staticDirs: []
         }
 
-        // run script bundler each entry file.
-        buildResponse.entries = await this.bundleEntryFile(this.options.entries)
+        // Run script bundler each entry file.
+        buildResponse.entries = await this.bundleEntryFile(this.inputOptions.entries)
 
-        // move static content.
-        if (this.options.staticDirs !== undefined) {
-            buildResponse.staticDirs = await this.moveStaticDirectories(this.options.staticDirs)
+        // Move static content.
+        if (this.inputOptions.staticDirs !== undefined) {
+            buildResponse.staticDirs = await this.moveStaticDirectories(this.inputOptions.staticDirs)
         }
 
         // get hash data of project.
-        buildResponse.hashProject = this.getHashOfOutputProject(this.options.outDir)
+        buildResponse.hash = this.getHashOfOutputProject(this.inputOptions.outDir)
 
         // Generate package json.
-        if (this.options.packageJson !== undefined) {
+        if (this.inputOptions.packageJson !== undefined) {
             this.generatePackageJson()
         }
 
@@ -78,24 +101,32 @@ export class CubegenBundler {
         return buildResponse
     }
 
-    private initialization (): void {
-        // recreate temporary directory.
+    /**
+     * Init temp and out directory.
+     */
+    private initDirectoryBuilder (): void {
+        // Recreate temporary directory.
         if (fs.existsSync(MODULE_BUNDLER_CACHE_PATH_DIR)) {
             fs.rmSync(MODULE_BUNDLER_CACHE_PATH_DIR, { recursive: true })
         }
         fs.mkdirSync(MODULE_BUNDLER_CACHE_PATH_DIR, { recursive: true })
 
-        // recreate out directory.
-        if (fs.existsSync(this.options.outDir)) {
-            fs.rmSync(this.options.outDir, { recursive: true })
+        // Recreate out directory.
+        if (fs.existsSync(this.inputOptions.outDir)) {
+            fs.rmSync(this.inputOptions.outDir, { recursive: true })
         }
-        fs.mkdirSync(this.options.outDir, { recursive: true })
+        fs.mkdirSync(this.inputOptions.outDir, { recursive: true })
     }
 
+    /**
+     * Bundle JavaScript entry file.
+     *
+     * @param entries
+     */
     private async bundleEntryFile (entries: FilePath[]): Promise<CubegenBundlerEntryResponse[]> {
         const bundleEntriesResponse: CubegenBundlerEntryResponse[] = []
         for (const entry of entries) {
-            this.percelOptions.entries = path.join(this.options.rootDir, entry)
+            this.percelOptions.entries = path.join(this.inputOptions.rootDir, entry)
             const buildObject = await this.bundingWithParcel()
             const bundleRaw = this.getBundleFileFormTemp()
             const outputPath = this.writeBundleToOutputPath(entry, bundleRaw)
@@ -111,6 +142,9 @@ export class CubegenBundler {
         return bundleEntriesResponse
     }
 
+    /**
+     * Bundling JavaScript source code with Parcel.
+     */
     private async bundingWithParcel (): Promise<BuildSuccessEvent> {
         const bundler = new Parcel(this.percelOptions)
         try {
@@ -123,6 +157,11 @@ export class CubegenBundler {
         }
     }
 
+    /**
+     * Read bundled file in temporary.
+     *
+     * @returns string
+     */
     private getBundleFileFormTemp (): string {
         const files: FilePath[] = fs.readdirSync(MODULE_BUNDLER_CACHE_PATH_DIR)
         const filePath = path.resolve(MODULE_BUNDLER_CACHE_PATH_DIR, files[0] ?? 'unknow.file')
@@ -133,30 +172,42 @@ export class CubegenBundler {
         return fs.readFileSync(filePath, 'utf8')
     }
 
+    /**
+     * Write bundle file to output path.
+     *
+     * @param entry
+     * @param bundleRaw
+     * @returns string
+     */
     private writeBundleToOutputPath (entry: string, bundleRaw: string): string {
-        // get full path entry and change ".ts" to ".js"
-        const outputPath = path.resolve(this.options.outDir, entry).replace('.ts', '.js')
+        // Get full path entry and change ".ts" to ".js"
+        const outputPath = path.resolve(this.inputOptions.outDir, entry).replace('.ts', '.js')
 
-        // create entry directory.
+        // Create entry directory.
         const directory = path.dirname(outputPath)
         if (!fs.existsSync(directory)) {
             fs.mkdirSync(directory, { recursive: true })
         }
 
-        // write bundle file.
+        // Write bundle file.
         fs.writeFileSync(outputPath, bundleRaw, 'utf8')
         return outputPath
     }
 
+    /**
+     * Move static content to output directory.
+     *
+     * @param publicDirs
+     */
     private async moveStaticDirectories (publicDirs: FilePath[]): Promise<CubegenBundlerStaticDirResponse[]> {
         const staticDirResponse: CubegenBundlerStaticDirResponse[] = []
         for (const dirName of publicDirs) {
             // check source dir.
-            const pathSourceDir = path.join(this.options.rootDir, dirName)
+            const pathSourceDir = path.join(this.inputOptions.rootDir, dirName)
             if (!fs.existsSync(pathSourceDir)) continue
 
             // copy public dir.
-            const pathDestinationDir = path.join(this.options.outDir, dirName)
+            const pathDestinationDir = path.join(this.inputOptions.outDir, dirName)
             await fs.copy(pathSourceDir, pathDestinationDir, { overwrite: true })
 
             // save meta data.
@@ -169,6 +220,12 @@ export class CubegenBundler {
         return staticDirResponse
     }
 
+    /**
+     * Get hash sha256 of output project.
+     *
+     * @param outDir
+     * @returns string
+     */
     private getHashOfOutputProject (outDir: FilePath): string {
         const hash = crypto.createHash('sha256')
         const traverseDirectory = (currentDir: FilePath): void => {
@@ -189,12 +246,15 @@ export class CubegenBundler {
         return `sha256:${hash.digest('hex')}`
     }
 
+    /**
+     * Generate new package.json for distribution project.
+     */
     private generatePackageJson (): void {
-        if (this.options.packageJson === undefined) return
-        const { type, hideDependencies, hideDevDependencies } = this.options.packageJson
+        if (this.inputOptions.packageJson === undefined) return
+        const { type, hideDependencies, hideDevDependencies } = this.inputOptions.packageJson
 
         // Check package.json path.
-        const packageJsonPath = path.join(this.options.rootDir, 'package.json')
+        const packageJsonPath = path.join(this.inputOptions.rootDir, 'package.json')
         if (!fs.existsSync(packageJsonPath)) {
             console.error('Error when reading package.json in root project.')
             process.exit()
@@ -210,6 +270,6 @@ export class CubegenBundler {
         if (hideDevDependencies) delete packageJson.devDependencies
 
         // Write new package.json.
-        fs.writeFileSync(path.join(this.options.outDir, 'package.json'), JSON.stringify(packageJson, null, 4), 'utf8')
+        fs.writeFileSync(path.join(this.inputOptions.outDir, 'package.json'), JSON.stringify(packageJson, null, 4), 'utf8')
     }
 }

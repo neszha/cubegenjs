@@ -1,3 +1,5 @@
+/*! MIT License. Copyright 2011, Sebastian Tschan. See LICENSE.txt. */
+
 /*
  * JavaScript MD5
  * https://github.com/blueimp/JavaScript-MD5
@@ -16,6 +18,7 @@
  * Distributed under the BSD License
  * See http://pajhome.org.uk/crypt/md5 for more info.
  */
+
 
 /* global define */
 
