@@ -117,11 +117,6 @@ export class NodeBuilder {
             entries: [
                 'cg.protector.js'
             ],
-            packageJson: {
-                type: 'module',
-                hideDependencies: true,
-                hideDevDependencies: true
-            },
             buildMode: 'development'
         }
         const bundler = new CubegenBundler(bundlerOptions)
