@@ -2,6 +2,7 @@
 
 import { Command } from 'commander'
 import { type CmdBuildOptions } from '../interfaces/Command.js'
+import builder from '../cli/builder.js'
 
 /**
  * Initialize.
@@ -18,7 +19,7 @@ program.command('build')
     .description('Building your project to distribution code.')
     .option('-r, --root <string>', 'Relative root project directory', './')
     .action(async (options: CmdBuildOptions): Promise<void> => {
-        console.log('build')
+        await builder.build(options)
     })
 
 /**

@@ -31,8 +31,6 @@ export class NodeBuilder {
      */
     async build (): Promise<void> {
         // Init.
-        console.log('. Starting building process.')
-        const startTime = new Date().getTime()
         this.initCubegenCacheDir()
 
         // Bundle and obfuscate protecotr file.
@@ -45,11 +43,6 @@ export class NodeBuilder {
         const bundleResponse = await this.bundleProject(builderConfigOptions.codeBundlingOptions)
         await this.restoreBackupProtectorFile()
         await this.signAndCreateCubegenJson(builderConfigOptions, bundleResponse)
-
-        // Show process duration info.
-        const endTime = new Date().getTime() - startTime
-        const durationInSeconds = endTime / 1000
-        console.log('.', `Done in ${durationInSeconds.toFixed(1)}s`)
     }
 
     /**
