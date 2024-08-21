@@ -1,5 +1,6 @@
 import EventEmitter from 'events'
 import { type NodeProtectorModifiedCodeOptions, type NodeProtectorIntervalCallOptions, type SyncFunctionCallback } from './interfaces/NodeProtector'
+import { evaluateCodeAsSignature } from './code-evaluation'
 import state from './state'
 
 /**
@@ -40,10 +41,8 @@ export const onModifiedCodeCallbackExecution = (options: NodeProtectorModifiedCo
 
     // Run evaluate source code process.
     event.on('call:on-modified-code', () => {
-        console.log('call:on-modified-code')
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        // const sourceCodeIsModified = evaluateCodeMofied()
-        // if (sourceCodeIsModified) callback()
+        const sourceCodeIsModified = evaluateCodeAsSignature(event)
+        if (sourceCodeIsModified) callback()
     })
 
     // Watch callback from event.

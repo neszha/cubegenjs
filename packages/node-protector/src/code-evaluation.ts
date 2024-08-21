@@ -1,10 +1,9 @@
 import fs from 'fs'
 import path from 'path'
 import { createHash } from 'crypto'
-import event from './event'
+import type EventEmitter from 'events'
 import { type CubegenJson } from './interfaces/CobegenJson'
-
-const privateKey1: string = '%PRIVATE_KEY_1%'
+import state from './state'
 
 /**
  * Evaluate source code modified.
@@ -12,21 +11,21 @@ const privateKey1: string = '%PRIVATE_KEY_1%'
  * @return true if source code is modified
  * @return false and send event on source code modified
  */
-export const evaluateCodeMofied = (privateKey2: string = '%PRIVATE_KEY_2%'): boolean => {
+export const evaluateCodeAsSignature = (event: EventEmitter, privateKey02: string = '%PRIVATE_KEY_02%'): boolean => {
     try {
-        // Get signnatures from cubegen-lock.json.
-        const lockPath: string = path.join(process.cwd(), 'cubegen-lock.json')
-        if (!fs.existsSync(lockPath)) {
-            throw new Error('Error when reading cubegen-lock.json in root project.')
+        // Get signatures from cubegen-lock.json.
+        const cubegenLockPath: string = path.join(process.cwd(), 'cubegen-lock.json')
+        if (!fs.existsSync(cubegenLockPath)) {
+            throw new Error('Error when reading cubegen-lock.json in root directory.')
         }
-        const cubegenLockJsonString = fs.readFileSync(lockPath, 'utf-8')
+        const cubegenLockJsonString = fs.readFileSync(cubegenLockPath, 'utf-8')
         const { signatures } = JSON.parse(cubegenLockJsonString) as CubegenJson
 
         // Get original signatures from this source code.
         const sourceCodePath = process.argv[1]
         const sourceCodeRaw = fs.readFileSync(sourceCodePath, 'utf-8')
         const sourceCodeHash = createHash('sha256').update(sourceCodeRaw).digest('hex')
-        const sourceCodeSignitureContent: string = [privateKey1, privateKey2, sourceCodeHash].join('.')
+        const sourceCodeSignitureContent: string = [state.privateKey01, privateKey02, sourceCodeHash].join('.')
         const sourceCodeSigniture = createHash('sha512').update(sourceCodeSignitureContent).digest('hex')
 
         // Comparing signatures.
@@ -35,15 +34,16 @@ export const evaluateCodeMofied = (privateKey2: string = '%PRIVATE_KEY_2%'): boo
             if (sourceCodeSigniture === signatureFromMeta) return false
         }
 
-        // Modification detected.
+        // Code Modification detected.
         const randomFloat = Math.random()
         if (randomFloat > 0.5) return true
-        else event.emit('event:source-code-changed')
+        else event.emit('event:source-code-changed') // Alternative callback via event.
         return false
     } catch (error) {
+        // If validate signatures is error.
         const randomFloat = Math.random()
         if (randomFloat > 0.5) return true
-        else event.emit('event:source-code-changed')
+        else event.emit('event:source-code-changed') // Alternative callback via event.
         return false
     }
 }
