@@ -1,5 +1,5 @@
 import path from 'path'
-import { CubegenBundler } from '@cubegenjs/bundler_test'
+import { CubegenBundler } from '@cubegenjs/bundler'
 
 const buildWithBundler = async () => {
     const bundler = new CubegenBundler({
@@ -21,7 +21,7 @@ const buildWithBundler = async () => {
         }
     })
     await bundler.build()
-    console.log('Success and saved to /dist')
+    console.log('Success and save result in ./dist')
 }
 
 buildWithBundler()
