@@ -16,12 +16,7 @@ describe('Test Class Cubegen Bundler Module', () => {
             'nested/main.ts',
             'worker/index.js'
         ],
-        staticDirs: ['assets', 'public'],
-        packageJson: {
-            type: 'commonjs',
-            hideDependencies: false,
-            hideDevDependencies: false
-        }
+        staticDirs: ['assets', 'public']
     }
 
     it('Success initialize bundler class', () => {
@@ -39,12 +34,7 @@ describe('Test Class Cubegen Bundler Module', () => {
         const bundler = new CubegenBundler(bundlerOptions)
         const originalInputOptions = bundler.getInputOptions()
         bundler.setConstomInputOptions({
-            packageJson: {
-                type: 'module',
-                hideDependencies: true,
-                hideDevDependencies: true
-            },
-            buildMode: 'production'
+            buildMode: 'development'
         })
         const newInputOptions = bundler.getInputOptions()
         expect(originalInputOptions).not.toEqual(newInputOptions)
@@ -92,12 +82,7 @@ describe('Test Output Project Bundler Module', () => {
             'nested/main.ts',
             'worker/index.js'
         ],
-        staticDirs: ['assets', 'public'],
-        packageJson: {
-            type: 'commonjs',
-            hideDependencies: false,
-            hideDevDependencies: false
-        }
+        staticDirs: ['assets', 'public']
     }
     const bundler = new CubegenBundler(bundlerOptions)
     const inputOptions = bundler.getInputOptions()
@@ -160,12 +145,7 @@ describe('Test Bundler Result Work Running with NodeJS Engine', () => {
         ],
         staticDirs: [
             'data'
-        ],
-        packageJson: {
-            type: 'module',
-            hideDependencies: false,
-            hideDevDependencies: false
-        }
+        ]
     })
     const inputOptions = bundler.getInputOptions()
 

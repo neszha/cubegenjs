@@ -33,7 +33,7 @@ export class CubegenBundler {
                         node: '>= 18'
                     },
                     outputFormat: 'esmodule',
-                    includeNodeModules: true,
+                    includeNodeModules: false,
                     distDir: MODULE_BUNDLER_CACHE_PATH_DIR
                 }
             },
@@ -89,15 +89,13 @@ export class CubegenBundler {
             buildResponse.staticDirs = await this.moveStaticDirectories(this.inputOptions.staticDirs)
         }
 
-        // get hash data of project.
+        // Get hash data of project.
         buildResponse.hash = this.getHashOfOutputProject(this.inputOptions.outDir)
 
         // Generate package json.
-        if (this.inputOptions.packageJson !== undefined) {
-            this.generatePackageJson()
-        }
+        this.generatePackageJson()
 
-        // done
+        // Done.
         return buildResponse
     }
 
@@ -250,24 +248,16 @@ export class CubegenBundler {
      * Generate new package.json for distribution project.
      */
     private generatePackageJson (): void {
-        if (this.inputOptions.packageJson === undefined) return
-        const { type, hideDependencies, hideDevDependencies } = this.inputOptions.packageJson
-
-        // Check package.json path.
+        // Check package.json in root project.
         const packageJsonPath = path.join(this.inputOptions.rootDir, 'package.json')
-        if (!fs.existsSync(packageJsonPath)) {
-            console.error('Error when reading package.json in root project.')
-            process.exit()
-        }
+        if (!fs.existsSync(packageJsonPath)) return
 
         // Read original package.json.
         const packageJsonString = fs.readFileSync(packageJsonPath, 'utf8')
         const packageJson = JSON.parse(packageJsonString)
 
         // Manipulate package.json.
-        packageJson.type = type
-        if (hideDependencies) delete packageJson.dependencies
-        if (hideDevDependencies) delete packageJson.devDependencies
+        delete packageJson.devDependencies
 
         // Write new package.json.
         fs.writeFileSync(path.join(this.inputOptions.outDir, 'package.json'), JSON.stringify(packageJson, null, 4), 'utf8')
