@@ -1,7 +1,5 @@
-import path from 'path'
-import fs from 'fs-extra'
 import { deleteAsync } from 'del'
-import { task, src, dest, series } from 'gulp'
+import { task, series } from 'gulp'
 
 /**
  * Clear builder directory.
@@ -37,44 +35,6 @@ task('clear:builder-directory', async () => {
     ], { force: true })
 
     // done.
-    return true
-})
-
-/**
- * Build npm dist directory.
- */
-task('build:npm-dist-directory', async () => {
-    // root module
-    await src('dist/**/*').pipe(dest('.npm-dist/'))
-    await src('LICENSE').pipe(dest('.npm-dist/'))
-    await src('package.json').pipe(dest('.npm-dist/'))
-    await src('README.md').pipe(dest('.npm-dist/'))
-
-    // bundler module.
-    await src('packages/bundler/package.json').pipe(dest('.npm-dist/packages/bundler/'))
-    await src('packages/bundler/dist/**/*').pipe(dest('.npm-dist/packages/bundler/dist'))
-
-    // obfuscator module.
-    await src('packages/obfuscator/package.json').pipe(dest('.npm-dist/packages/obfuscator/'))
-    await src('packages/obfuscator/dist/**/*').pipe(dest('.npm-dist/packages/obfuscator/dist'))
-
-    // node-protector module.
-    await src('packages/node-protector/package.json').pipe(dest('.npm-dist/packages/node-protector/'))
-    await src('packages/node-protector/dist/**/*').pipe(dest('.npm-dist/packages/node-protector/dist'))
-
-    // Done.
-    return true
-})
-
-task('build:package-json', async () => {
-    // Manipulate root package.json.
-    const rootDir = process.cwd()
-    const packageJsonString = fs.readFileSync(path.join(rootDir, 'package.json'), 'utf8')
-    const packageJson = JSON.parse(packageJsonString)
-    packageJson.bin.cubegen = 'esm/bin/cubegen.js'
-    fs.writeFileSync(path.join(rootDir, '.npm-dist', 'package.json'), JSON.stringify(packageJson, null, 4), 'utf8')
-
-    // Done.
     return true
 })
 

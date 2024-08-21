@@ -13,26 +13,26 @@
         "cubegenjs",
         "builder",
         "obfuscator",
-        "protector"
+        "node-protector",
+        "web-protector"
     ],
     "scripts": {
         "clear:builder": "gulp clear:builder-directory",
-        "build": "npm run clear:builder && npm run build:bundler && npm run build:obfuscator && npm run build:node-protector && npm run build:root-module && npm run build:npm-dist",
+        "build": "npm run clear:builder && npm run build:bundler && npm run build:obfuscator && npm run build:node-protector && npm run build:root-module",
         "build:root-module": "tsc -p tsconfig.prod.json && tsc -p tsconfig.esm.json",
         "build:watch": "tsc --watch -p tsconfig.esm.json",
         "build:bundler": "lerna run build --scope=@cubegenjs/bundler",
         "build:obfuscator": "lerna run build --scope=@cubegenjs/obfuscator",
         "build:node-protector": "lerna run build --scope=@cubegenjs/node-protector",
-        "build:npm-dist": "gulp build:npm-dist-directory && gulp build:package-json",
         "test": "lerna run test"
     },
     "repository": "neszha/cubegenjs",
     "author": "Fanesa Hadi Pramana",
     "license": "MIT",
     "dependencies": {
-        "@cubegenjs/bundler": "^0.1.0",
-        "@cubegenjs/node-protector": "^0.1.0",
-        "@cubegenjs/obfuscator": "^0.1.0",
+        "@cubegenjs/bundler": "^0.1.0-experimental-1",
+        "@cubegenjs/node-protector": "^0.1.0-experimental-1",
+        "@cubegenjs/obfuscator": "^0.1.0-experimental-1",
         "chalk": "^5.3.0",
         "commander": "^12.0.0",
         "fs-extra": "^11.2.0",
