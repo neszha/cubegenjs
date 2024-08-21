@@ -1,6 +1,6 @@
 {
     "name": "@cubegenjs/bundler",
-    "version": "0.1.0-experimental-2",
+    "version": "0.1.0-experimental-4",
     "description": "Internal module bundling process for cubegenjs packages",
     "main": "dist/index.js",
     "typings": "dist/index.d.js",

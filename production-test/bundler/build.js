@@ -6,8 +6,9 @@ const buildWithBundler = async () => {
         rootDir: path.resolve(process.cwd()),
         outDir: path.resolve(process.cwd(), 'dist'),
         entries: [
-            'src/main.js',
+            'src/cli.js',
             'src/file-system.js',
+            'src/main.js',
         ],
         staticDirs: [
             'public',
