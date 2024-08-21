@@ -33,7 +33,7 @@ export class CubegenBundler {
                         node: '>= 18'
                     },
                     outputFormat: 'esmodule',
-                    includeNodeModules: true,
+                    includeNodeModules: false,
                     distDir: MODULE_BUNDLER_CACHE_PATH_DIR
                 }
             },

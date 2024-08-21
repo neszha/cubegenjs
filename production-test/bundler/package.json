@@ -1,0 +1,18 @@
+{
+  "name": "hello-word",
+  "version": "1.0.0",
+  "main": "src/main.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@cubegenjs/bundler_test": "^0.1.0-experimental-2"
+  },
+  "dependencies": {
+    "fs-extra": "^11.2.0"
+  }
+}
