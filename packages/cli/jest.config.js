@@ -1,5 +1,5 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} */
-module.exports = {
+export default {
     maxWorkers: 1,
     preset: 'ts-jest',
     testEnvironment: 'node',

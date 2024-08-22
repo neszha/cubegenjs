@@ -1,12 +1,12 @@
 import path from 'path'
 import fs from 'fs-extra'
 import chalk from 'chalk'
-import Listr from 'listr'
+import { Listr } from 'listr2'
 import { type NodeProtectorBuilderOptions } from '@cubegenjs/node-protector/src/interfaces/NodeProtector'
 import { type CubegenBuilderOptions } from '../interfaces/Builder'
 import { type CmdBuildOptions } from '../interfaces/Command'
 import { NodeBuilder } from '../services/NodeBuilder.js'
-import { Observable } from 'rxjs'
+import { Observable, type Subscriber } from 'rxjs'
 
 export default {
     cwd: process.cwd(),
@@ -26,13 +26,12 @@ export default {
                 title: 'Starting building project',
                 task: async () => {
                     startTime = new Date().getTime()
-                    return await Promise.resolve('Foo')
                 }
             },
             {
                 title: 'Getting builder options',
                 task: async (ctx, task) => {
-                    return new Observable(observer => {
+                    return new Observable((observer: Subscriber<unknown>) => {
                         observer.next('Read config file...')
                         // eslint-disable-next-line @typescript-eslint/no-misused-promises
                         setTimeout(async () => {
@@ -42,18 +41,23 @@ export default {
                             setTimeout(() => {
                                 task.title += ': ' + titleWithTarget
                                 observer.complete()
-                            }, 1000)
-                        }, 250)
+                            }, 500)
+                        }, 500)
                     })
                 }
             },
             {
-                title: 'Start build project',
+                title: 'Building your project',
                 task: async (ctx, task) => {
-                    if (cubegenBuilderConfig.target === 'node') {
-                        const cubegenBuilderConfigForNode = cubegenBuilderConfig as NodeProtectorBuilderOptions
-                        await this.buildProjectWithNodeBuilder(cubegenBuilderConfigForNode)
-                    }
+                    return new Observable((observer: Subscriber<unknown>) => {
+                        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                        setTimeout(async () => {
+                            if (cubegenBuilderConfig.target === 'node') {
+                                const cubegenBuilderConfigForNode = cubegenBuilderConfig as NodeProtectorBuilderOptions
+                                await this.buildProjectWithNodeBuilder(cubegenBuilderConfigForNode, observer)
+                            }
+                        }, 500)
+                    })
                 }
             },
             {
@@ -96,10 +100,11 @@ export default {
     /**
      * Start build project with node builer.
      */
-    async buildProjectWithNodeBuilder (builderConfig: NodeProtectorBuilderOptions): Promise<void> {
+    async buildProjectWithNodeBuilder (builderConfig: NodeProtectorBuilderOptions, observer: Subscriber<unknown>): Promise<void> {
         const nodeBuilder = new NodeBuilder({
             rootDir: this.rootProject,
-            builderConfig
+            builderConfig,
+            observer
         })
         await nodeBuilder.build()
     }

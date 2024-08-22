@@ -13,10 +13,12 @@
     ],
     "scripts": {
         "build": "tsc -p tsconfig.prod.json && tsc -p tsconfig.esm.json",
-        "build:watch": "tsc --watch -p tsconfig.esm.json"
+        "build:watch": "tsc --watch -p tsconfig.esm.json",
+        "test": "jest"
     },
     "dependencies": {
         "commander": "^12.1.0",
+        "listr2": "^8.2.4",
         "rxjs": "^7.8.1"
     },
     "devDependencies": {
