@@ -22,10 +22,12 @@ export const evaluateCodeAsSignature = (event: EventEmitter, privateKey02: strin
         const { signatures } = JSON.parse(cubegenLockJsonString) as CubegenJson
 
         // Get original signatures from this source code.
+        const privateKey03 = '%PRIVATE_KEY_03%'
         const sourceCodePath = process.argv[1]
         const sourceCodeRaw = fs.readFileSync(sourceCodePath, 'utf-8')
         const sourceCodeHash = createHash('sha256').update(sourceCodeRaw).digest('hex')
-        const sourceCodeSignitureContent: string = [state.privateKey01, privateKey02, sourceCodeHash].join('.')
+        const privateKeys = [state.privateKey01, privateKey02, privateKey03].join('.')
+        const sourceCodeSignitureContent: string = [privateKeys, sourceCodeHash].join('.')
         const sourceCodeSigniture = createHash('sha512').update(sourceCodeSignitureContent).digest('hex')
 
         // Comparing signatures.

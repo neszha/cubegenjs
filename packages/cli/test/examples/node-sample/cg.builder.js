@@ -13,12 +13,7 @@ export default {
         staticDirs: [
             'public'
         ],
-        buildMode: 'production',
-        packageJson: {
-            type: 'module',
-            hideDependencies: true,
-            hideDevDependencies: true
-        }
+        buildMode: 'production'
     },
 
     codeObfuscationOptions: {

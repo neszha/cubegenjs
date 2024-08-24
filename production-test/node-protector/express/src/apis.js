@@ -21,7 +21,7 @@ api.get('/users', (req, res) => {
 })
 
 api.get('/address', (req, res) => {
-    const addressPath = path.join(process.cwd(), 'src/store/address.json')
+    const addressPath = path.join(process.cwd(), 'src/static-data/address.json')
     const rawJsonString = fs.readFileSync(addressPath, 'utf8')
     res.json({
         addresses: JSON.parse(rawJsonString).addresses

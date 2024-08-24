@@ -1,8 +1,4 @@
-import {
-    onStart,
-    onModifiedCode,
-    onIntervalCall
-} from '@cubegenjs/node-protector'
+import { onStart, onModifiedCode, onIntervalCall } from '@cubegenjs/node-protector'
 
 /**
  * Run action after node protector is started.
@@ -22,7 +18,7 @@ const modifiedCodeOptions = {
 }
 onModifiedCode(modifiedCodeOptions, () => {
     console.log('Source code is changed.')
-    process.exit()
+    process.exit(0)
 })
 
 /**

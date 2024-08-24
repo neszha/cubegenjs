@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander'
-import { type CmdBuildOptions } from '../src/interfaces/Command.js'
-import builder from '../src/commands/builder.js'
+import { type CmdBuildOptions } from '../interfaces/Command.js'
+import builder from '../commands/build.js'
 
 /**
  * Initialize.

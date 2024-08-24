@@ -1,3 +1,3 @@
-# @cubegenjs/node-protector
+# @cubegenjs/cli
 
-Internal module node protector for `cubegenjs` packages.
+Internal module command line interfaces for `cubegenjs` packages.

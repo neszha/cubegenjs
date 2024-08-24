@@ -1,4 +1,4 @@
-import builder from '../src/commands/builder'
+import builder from '../src/commands/build'
 
 describe('Test Build Node Project', () => {
     it('Success build node project', async () => {

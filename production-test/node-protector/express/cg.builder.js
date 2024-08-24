@@ -7,18 +7,13 @@ export default {
         rootDir: './',
         outDir: './dist',
         entries: [
-            'server.js',
-            'worker.js'
+            'src/main.js',
         ],
         staticDirs: [
-            'public'
+            'public',
+            'src/static-data'
         ],
         buildMode: 'production',
-        packageJson: {
-            type: 'module',
-            hideDependencies: true,
-            hideDevDependencies: true
-        }
     },
 
     codeObfuscationOptions: {

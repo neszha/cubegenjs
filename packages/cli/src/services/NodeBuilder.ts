@@ -35,8 +35,8 @@ export class NodeBuilder {
 
         // Bundle and obfuscate protecotr file.
         const builderConfigOptions: NodeProtectorBuilderOptions = await this.getCubegenBuilderConfig()
-        const protectorDevBundlePath: FilePath = await this.bundleProtectorFileModeDev()
-        const protectionDevBundleWithKeyPath: FilePath = await this.generateAndInjectPrivateKeys(protectorDevBundlePath, builderConfigOptions.appKey)
+        const protectorBundlePath: FilePath = await this.bundleProtectorFile()
+        const protectionDevBundleWithKeyPath: FilePath = await this.generateAndInjectPrivateKeys(protectorBundlePath, builderConfigOptions.appKey)
         await this.obfuscateProtector(protectionDevBundleWithKeyPath)
 
         // Bundle project to distribution project.
@@ -91,7 +91,7 @@ export class NodeBuilder {
     /**
      * Bundle cubegen protector file with development mode.
      */
-    private async bundleProtectorFileModeDev (): Promise<FilePath> {
+    private async bundleProtectorFile (): Promise<FilePath> {
         this.inputOptions.observer.next('Bundling protector file...')
         await delay(250)
 
@@ -109,7 +109,8 @@ export class NodeBuilder {
             entries: [
                 'cg.protector.js'
             ],
-            buildMode: 'development'
+            buildMode: 'development',
+            includeNodeModules: true
         }
         const bundler = new CubegenBundler(bundlerOptions)
         const bundlerResult = await bundler.build()
@@ -132,11 +133,13 @@ export class NodeBuilder {
         bundledRawCode = bundledRawCode.replace('%IN_DEVELOPMENT_MODE%', 'distributed')
 
         // Generate private keys ans inject into protector.
-        const privateKey01 = createHash('sha256').update(appKey).digest('hex')
-        const privateKey02 = createHash('sha512').update(appKey).digest('hex')
+        const privateKey01 = createHash('md5').update(appKey).digest('hex')
+        const privateKey02 = createHash('sha256').update(appKey + privateKey01).digest('hex')
+        const privateKey03 = createHash('sha512').update(appKey + privateKey02).digest('hex')
         bundledRawCode = bundledRawCode.replace('%PRIVATE_KEY_01%', privateKey01)
         bundledRawCode = bundledRawCode.replace('%PRIVATE_KEY_02%', privateKey02)
-        this.privateKeys = [privateKey01, privateKey02]
+        bundledRawCode = bundledRawCode.replace('%PRIVATE_KEY_03%', privateKey03)
+        this.privateKeys = [privateKey01, privateKey02, privateKey03]
 
         // Write raw content.
         const outDirPath = path.join(this.cubegenCacheDir, 'protector_keys')
