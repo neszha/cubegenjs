@@ -1,6 +1,7 @@
 // import ora from 'ora'
 import path from 'path'
 import fs from 'fs-extra'
+import { delay } from 'listr2'
 import { createHash } from 'crypto'
 import { CubegenBundler } from '@cubegenjs/bundler'
 import { CubegenObfuscator } from '@cubegenjs/obfuscator'
@@ -30,7 +31,7 @@ export class NodeBuilder {
      */
     async build (): Promise<void> {
         // Init.
-        this.initCubegenCacheDir()
+        await this.initCubegenCacheDir()
 
         // Bundle and obfuscate protecotr file.
         const builderConfigOptions: NodeProtectorBuilderOptions = await this.getCubegenBuilderConfig()
@@ -52,8 +53,9 @@ export class NodeBuilder {
     /**
      * Init cubagen cache diractory.
      */
-    private initCubegenCacheDir (): void {
+    private async initCubegenCacheDir (): Promise<void> {
         this.inputOptions.observer.next('Init cubegen cache diractory...')
+        await delay(250)
 
         // Check root directory.
         if (!fs.existsSync(this.inputOptions.rootDir)) {
@@ -72,6 +74,7 @@ export class NodeBuilder {
      */
     private async getCubegenBuilderConfig (): Promise<NodeProtectorBuilderOptions> {
         this.inputOptions.observer.next('Get cubegen builder config...')
+        await delay(250)
 
         // Check bundler config file exists.
         const configFileName = 'cg.builder.js'
@@ -90,6 +93,7 @@ export class NodeBuilder {
      */
     private async bundleProtectorFileModeDev (): Promise<FilePath> {
         this.inputOptions.observer.next('Bundling protector file...')
+        await delay(250)
 
         // Check protector config file exists.
         const configFileName = 'cg.protector.js'
@@ -119,6 +123,7 @@ export class NodeBuilder {
      */
     private async generateAndInjectPrivateKeys (protectorDevBundlePath: FilePath, appKey: string): Promise<FilePath> {
         this.inputOptions.observer.next('Generate private keys and inject into protector...')
+        await delay(250)
 
         // Read raw content.
         let bundledRawCode = await fs.readFile(protectorDevBundlePath, { encoding: 'utf8' })
@@ -187,6 +192,7 @@ export class NodeBuilder {
      */
     private async restoreBackupProtectorFile (): Promise<void> {
         this.inputOptions.observer.next('Restore backup protector file...')
+        await delay(250)
         const protectorPath = path.join(this.inputOptions.rootDir, 'cg.protector.js')
         const protectorBackupPath = path.join(this.inputOptions.rootDir, 'cg.protector.js.bak')
         if (fs.existsSync(protectorBackupPath)) {
@@ -199,6 +205,7 @@ export class NodeBuilder {
      */
     private async signAndCreateCubegenJson (builderOptions: NodeProtectorBuilderOptions, bundleResponse: CubegenBundlerResponse): Promise<void> {
         this.inputOptions.observer.next('Signaturing source code and create cubegen-lock.json...')
+        await delay(250)
         const cubgenMeta: CubegenLockJson = {
             hashProject: bundleResponse.hash,
             signatures: []

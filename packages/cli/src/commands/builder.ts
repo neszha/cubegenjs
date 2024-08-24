@@ -1,12 +1,12 @@
 import path from 'path'
 import fs from 'fs-extra'
 import chalk from 'chalk'
-import { Listr } from 'listr2'
+import { delay, Listr } from 'listr2'
+import { Observable, type Subscriber } from 'rxjs'
 import { type NodeProtectorBuilderOptions } from '@cubegenjs/node-protector/src/interfaces/NodeProtector'
 import { type CubegenBuilderOptions } from '../interfaces/Builder'
 import { type CmdBuildOptions } from '../interfaces/Command'
 import { NodeBuilder } from '../services/NodeBuilder.js'
-import { Observable, type Subscriber } from 'rxjs'
 
 export default {
     cwd: process.cwd(),
@@ -26,6 +26,7 @@ export default {
                 title: 'Starting building project',
                 task: async () => {
                     startTime = new Date().getTime()
+                    await delay(500)
                 }
             },
             {
@@ -33,16 +34,20 @@ export default {
                 task: async (ctx, task) => {
                     return new Observable((observer: Subscriber<unknown>) => {
                         observer.next('Read config file...')
-                        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                        setTimeout(async () => {
-                            cubegenBuilderConfig = await this.getCubegenBuilderConfig()
+                        void delay(500).then(async () => {
+                            try {
+                                cubegenBuilderConfig = await this.getCubegenBuilderConfig()
+                            } catch (error) {
+                                observer.error(error)
+                                observer.complete()
+                                return
+                            }
                             const titleWithTarget = 'Target environment => ' + chalk.green(cubegenBuilderConfig.target)
                             observer.next(titleWithTarget)
-                            setTimeout(() => {
-                                task.title += ': ' + titleWithTarget
-                                observer.complete()
-                            }, 500)
-                        }, 500)
+                            await delay(500)
+                            task.title += ': ' + titleWithTarget
+                            observer.complete()
+                        })
                     })
                 }
             },
@@ -50,13 +55,12 @@ export default {
                 title: 'Building your project',
                 task: async (ctx, task) => {
                     return new Observable((observer: Subscriber<unknown>) => {
-                        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                        setTimeout(async () => {
+                        void delay(500).then(async () => {
                             if (cubegenBuilderConfig.target === 'node') {
                                 const cubegenBuilderConfigForNode = cubegenBuilderConfig as NodeProtectorBuilderOptions
                                 await this.buildProjectWithNodeBuilder(cubegenBuilderConfigForNode, observer)
                             }
-                        }, 500)
+                        })
                     })
                 }
             },
@@ -89,8 +93,8 @@ export default {
         const builderOptionsData = await import(builderFilePath)
         const builderOptions = builderOptionsData.default as CubegenBuilderOptions
         const allowtargets = ['node', 'web']
-        if (!allowtargets.includes(builderOptions.target as string)) {
-            throw new Error('Error: Invalid target environment. Use `node` or `web`')
+        if (!allowtargets.includes(builderOptions.target.toLowerCase())) {
+            throw new Error('Error: Invalid target options in builder config. Please use `node` or `web`')
         }
 
         // Done.

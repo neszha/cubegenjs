@@ -6,5 +6,5 @@ describe('Test Build Node Project', () => {
             root: './packages/cli/test/examples/node-sample'
         })
         expect(true).toBe(true)
-    })
+    }, 15_000)
 })
