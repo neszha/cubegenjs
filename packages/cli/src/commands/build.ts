@@ -4,9 +4,9 @@ import chalk from 'chalk'
 import { delay, Listr } from 'listr2'
 import { Observable, type Subscriber } from 'rxjs'
 import { type NodeProtectorBuilderOptions } from '@cubegenjs/node-protector/src/interfaces/NodeProtector'
-import { type CubegenBuilderOptions } from '../interfaces/Builder'
-import { type CmdBuildOptions } from '../interfaces/Command'
-import { NodeBuilder } from '../services/NodeBuilder.js'
+import { type CubegenBuilderOptions } from '@cubegenjs/cli_test/src/interfaces/Builder'
+import { type CmdBuildOptions } from '@cubegenjs/cli_test/src/interfaces/Command'
+import { NodeBuilder } from '@cubegenjs/cli_test/src/services/NodeBuilder'
 
 export default {
     cwd: process.cwd(),

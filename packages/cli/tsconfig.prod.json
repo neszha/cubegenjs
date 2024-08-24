@@ -3,6 +3,7 @@
     "exclude": [
         "dist",
         "test",
+        "templates",
         "jest.config.js"
     ]
 }

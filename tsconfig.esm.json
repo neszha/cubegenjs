@@ -14,7 +14,7 @@
     "exclude": [
         "dist",
         "packages",
-        "production-test",
+        "test-e2e",
         "gulpfile.js",
         "jest.config.js"
     ]

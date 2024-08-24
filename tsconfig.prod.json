@@ -13,6 +13,7 @@
     "exclude": [
         "dist",
         "packages",
+        "test-e2e",
         "gulpfile.js",
         "jest.config.js"
     ]

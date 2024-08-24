@@ -1,7 +1,12 @@
+/**
+ * You mush import this file in your project.
+ *
+ * For example: `import 'cg.protector.js'` in file index.js
+ */
 import { onStart, onModifiedCode, onIntervalCall } from '@cubegenjs/node-protector'
 
 /**
- * Run action after node protector is started.
+ * Exec after protector is started.
  */
 onStart(() => {
     console.log('Runtime protector is starting.')
@@ -18,7 +23,7 @@ const modifiedCodeOptions = {
 }
 onModifiedCode(modifiedCodeOptions, () => {
     console.log('Source code is changed.')
-    process.exit(0)
+    process.exit()
 })
 
 /**

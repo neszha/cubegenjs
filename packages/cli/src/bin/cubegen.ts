@@ -2,8 +2,9 @@
 
 import fs from 'fs'
 import { Command } from 'commander'
-import { type CmdBuildOptions } from '../interfaces/Command.js'
-import builder from '../commands/build.js'
+import { type CmdInitOptions, type CmdBuildOptions } from '@cubegenjs/cli_test/src/interfaces/Command'
+import builder from '@cubegenjs/cli_test/src/commands/build'
+import initor from '@cubegenjs/cli_test/src/commands/init'
 
 /**
  * Get module version.
@@ -23,6 +24,16 @@ const program = new Command()
 program.name('cubegen')
     .description('Protecting and Optimizing your JavaScript Source Code')
     .version(moduleVersion)
+
+/**
+ * Init command.
+ */
+program.command('init')
+    .description('Initialize cubegen configuration.')
+    .option('-r, --root <string>', 'Relative root project directory', './')
+    .action(async (options: CmdInitOptions): Promise<void> => {
+        await initor.generate(options)
+    })
 
 /**
  * Build command.
