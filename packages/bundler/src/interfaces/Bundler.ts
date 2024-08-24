@@ -11,6 +11,7 @@ export interface CubegenBundlerOptions {
     entries: FilePath[] // relative with rootDir
     staticDirs?: FilePath[] // relative with rootDir
     buildMode?: BuildMode
+    includeNodeModules?: boolean
 }
 
 export interface CustomCubegenBundlerOptions {
