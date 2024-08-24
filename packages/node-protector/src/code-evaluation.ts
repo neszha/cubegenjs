@@ -23,7 +23,17 @@ export const evaluateCodeAsSignature = (event: EventEmitter, privateKey02: strin
 
         // Get original signatures from this source code.
         const privateKey03 = '%PRIVATE_KEY_03%'
-        const sourceCodePath = process.argv[1]
+        let sourceCodePath = process.argv[1]
+        const entryFileName = path.basename(sourceCodePath)
+        if (!entryFileName.includes('.js')) {
+            const packageJsonPath: string = path.join(process.cwd(), 'package.json')
+            if (!fs.existsSync(packageJsonPath)) {
+                throw new Error('Error when reading package.json in root directory.')
+            }
+            const packageJsonString = fs.readFileSync(packageJsonPath, 'utf-8')
+            const { main } = JSON.parse(packageJsonString)
+            sourceCodePath = path.join(sourceCodePath, main as string)
+        }
         const sourceCodeRaw = fs.readFileSync(sourceCodePath, 'utf-8')
         const sourceCodeHash = createHash('sha256').update(sourceCodeRaw).digest('hex')
         const privateKeys = [state.privateKey01, privateKey02, privateKey03].join('.')
