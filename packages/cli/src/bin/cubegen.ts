@@ -1,8 +1,20 @@
 #!/usr/bin/env node
 
+import fs from 'fs'
 import { Command } from 'commander'
 import { type CmdBuildOptions } from '../interfaces/Command.js'
 import builder from '../commands/build.js'
+
+/**
+ * Get module version.
+ */
+let moduleVersion = '0.0.0'
+const packageJsonPath = '../../package.json'
+if (fs.existsSync(packageJsonPath)) {
+    const packageJsonString = fs.readFileSync(packageJsonPath, 'utf-8')
+    const packageJson = JSON.parse(packageJsonString)
+    moduleVersion = packageJson.version
+}
 
 /**
  * Initialize.
@@ -10,7 +22,7 @@ import builder from '../commands/build.js'
 const program = new Command()
 program.name('cubegen')
     .description('Protecting and Optimizing your JavaScript Source Code')
-    .version('0.1.0')
+    .version(moduleVersion)
 
 /**
  * Build command.
