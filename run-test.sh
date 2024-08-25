@@ -1,3 +1,6 @@
+clear
+echo 'Running all jest tests...'
+
 ## Cubegen Bundler.
 node --experimental-vm-modules node_modules/jest/bin/jest.js 'packages/bundler/test/functional.spec.ts' -c 'packages/bundler/jest.config.js' 
 node --experimental-vm-modules node_modules/jest/bin/jest.js 'packages/bundler/test/compression.spec.ts' -c 'packages/bundler/jest.config.js' 

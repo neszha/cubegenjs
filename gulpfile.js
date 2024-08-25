@@ -34,6 +34,11 @@ task('clear:builder-directory', async () => {
         'packages/node-protector/dist'
     ], { force: true })
 
+    // cli module.
+    await deleteAsync([
+        'packages/cli/dist'
+    ], { force: true })
+
     // done.
     return true
 })
