@@ -133,41 +133,41 @@ describe('Test Output Project Bundler Module', () => {
         })
         expect(outputSourceCodeEntry3).toEqual(outputBundleCodeEntry3)
     })
-})
 
-describe('Test Bundler Result Work Running with NodeJS Engine', () => {
-    const bundler = new CubegenBundler({
-        rootDir: path.resolve(MODULE_PATH_DIR, 'test/examples/node-code'),
-        outDir: path.resolve(MODULE_TEMP_PATH_DIR, 'out-test-03'),
-        entries: [
-            'argv.js',
-            'file-system.js'
-        ],
-        staticDirs: [
-            'data'
-        ]
-    })
-    const inputOptions = bundler.getInputOptions()
-
-    it('Success use argv function', async () => {
-        await bundler.build()
-
-        // Check exec output.
-        const execResult = execSync('node argv.js test_argv', {
-            cwd: inputOptions.outDir,
-            encoding: 'utf-8'
+    describe('Test Bundler Result Working in NodeJS Engine', () => {
+        const bundler = new CubegenBundler({
+            rootDir: path.resolve(MODULE_PATH_DIR, 'test/examples/node-code'),
+            outDir: path.resolve(MODULE_TEMP_PATH_DIR, 'out-test-03'),
+            entries: [
+                'argv.js',
+                'file-system.js'
+            ],
+            staticDirs: [
+                'data'
+            ]
         })
-        expect(execResult).toEqual('test_argv\n')
-    })
+        const inputOptions = bundler.getInputOptions()
 
-    it('Success use file-system function', async () => {
-        await bundler.build()
+        it('Success use argv function', async () => {
+            await bundler.build()
 
-        // Check exec output.
-        const execResult = execSync('node file-system.js', {
-            cwd: inputOptions.outDir,
-            encoding: 'utf-8'
+            // Check exec output.
+            const execResult = execSync('node argv.js test_argv', {
+                cwd: inputOptions.outDir,
+                encoding: 'utf-8'
+            })
+            expect(execResult).toEqual('test_argv\n')
         })
-        expect(execResult).toEqual('Hello, World!\n')
+
+        it('Success use file-system function', async () => {
+            await bundler.build()
+
+            // Check exec output.
+            const execResult = execSync('node file-system.js', {
+                cwd: inputOptions.outDir,
+                encoding: 'utf-8'
+            })
+            expect(execResult).toEqual('Hello, World!\n')
+        })
     })
 })
