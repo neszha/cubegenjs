@@ -1,19 +1,19 @@
 {
-  "name": "bundler-production-test",
-  "version": "1.0.0",
-  "main": "src/main.js",
-  "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "chalk": "^5.3.0",
-    "fs-extra": "^11.2.0"
-  },
-  "workspaces": [
-    "../../../packages/bundler"
-  ]
+    "name": "bundler-test-e2e",
+    "version": "1.0.0",
+    "main": "src/main.js",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "chalk": "^5.3.0",
+        "fs-extra": "^11.2.0"
+    },
+    "workspaces": [
+        "../../"
+    ]
 }

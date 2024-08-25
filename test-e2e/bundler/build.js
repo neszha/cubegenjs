@@ -1,4 +1,5 @@
 import path from 'path'
+import chalk from 'chalk'
 import { CubegenBundler } from '@cubegenjs/bundler'
 
 const buildWithBundler = async () => {
@@ -16,7 +17,7 @@ const buildWithBundler = async () => {
         ],
     })
     await bundler.build()
-    console.log('Success and save result in ./dist')
+    console.log('Success and save result in ' + chalk.green('./dist'))
 }
 
 buildWithBundler()

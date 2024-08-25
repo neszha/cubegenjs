@@ -1,5 +1,6 @@
 import path from 'path'
 import fs from 'fs-extra'
+import chalk from 'chalk';
 import { CubegenObfuscator } from "@cubegenjs/obfuscator";
 
 const obfuscateCode = async () => {
@@ -33,7 +34,7 @@ const obfuscateCode = async () => {
     await fs.copyFile(packageJsonPath, packageJsonOutputPath)
 
     // Done.
-    console.log('Success and save result in ./dist')
+    console.log('Success and save result in ' + chalk.green('./dist'))
 }
 
 obfuscateCode()
