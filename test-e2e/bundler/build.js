@@ -14,11 +14,6 @@ const buildWithBundler = async () => {
             'public',
             'storage'
         ],
-        packageJson: {
-            type: 'module',
-            hideDependencies: false,
-            hideDevDependencies: true
-        }
     })
     await bundler.build()
     console.log('Success and save result in ./dist')

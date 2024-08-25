@@ -9,10 +9,10 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "devDependencies": {
-    "@cubegenjs/obfuscator": "^0.1.0-experimental-2"
-  },
   "dependencies": {
     "fs-extra": "^11.2.0"
-  }
+  },
+  "workspaces": [
+    "../../../packages/obfuscator"
+  ]
 }

@@ -9,11 +9,11 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "devDependencies": {
-    "@cubegenjs/bundler": "^0.1.0-experimental-4"
-  },
   "dependencies": {
     "chalk": "^5.3.0",
     "fs-extra": "^11.2.0"
-  }
+  },
+  "workspaces": [
+    "../../../packages/bundler"
+  ]
 }
