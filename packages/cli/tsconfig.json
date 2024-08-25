@@ -1,20 +1,18 @@
 {
-    "extends": "./tsconfig.json",
+    "extends": "../../tsconfig.json",
     "compilerOptions": {
+        "target": "ESNext",
         "module": "ESNext",
-        "target": "ES6",
         "moduleResolution": "Node",
         "rootDirs": [
             "src",
             "test"
         ],
-        "outDir": "dist/esm",
+        "outDir": "dist",
         "declaration": true
     },
     "exclude": [
         "dist",
-        "test",
-        "templates",
-        "jest.config.js"
+        "example"
     ]
 }
