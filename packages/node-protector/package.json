@@ -3,7 +3,6 @@
     "version": "0.1.0-experimental-1",
     "description": "Internal module node protector for cubegenjs packages",
     "main": "dist/index.js",
-    "module": "dist/esm/index.js",
     "typings": "dist/index.d.js",
     "keywords": [
         "cubegen",
@@ -11,7 +10,7 @@
         "node-protector"
     ],
     "scripts": {
-        "build": "tsc -p tsconfig.prod.json && tsc -p tsconfig.esm.json",
+        "build": "tsc -p tsconfig.prod.json",
         "build:watch": "tsc --watch -p tsconfig.esm.json"
     },
     "dependencies": {

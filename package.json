@@ -19,7 +19,7 @@
     "scripts": {
         "clear:builder": "gulp clear:builder-directory",
         "build": "npm run clear:builder && npm run build:bundler && npm run build:obfuscator && npm run build:node-protector && npm run build:cli && npm run build:root-module",
-        "build:root-module": "tsc -p tsconfig.prod.json && tsc -p tsconfig.esm.json",
+        "build:root-module": "tsc -p tsconfig.prod.json",
         "build:watch": "tsc --watch -p tsconfig.esm.json",
         "build:cli": "lerna run build --scope=@cubegenjs/cli",
         "build:bundler": "lerna run build --scope=@cubegenjs/bundler",

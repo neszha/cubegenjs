@@ -6,7 +6,7 @@ import { Observable, type Subscriber } from 'rxjs'
 import { type NodeProtectorBuilderOptions } from '@cubegenjs/node-protector/src/interfaces/NodeProtector'
 import { type CubegenBuilderOptions } from '../interfaces/Builder'
 import { type CmdBuildOptions } from '../interfaces/Command'
-import { NodeBuilder } from '../services/NodeBuilder'
+import { NodeBuilder } from '../services/NodeBuilder.js'
 
 export default {
     cwd: process.cwd(),
