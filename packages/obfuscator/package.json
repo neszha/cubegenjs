@@ -6,8 +6,7 @@
     "typings": "dist/index.d.js",
     "scripts": {
         "build": "tsc -p tsconfig.prod.json",
-        "build:watch": "tsc --watch -p tsconfig.prod.json",
-        "test": "jest"
+        "build:watch": "tsc --watch -p tsconfig.prod.json"
     },
     "dependencies": {
         "javascript-obfuscator": "^4.1.0"

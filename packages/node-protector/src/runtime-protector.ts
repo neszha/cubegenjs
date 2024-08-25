@@ -65,7 +65,7 @@ export const onIntervalCallCallbackExecution = (options: NodeProtectorIntervalCa
 
     // Run event loop.
     event.on('call:on-interval-call', () => {
-        setInterval(() => {
+        state.callIntervalTimeout = setInterval(() => {
             event.emit('event:interval-call')
         }, options.eventLoopInterval ?? 5000)
     })

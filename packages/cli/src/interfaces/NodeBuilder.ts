@@ -1,6 +1,6 @@
 import { type CubegenObfuscatorOptions } from '@cubegenjs/obfuscator/dist/interfaces/Obfuscator'
 import { type CubegenBundlerOptions } from '@cubegenjs/bundler/dist/interfaces/Bundler'
-import { type TargetEnvironment } from '@cubegenjs/cli_test/src/interfaces/Common'
+import { type TargetEnvironment } from './Common'
 
 export interface NodeBuilderOptions {
     appKey: string

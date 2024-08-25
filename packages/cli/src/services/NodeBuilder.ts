@@ -1,4 +1,3 @@
-// import ora from 'ora'
 import path from 'path'
 import fs from 'fs-extra'
 import { delay } from 'listr2'
@@ -8,9 +7,9 @@ import { CubegenObfuscator } from '@cubegenjs/obfuscator'
 import { type CubegenObfuscatorResponse } from '@cubegenjs/obfuscator/dist/interfaces/Obfuscator'
 import { type NodeProtectorBuilderOptions } from '@cubegenjs/node-protector/dist/interfaces/NodeProtector'
 import { type CubegenBundlerResponse, type CubegenBundlerOptions } from '@cubegenjs/bundler/dist/interfaces/Bundler'
-import { type NodeBuilderInputOptions } from '@cubegenjs/cli_test/src/interfaces/Builder'
-import { type CubegenLockJson } from '@cubegenjs/cli_test/src/interfaces/CobegenLockJson'
-import { type FilePath } from '@cubegenjs/cli_test/src/interfaces/Common'
+import { type NodeBuilderInputOptions } from '../interfaces/Builder'
+import { type CubegenLockJson } from '../interfaces/CobegenLockJson'
+import { type FilePath } from '../interfaces/Common'
 
 export class NodeBuilder {
     private readonly inputOptions: NodeBuilderInputOptions

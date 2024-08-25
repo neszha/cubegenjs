@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import initor from '@cubegenjs/cli_test/src/commands/init'
+import initor from '../src/commands/init'
 
 const projectDir = path.join(process.cwd(), 'packages/cli/test/examples/init-node-sample')
 

@@ -23,8 +23,7 @@
         "build:watch": "tsc --watch -p tsconfig.esm.json",
         "build:bundler": "lerna run build --scope=@cubegenjs/bundler",
         "build:obfuscator": "lerna run build --scope=@cubegenjs/obfuscator",
-        "build:node-protector": "lerna run build --scope=@cubegenjs/node-protector",
-        "test": "lerna run test"
+        "build:node-protector": "lerna run build --scope=@cubegenjs/node-protector"
     },
     "repository": "neszha/cubegenjs",
     "author": "Fanesa Hadi Pramana",

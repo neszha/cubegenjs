@@ -4,9 +4,9 @@ import chalk from 'chalk'
 import { delay, Listr } from 'listr2'
 import { Observable, type Subscriber } from 'rxjs'
 import { type NodeProtectorBuilderOptions } from '@cubegenjs/node-protector/src/interfaces/NodeProtector'
-import { type CubegenBuilderOptions } from '@cubegenjs/cli_test/src/interfaces/Builder'
-import { type CmdBuildOptions } from '@cubegenjs/cli_test/src/interfaces/Command'
-import { NodeBuilder } from '@cubegenjs/cli_test/src/services/NodeBuilder'
+import { type CubegenBuilderOptions } from '../interfaces/Builder'
+import { type CmdBuildOptions } from '../interfaces/Command'
+import { NodeBuilder } from '../services/NodeBuilder'
 
 export default {
     cwd: process.cwd(),
@@ -16,7 +16,7 @@ export default {
      * Build source code to distribution code.
      */
     async build (options: CmdBuildOptions): Promise<void> {
-        this.rootProject = path.join(this.cwd, options.root || './')
+        this.rootProject = path.join(this.cwd, options.root ?? './')
 
         // Run tasks.
         let startTime: number

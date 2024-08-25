@@ -16,5 +16,10 @@ export default {
     /**
      * Private key value changed after build process.
      */
-    privateKey01: '%PRIVATE_KEY_01%' as string
+    privateKey01: '%PRIVATE_KEY_01%' as string,
+
+    /**
+     * Store call interval timeout.
+     */
+    callIntervalTimeout: null as NodeJS.Timeout | null
 }

@@ -2,9 +2,9 @@
 
 import fs from 'fs'
 import { Command } from 'commander'
-import { type CmdInitOptions, type CmdBuildOptions } from '@cubegenjs/cli_test/src/interfaces/Command'
-import builder from '@cubegenjs/cli_test/src/commands/build'
-import initor from '@cubegenjs/cli_test/src/commands/init'
+import { type CmdBuildOptions, type CmdInitOptions } from '../interfaces/Command'
+import initor from '../commands/init'
+import builder from '../commands/build'
 
 /**
  * Get module version.

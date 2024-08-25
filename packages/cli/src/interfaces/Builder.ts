@@ -1,6 +1,6 @@
 import { type Subscriber } from 'rxjs'
 import { type NodeProtectorBuilderOptions } from '@cubegenjs/node-protector/dist/interfaces/NodeProtector'
-import { type FilePath } from '@cubegenjs/cli_test/src/interfaces/Common'
+import { type FilePath } from '@cubegenjs/cli/src/interfaces/Common'
 
 export type CubegenBuilderOptions = NodeProtectorBuilderOptions
 

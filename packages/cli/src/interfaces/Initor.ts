@@ -1,4 +1,4 @@
-import { type TargetEnvironment } from '@cubegenjs/cli_test/src/interfaces/Common'
+import { type TargetEnvironment } from './Common'
 
 export interface InitorUserInput {
     targetEnvironment: TargetEnvironment

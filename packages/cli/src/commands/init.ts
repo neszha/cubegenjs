@@ -4,9 +4,9 @@ import { fileURLToPath } from 'url'
 import { createHash } from 'crypto'
 import { delay, Listr } from 'listr2'
 import { select } from '@inquirer/prompts'
-import { type PackageJson, type CmdInitOptions } from '@cubegenjs/cli_test/src/interfaces/Command'
-import { type TargetEnvironment } from '@cubegenjs/cli_test/src/interfaces/Common'
-import { type InitorUserInput } from '@cubegenjs/cli_test/src/interfaces/Initor'
+import { type PackageJson, type CmdInitOptions } from '../interfaces/Command'
+import { type TargetEnvironment } from '../interfaces/Common'
+import { type InitorUserInput } from '../interfaces/Initor'
 
 const userInput: InitorUserInput = {
     targetEnvironment: 'node'
