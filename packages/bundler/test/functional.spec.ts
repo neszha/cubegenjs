@@ -58,7 +58,7 @@ describe('Test Class Cubegen Bundler Module', () => {
         expect(staticDirs[0]).toHaveProperty('sourceDirPath')
         expect(staticDirs[0]).toHaveProperty('ouputDirPath')
 
-        // check entry result file exits.
+        // Check entry result file exits.
         expect(fs.existsSync(entries[0].ouputPath)).toEqual(true)
         expect(fs.existsSync(entries[1].ouputPath)).toEqual(true)
         expect(fs.existsSync(entries[2].ouputPath)).toEqual(true)
