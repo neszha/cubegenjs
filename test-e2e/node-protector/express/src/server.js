@@ -30,5 +30,5 @@ app.get('/api', (req, res) => {
  * Start http server.
  */
 app.listen(port, () => {
-    console.log(`Express app listening on port ${port}`)
+    console.log(`Express app listening on port http://localhost:${port}`)
 })

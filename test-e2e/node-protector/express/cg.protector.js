@@ -22,7 +22,7 @@ const modifiedCodeOptions = {
     enabled: true
 }
 onModifiedCode(modifiedCodeOptions, () => {
-    console.log('Source code is changed.')
+    console.log('The source code has been changed.')
     process.exit()
 })
 
