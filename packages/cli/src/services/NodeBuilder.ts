@@ -8,7 +8,7 @@ import { type CubegenObfuscatorResponse } from '@cubegenjs/obfuscator/dist/inter
 import { type NodeProtectorBuilderOptions } from '@cubegenjs/node-protector/dist/interfaces/NodeProtector'
 import { type CubegenBundlerResponse, type CubegenBundlerOptions } from '@cubegenjs/bundler/dist/interfaces/Bundler'
 import { type NodeBuilderInputOptions } from '../interfaces/Builder'
-import { type CubegenLockJson } from '../interfaces/CobegenLockJson'
+import { type CubegenJson } from '../interfaces/CubegenJson'
 import { type FilePath } from '../interfaces/Common'
 
 export class NodeBuilder {
@@ -208,7 +208,7 @@ export class NodeBuilder {
     private async signAndCreateCubegenJson (builderOptions: NodeProtectorBuilderOptions, bundleResponse: CubegenBundlerResponse): Promise<void> {
         this.inputOptions.observer.next('Signaturing source code and create cubegen-lock.json...')
         await delay(250)
-        const cubgenMeta: CubegenLockJson = {
+        const cubgenMeta: CubegenJson = {
             hashProject: bundleResponse.hash,
             signatures: []
         }

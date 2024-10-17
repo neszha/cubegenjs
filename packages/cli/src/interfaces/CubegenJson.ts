@@ -3,7 +3,7 @@ export interface CubegenCodeSignature {
     signature: string
 }
 
-export interface CubegenLockJson {
+export interface CubegenJson {
     hashProject: string
     signatures: CubegenCodeSignature[]
 }
