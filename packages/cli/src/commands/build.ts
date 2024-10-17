@@ -4,9 +4,11 @@ import chalk from 'chalk'
 import { delay, Listr } from 'listr2'
 import { Observable, type Subscriber } from 'rxjs'
 import { type NodeProtectorBuilderOptions } from '@cubegenjs/node-protector/src/interfaces/NodeProtector'
+import { type WebProtectorBuilderOptions } from '@cubegenjs/web-protector/src/interfaces/WebProtector'
 import { type CubegenBuilderOptions } from '../interfaces/Builder'
 import { type CmdBuildOptions } from '../interfaces/Command'
 import { NodeBuilder } from '../services/NodeBuilder.js'
+import { WebBuilder } from '../services/WebBuilder.js'
 
 export default {
     cwd: process.cwd(),
@@ -59,7 +61,15 @@ export default {
                             if (cubegenBuilderConfig.target === 'node') {
                                 const cubegenBuilderConfigForNode = cubegenBuilderConfig as NodeProtectorBuilderOptions
                                 await this.buildProjectWithNodeBuilder(cubegenBuilderConfigForNode, observer)
+                                return
                             }
+                            if (cubegenBuilderConfig.target === 'browser') {
+                                const cubegenObfusBuilderConfigForWeb = cubegenBuilderConfig as WebProtectorBuilderOptions
+                                await this.buildObfusCodeWithWebBuilder(cubegenObfusBuilderConfigForWeb, observer)
+                                return
+                            }
+                            observer.error(new Error('Error: Invalid target options in builder config. Please use `node` or `browser`'))
+                            observer.complete()
                         })
                     })
                 }
@@ -92,9 +102,9 @@ export default {
         // Read builder config file.
         const builderOptionsData = await import(builderFilePath)
         const builderOptions = builderOptionsData.default as CubegenBuilderOptions
-        const allowtargets = ['node', 'web']
+        const allowtargets = ['node', 'browser']
         if (!allowtargets.includes(builderOptions.target.toLowerCase())) {
-            throw new Error('Error: Invalid target options in builder config. Please use `node` or `web`')
+            throw new Error('Error: Invalid target options in builder config. Please use `node` or `browser`')
         }
 
         // Done.
@@ -111,9 +121,17 @@ export default {
             observer
         })
         await nodeBuilder.build()
-    }
+    },
 
     /**
-     * Start build project with web builer.
+     * Start build obfus code with web builer.
      */
+    async buildObfusCodeWithWebBuilder (builderConfig: WebProtectorBuilderOptions, observer: Subscriber<unknown>): Promise<void> {
+        const webBuilder = new WebBuilder({
+            rootDir: this.rootProject,
+            builderConfig,
+            observer
+        })
+        await webBuilder.build()
+    }
 }

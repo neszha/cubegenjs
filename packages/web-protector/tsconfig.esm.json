@@ -1,0 +1,20 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "rootDirs": [
+            "src",
+            "test"
+        ],
+        "outDir": "dist/esm",
+        "declaration": true
+    },
+    "exclude": [
+        "dist",
+        "test",
+        "templates",
+        "jest.config.js"
+    ]
+}

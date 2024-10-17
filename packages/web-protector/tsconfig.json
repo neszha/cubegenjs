@@ -1,0 +1,18 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "target": "ES2021",
+        "module": "Node16",
+        "moduleResolution": "Node16",
+        "rootDirs": [
+            "src",
+            "test"
+        ],
+        "outDir": "dist",
+        "declaration": true
+    },
+    "exclude": [
+        "dist",
+        "example"
+    ]
+}

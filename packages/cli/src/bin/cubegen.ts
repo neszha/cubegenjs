@@ -29,7 +29,7 @@ program.name('cubegen')
  * Init command.
  */
 program.command('init')
-    .description('Initialize cubegen configuration.')
+    .description('initialize cubegen configuration')
     .option('-r, --root <string>', 'Relative root project directory', './')
     .action(async (options: CmdInitOptions): Promise<void> => {
         await initor.generate(options)
@@ -39,8 +39,8 @@ program.command('init')
  * Build command.
  */
 program.command('build')
-    .description('Building your project to distribution code.')
-    .option('-r, --root <string>', 'Relative root project directory', './')
+    .description('building your project to distribution code')
+    .option('-r, --root <string>', 'relative root project directory', './')
     .action(async (options: CmdBuildOptions): Promise<void> => {
         await builder.build(options)
     })

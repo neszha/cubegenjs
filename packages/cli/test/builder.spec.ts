@@ -7,4 +7,11 @@ describe('Test Build Node Project', () => {
         })
         expect(true).toBe(true)
     }, 15_000)
+
+    it('Success generate obfus protector web project', async () => {
+        await builder.build({
+            root: './packages/cli/test/examples/web-sample'
+        })
+        expect(true).toBe(true)
+    }, 15_000)
 })

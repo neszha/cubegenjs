@@ -1,6 +1,6 @@
 ## About Project
 
-End to end test for node-protector module CubegenJS for ExpressJS project.
+End to end test for web-protector module CubegenJS for VueJS framework project.
 
 ## Run Test
 
@@ -11,9 +11,9 @@ npm install
 
 Run original code.
 ```sh
-node .
+npm run dev
 ```
-You can access original program with browser in `http://localhost:3000`
+You can access original program with browser in `http://localhost:5173`
 
 Build original code to distribution code.
 ```sh
@@ -22,8 +22,7 @@ npx cubegen build
 
 Run distribution code in `dist/`.
 ```sh
-cd dist
+npm run preview
 ```
-```sh
-node .
-```
+
+You can access dist program with browser in `http://localhost:4173`
