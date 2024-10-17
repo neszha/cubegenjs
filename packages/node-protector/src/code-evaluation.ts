@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { createHash } from 'crypto'
 import type EventEmitter from 'events'
-import { type CubegenJson } from './interfaces/CobegenJson'
+import { type CubegenJson } from './interfaces/CubegenJson'
 import state from './state'
 
 /**
