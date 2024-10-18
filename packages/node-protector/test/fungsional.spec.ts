@@ -4,7 +4,6 @@ import { CubegenBundler } from '@cubegenjs/bundler'
 import { CubegenObfuscator } from '@cubegenjs/obfuscator'
 import { type CubegenBundlerOptions } from '@cubegenjs/bundler/dist/interfaces/Bundler'
 import { type NodeProtectorModifiedCodeOptions, type NodeProtectorIntervalCallOptions } from './interfaces/NodeProtector'
-import state from '../src/state'
 
 describe('Test Functional Node Protector Module', () => {
     it('Success run onStart callback lifecycle', async () => {
@@ -20,7 +19,7 @@ describe('Test Functional Node Protector Module', () => {
 
     it('Success run onModifiedCode callback lifecycle', async () => {
         const nodeProtector = await import('../src/index.js')
-        state.inDevelopmentMode = 'distributed'
+        nodeProtector.customState.inDevelopmentMode = 'distributed'
         const inputOptions: NodeProtectorModifiedCodeOptions = {
             enabled: true
         }
@@ -49,7 +48,7 @@ describe('Test Functional Node Protector Module', () => {
 
     it('onModifiedCode not called in development project', async () => {
         const nodeProtector = await import('../src/index.js')
-        state.inDevelopmentMode = 'development'
+        nodeProtector.customState.inDevelopmentMode = 'development'
         const inputOptions: NodeProtectorModifiedCodeOptions = {
             enabled: true
         }
@@ -73,8 +72,8 @@ describe('Test Functional Node Protector Module', () => {
             callCounter++
         })
         setTimeout(() => {
-            if (state.callIntervalTimeout !== null) {
-                clearInterval(state.callIntervalTimeout)
+            if (nodeProtector.customState.callIntervalTimeout !== null) {
+                clearInterval(nodeProtector.customState.callIntervalTimeout)
             }
             expect(callCounter).toBeGreaterThanOrEqual(4)
         }, 1000)
@@ -91,8 +90,8 @@ describe('Test Functional Node Protector Module', () => {
             callCounter++
         })
         setTimeout(() => {
-            if (state.callIntervalTimeout !== null) {
-                clearInterval(state.callIntervalTimeout)
+            if (nodeProtector.customState.callIntervalTimeout !== null) {
+                clearInterval(nodeProtector.customState.callIntervalTimeout)
             }
             expect(callCounter).toBe(0)
         }, 1000)
