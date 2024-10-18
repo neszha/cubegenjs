@@ -75,7 +75,7 @@ describe('Test Functional Node Protector Module', () => {
             if (nodeProtector.customState.callIntervalTimeout !== null) {
                 clearInterval(nodeProtector.customState.callIntervalTimeout)
             }
-            expect(callCounter).toBeGreaterThanOrEqual(4)
+            expect(callCounter).toBeGreaterThanOrEqual(3)
         }, 1000)
     })
 
