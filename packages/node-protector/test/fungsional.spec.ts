@@ -9,7 +9,7 @@ import state from '../src/state'
 
 describe('Test Functional Node Protector Module', () => {
     it.concurrent('Success run onStart callback lifecycle', async () => {
-        const nodeProtector = await import('../src/index')
+        const nodeProtector = await import('../src/index.js')
         let isCalled = false
         nodeProtector.onStart(() => {
             isCalled = true
@@ -20,7 +20,7 @@ describe('Test Functional Node Protector Module', () => {
     })
 
     it.concurrent('Success run onModifiedCode callback lifecycle', async () => {
-        const nodeProtector = await import('../src/index')
+        const nodeProtector = await import('../src/index.js')
         state.inDevelopmentMode = 'distributed'
         const inputOptions: NodeProtectorModifiedCodeOptions = {
             enabled: true
@@ -35,7 +35,7 @@ describe('Test Functional Node Protector Module', () => {
     })
 
     it.concurrent('onModifiedCode not called if not enabled', async () => {
-        const nodeProtector = await import('../src/index')
+        const nodeProtector = await import('../src/index.js')
         const inputOptions: NodeProtectorModifiedCodeOptions = {
             enabled: false
         }
@@ -49,7 +49,7 @@ describe('Test Functional Node Protector Module', () => {
     })
 
     it.concurrent('onModifiedCode not called in development project', async () => {
-        const nodeProtector = await import('../src/index')
+        const nodeProtector = await import('../src/index.js')
         state.inDevelopmentMode = 'development'
         const inputOptions: NodeProtectorModifiedCodeOptions = {
             enabled: true
@@ -64,7 +64,7 @@ describe('Test Functional Node Protector Module', () => {
     })
 
     it.concurrent('Success run onIntervalCall callback lifecycle', async () => {
-        const nodeProtector = await import('../src/index')
+        const nodeProtector = await import('../src/index.js')
         const inputOptions: NodeProtectorIntervalCallOptions = {
             enabled: true,
             eventLoopInterval: 200
@@ -82,7 +82,7 @@ describe('Test Functional Node Protector Module', () => {
     })
 
     it.concurrent('onIntervalCall not called if not enabled', async () => {
-        const nodeProtector = await import('../src/index')
+        const nodeProtector = await import('../src/index.js')
         const inputOptions: NodeProtectorIntervalCallOptions = {
             enabled: false,
             eventLoopInterval: 200
