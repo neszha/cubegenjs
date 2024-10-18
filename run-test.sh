@@ -13,6 +13,7 @@ node --experimental-vm-modules node_modules/jest/bin/jest.js 'packages/obfuscato
 node --experimental-vm-modules node_modules/jest/bin/jest.js 'packages/node-protector/test/fungsional.spec.ts' -c 'packages/node-protector/jest.config.js'
 
 ## Cubegen Web Protector.
+node --experimental-vm-modules node_modules/jest/bin/jest.js 'packages/web-protector/test/fungsional.spec.ts' -c 'packages/web-protector/jest.config.js'
 
 ## Cubegen CLI.
 node --experimental-vm-modules node_modules/jest/bin/jest.js 'packages/cli/test/init.spec.ts' -c 'packages/cli/jest.config.js'

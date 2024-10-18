@@ -1,9 +1,7 @@
 /**
- * You mush build cubegen config with command `npx cubegen build`.
- * The build process will generate "cg.protector.obfus.js" file in the project root.
- * Import this file in your project.
+ * You mush import this file in your project.
  *
- * For example: `import 'cg.protector.obfus.js'` in file index.js
+ * For example: `import 'cg.protector.js'` in file index.js
  */
 import { onStart, onDocumentLoaded, onDomainNotAllowed, onIntervalCall } from '@cubegenjs/web-protector'
 
@@ -15,7 +13,7 @@ onStart(() => {
 })
 
 /**
- * Exec after protector is started.
+ * Exec after DOM loaded.
  */
 onDocumentLoaded(() => {
     // console.log('Document is loaded.')
@@ -24,11 +22,16 @@ onDocumentLoaded(() => {
 /**
  * Domain locking.
  *
- * Set enable to true to enable domain locking.
- * In development mode, the onModifiedCode lifecycle is not called.
+ * Set enabled to `true` to use domain locking.
+ * In development mode, the onDomainNotAllowed lifecycle is not called.
  */
 const domainLockingOptions = {
-    enabled: false
+    enabled: false,
+    whitlist: [
+        'localhost',
+        'localhost:/d+',
+        '127.0.0.1:/d+'
+    ]
 }
 onDomainNotAllowed(domainLockingOptions, () => {
     // console.log('Domain is not allowed.')
@@ -38,7 +41,7 @@ onDomainNotAllowed(domainLockingOptions, () => {
 /**
  * Event loop call interval.
  *
- * Set enable to true to enable event loop.
+ * Set enabled to `true` to use event loop.
  */
 const intervalCallOptions = {
     enabled: false,

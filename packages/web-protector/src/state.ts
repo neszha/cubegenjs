@@ -9,6 +9,11 @@ export default {
     protectorIsReady: false as boolean,
 
     /**
+     * Store site host.
+     */
+    siteHost: '' as string,
+
+    /**
      * Value is 'distributed' in distributed mode changed after build process.
      */
     inDevelopmentMode: '%IN_DEVELOPMENT_MODE%' as string | 'distributed',

@@ -12,6 +12,7 @@ export interface WebProtectorBuilderOptions {
 
 export interface WebProtectorDomainLockingOptions {
     enabled: boolean
+    whitlist: string[]
 }
 
 export interface WebProtectorIntervalCallOptions {

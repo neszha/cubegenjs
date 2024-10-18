@@ -1,6 +1,5 @@
 import fs from 'fs'
 import path from 'path'
-import { fileURLToPath } from 'url'
 import { CubegenBundler } from '@cubegenjs/bundler'
 import { CubegenObfuscator } from '@cubegenjs/obfuscator'
 import { type CubegenBundlerOptions } from '@cubegenjs/bundler/dist/interfaces/Bundler'
@@ -8,7 +7,7 @@ import { type NodeProtectorModifiedCodeOptions, type NodeProtectorIntervalCallOp
 import state from '../src/state'
 
 describe('Test Functional Node Protector Module', () => {
-    it.concurrent('Success run onStart callback lifecycle', async () => {
+    it('Success run onStart callback lifecycle', async () => {
         const nodeProtector = await import('../src/index.js')
         let isCalled = false
         nodeProtector.onStart(() => {
@@ -19,7 +18,7 @@ describe('Test Functional Node Protector Module', () => {
         }, 500)
     })
 
-    it.concurrent('Success run onModifiedCode callback lifecycle', async () => {
+    it('Success run onModifiedCode callback lifecycle', async () => {
         const nodeProtector = await import('../src/index.js')
         state.inDevelopmentMode = 'distributed'
         const inputOptions: NodeProtectorModifiedCodeOptions = {
@@ -34,7 +33,7 @@ describe('Test Functional Node Protector Module', () => {
         }, 500)
     })
 
-    it.concurrent('onModifiedCode not called if not enabled', async () => {
+    it('onModifiedCode not called if not enabled', async () => {
         const nodeProtector = await import('../src/index.js')
         const inputOptions: NodeProtectorModifiedCodeOptions = {
             enabled: false
@@ -48,7 +47,7 @@ describe('Test Functional Node Protector Module', () => {
         }, 500)
     })
 
-    it.concurrent('onModifiedCode not called in development project', async () => {
+    it('onModifiedCode not called in development project', async () => {
         const nodeProtector = await import('../src/index.js')
         state.inDevelopmentMode = 'development'
         const inputOptions: NodeProtectorModifiedCodeOptions = {
@@ -63,7 +62,7 @@ describe('Test Functional Node Protector Module', () => {
         }, 500)
     })
 
-    it.concurrent('Success run onIntervalCall callback lifecycle', async () => {
+    it('Success run onIntervalCall callback lifecycle', async () => {
         const nodeProtector = await import('../src/index.js')
         const inputOptions: NodeProtectorIntervalCallOptions = {
             enabled: true,
@@ -81,7 +80,7 @@ describe('Test Functional Node Protector Module', () => {
         }, 1000)
     })
 
-    it.concurrent('onIntervalCall not called if not enabled', async () => {
+    it('onIntervalCall not called if not enabled', async () => {
         const nodeProtector = await import('../src/index.js')
         const inputOptions: NodeProtectorIntervalCallOptions = {
             enabled: false,
@@ -101,8 +100,7 @@ describe('Test Functional Node Protector Module', () => {
 })
 
 describe('Test Obfuscate Node Protector Script', () => {
-    const __filename = fileURLToPath(import.meta.url)
-    const __dirname = path.dirname(__filename)
+    const __dirname = path.join(process.cwd(), 'packages', 'node-protector', 'test')
     const bundlePath = path.join(__dirname, '.temp', 'index.js')
     const obfusPath = path.join(__dirname, '.temp', 'obfus.js')
 
@@ -136,11 +134,11 @@ describe('Test Obfuscate Node Protector Script', () => {
         fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8')
     })
 
-    it.concurrent('Success bundle node protector script', async () => {
+    it('Success bundle node protector script', async () => {
         expect(fs.existsSync(bundlePath)).toBe(true)
     })
 
-    it.concurrent('Success obfuscate node protector script', async () => {
+    it('Success obfuscate node protector script', async () => {
         expect(fs.existsSync(obfusPath)).toBe(true)
     })
 })

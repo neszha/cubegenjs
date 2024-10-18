@@ -8,7 +8,7 @@ export default {
      *
      * You can use a custom random characters.
      */
-    appKey: '69e8e7b17b45df3e519b6c928f5be6e3cd5f5bd0f8fa0dff37a20ebd30f902cc',
+    appKey: '5c1db867c355c847202d6c2a7c3642209b2b51bbb681114314068de3fe681570',
 
     /**
      * Target where your application will be run in production.
@@ -34,7 +34,7 @@ export default {
         target: 'browser',
 
         // Random Generator
-        seed: '69e8e7b17b45df3e',
+        seed: '5c1db867c355c847',
 
         // Control Flow Flattening
         controlFlowFlattening: true,
@@ -48,7 +48,7 @@ export default {
 
         // Renaming
         renameGlobals: true, // This option may break your code
-        renameProperties: false, // This option may break your code
+        renameProperties: true, // This option may break your code
         renamePropertiesMode: 'safe',
         identifierNamesGenerator: 'mangled-shuffled',
 

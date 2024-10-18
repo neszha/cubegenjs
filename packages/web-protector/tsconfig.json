@@ -9,7 +9,8 @@
             "test"
         ],
         "outDir": "dist",
-        "declaration": true
+        "declaration": true,
+        "lib": ["es6", "dom"]
     },
     "exclude": [
         "dist",

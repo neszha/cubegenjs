@@ -15,7 +15,7 @@ onStart(() => {
 /**
  * Code Modification Protection.
  *
- * Set enable to true to enable modification protection.
+ * Set enabled to `true` to use modification protection.
  * In development mode, the onModifiedCode lifecycle is not called.
  */
 const modifiedCodeOptions = {
@@ -29,7 +29,7 @@ onModifiedCode(modifiedCodeOptions, () => {
 /**
  * Event loop call interval.
  *
- * Set enable to true to enable event loop.
+ * Set enabled to `true` to use event loop.
  */
 const intervalCallOptions = {
     enabled: false,

@@ -88,9 +88,15 @@ export class WebBuilder {
         }
         const bundler = new CubegenBundler(bundlerOptions)
         const bundlerResult = await bundler.build()
+        const bundledPath = bundlerResult.entries[0].ouputPath
+
+        // Activate distributed mode.
+        let bundledRawCode = await fs.readFile(bundledPath, { encoding: 'utf8' })
+        bundledRawCode = bundledRawCode.replace('%IN_DEVELOPMENT_MODE%', 'distributed')
+        await fs.writeFile(bundledPath, bundledRawCode, 'utf-8')
 
         // Done.
-        return bundlerResult.entries[0].ouputPath
+        return bundledPath
     }
 
     /**
