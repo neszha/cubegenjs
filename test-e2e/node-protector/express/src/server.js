@@ -20,13 +20,6 @@ app.use('/', express.static(`${APP_ROOT}/public`));
 app.use('/api', apiRouters)
 
 /**
- * Express Rest API Routes.
- */
-app.get('/api', (req, res) => {
-    res.js
-})
-
-/**
  * Start http server.
  */
 app.listen(port, () => {

@@ -1,0 +1,25 @@
+{
+    "addresses": [
+        {
+            "id": 1,
+            "address": "123 Main Street",
+            "city": "New York",
+            "state": "NY",
+            "zip": 10001
+        },
+        {
+            "id": 2,
+            "address": "456 Main Street",
+            "city": "New York",
+            "state": "NY",
+            "zip": 10001
+        },
+        {
+            "id": 3,
+            "address": "789 Main Street",
+            "city": "New York",
+            "state": "NY",
+            "zip": 10001
+        }
+    ]
+}
