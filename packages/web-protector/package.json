@@ -1,6 +1,6 @@
 {
     "name": "@cubegenjs/web-protector",
-    "version": "0.1.0-experimental-1",
+    "version": "0.1.1",
     "description": "Internal module web protector for cubegenjs packages",
     "main": "dist/index.js",
     "module": "dist/esm/index.js",
@@ -15,8 +15,8 @@
         "build:watch": "tsc --watch -p tsconfig.esm.json"
     },
     "dependencies": {
-        "@cubegenjs/bundler": "^0.1.0-experimental-1",
-        "@cubegenjs/obfuscator": "^0.1.0-experimental-1"
+        "@cubegenjs/bundler": "^0.1.1",
+        "@cubegenjs/obfuscator": "^0.1.1"
     },
     "devDependencies": {
         "@types/fs-extra": "^11.0.4",
