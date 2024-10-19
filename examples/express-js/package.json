@@ -15,6 +15,6 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
-    "cubegenjs": "^0.1.5"
+    "cubegenjs": "^0.1.6"
   }
 }
