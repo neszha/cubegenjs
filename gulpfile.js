@@ -34,6 +34,12 @@ task('clear:builder-directory', async () => {
         'packages/node-protector/dist'
     ], { force: true })
 
+    // web-protector module.
+    await deleteAsync([
+        'packages/web-protector/.test-temp',
+        'packages/web-protector/dist'
+    ], { force: true })
+
     // cli module.
     await deleteAsync([
         'packages/cli/dist'
