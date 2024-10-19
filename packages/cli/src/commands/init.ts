@@ -84,8 +84,8 @@ export default {
         const __filename = fileURLToPath(import.meta.url)
         const __modulePath = __filename
             .replace(/(\/packages\/cli).*$/, '/packages/cli')
-            .replace(/(\/cubegenjs\/cli).*$/, 'cubegenjs/cli')
-        const nodeProtectorDirTemplates = path.resolve(__modulePath, '../node-protector//templates')
+            .replace(/(cubegenjs\/cli).*$/, 'cubegenjs/cli')
+        const nodeProtectorDirTemplates = path.resolve(__modulePath, '../node-protector/templates')
 
         // Create tasks.
         const startTime = new Date().getTime()
@@ -142,8 +142,8 @@ export default {
         const __filename = fileURLToPath(import.meta.url)
         const __modulePath = __filename
             .replace(/(\/packages\/cli).*$/, '/packages/cli')
-            .replace(/(\/cubegenjs\/cli).*$/, 'cubegenjs/cli')
-        const nodeProtectorDirTemplates = path.resolve(__modulePath, '../web-protector//templates')
+            .replace(/(cubegenjs\/cli).*$/, 'cubegenjs/cli')
+        const nodeProtectorDirTemplates = path.resolve(__modulePath, '../web-protector/templates')
 
         // Create tasks.
         const startTime = new Date().getTime()

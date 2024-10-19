@@ -1,6 +1,6 @@
 {
     "name": "cubegenjs",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "Protecting and Optimizing your JavaScript Source Code",
     "main": "index.js",
     "typings": "index.d.js",
@@ -32,7 +32,7 @@
     "license": "MIT",
     "dependencies": {
         "@cubegenjs/bundler": "^0.1.1",
-        "@cubegenjs/cli": "^0.1.0",
+        "@cubegenjs/cli": "^0.1.2",
         "@cubegenjs/node-protector": "^0.1.1",
         "@cubegenjs/obfuscator": "^0.1.1",
         "@cubegenjs/web-protector": "^0.1.1",
