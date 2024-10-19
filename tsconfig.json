@@ -31,6 +31,9 @@
         /* Modules */
         "module": "ESNext",
 
+        /* Module Resolution */
+        "moduleResolution": "Node",
+
         /* Specify what module code is generated. */
         "rootDirs": [
             "packages/**/*",
