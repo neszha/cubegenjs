@@ -1,7 +1,7 @@
 import path from 'path'
 import fs from 'fs-extra'
-import { CubegenBundler } from '../src/index'
 import { type CubegenBundlerResponse } from '../src/interfaces/Bundler'
+import { CubegenBundler } from '../src/index'
 
 const MODULE_PATH_DIR = path.resolve(__dirname, '../')
 const MODULE_TEMP_PATH_DIR = path.join(MODULE_PATH_DIR, '.test-temp')

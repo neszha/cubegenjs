@@ -3,8 +3,8 @@ import fs from 'fs-extra'
 import crypto from 'crypto'
 import { Parcel } from '@parcel/core'
 import type { BuildSuccessEvent } from '@parcel/types'
-import { type FilePath } from './interfaces/Common'
 import { type PercelOptions, type CubegenBundlerOptions, type CubegenBundlerResponse, type CubegenBundlerEntryResponse, type CubegenBundlerStaticDirResponse, type CustomCubegenBundlerOptions } from './interfaces/Bundler'
+import { type FilePath } from './interfaces/Common'
 
 const MODULE_PATH_DIR = path.resolve(__dirname, '../')
 const MODULE_PARCEL_CACHE_PATH_DIR = path.resolve(MODULE_PATH_DIR, '.cache')
