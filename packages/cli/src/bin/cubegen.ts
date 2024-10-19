@@ -3,8 +3,8 @@
 import fs from 'fs'
 import { Command } from 'commander'
 import { type CmdBuildOptions, type CmdInitOptions } from '../interfaces/Command'
-import initor from '../commands/init.js'
 import builder from '../commands/build.js'
+import initor from '../commands/init.js'
 
 /**
  * Get module version.

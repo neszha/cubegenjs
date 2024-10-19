@@ -1,8 +1,8 @@
 import fs from 'fs'
 import path from 'path'
-import initor from '../src/commands/init'
-import { type NodeProtectorBuilderOptions } from '@cubegenjs/node-protector/src/interfaces/NodeProtector'
 import { type WebProtectorBuilderOptions } from '@cubegenjs/web-protector/src/interfaces/WebProtector'
+import { type NodeProtectorBuilderOptions } from '@cubegenjs/node-protector/src/interfaces/NodeProtector'
+import initor from '../src/commands/init'
 
 describe('Test Init Node Protector Project', () => {
     it('Success init cubegen node protector', async () => {

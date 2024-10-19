@@ -1,6 +1,6 @@
 {
     "name": "@cubegenjs/cli",
-    "version": "0.1.0-experimental-5",
+    "version": "0.1.0",
     "description": "Internal module command line interface for cubegenjs packages",
     "main": "dist/index.js",
     "type": "module",

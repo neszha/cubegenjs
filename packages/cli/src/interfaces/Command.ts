@@ -1,5 +1,5 @@
-import { type FilePath } from './Common'
 import { type InitorUserInput } from './Initor'
+import { type FilePath } from './Common'
 
 export interface CmdInitOptions {
     root: FilePath
