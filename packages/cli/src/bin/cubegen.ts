@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import fs from 'fs'
+import path from 'path'
 import { Command } from 'commander'
 import { type CmdBuildOptions, type CmdInitOptions } from '../interfaces/Command'
 import builder from '../commands/build.js'
@@ -10,7 +11,7 @@ import initor from '../commands/init.js'
  * Get module version.
  */
 let moduleVersion = '0.0.0'
-const packageJsonPath = '../../package.json'
+const packageJsonPath = path.join(process.cwd(), 'node_modules', 'cubegenjs', 'package.json')
 if (fs.existsSync(packageJsonPath)) {
     const packageJsonString = fs.readFileSync(packageJsonPath, 'utf-8')
     const packageJson = JSON.parse(packageJsonString)
@@ -30,7 +31,7 @@ program.name('cubegen')
  */
 program.command('init')
     .description('initialize cubegen configuration')
-    .option('-r, --root <string>', 'Relative root project directory', './')
+    .option('-r, --root <string>', 'relative root project directory', './')
     .action(async (options: CmdInitOptions): Promise<void> => {
         await initor.generate(options)
     })
