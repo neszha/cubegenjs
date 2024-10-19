@@ -29,13 +29,15 @@ const domainLockingOptions = {
     enabled: false,
     whitlist: [
         'localhost',
-        'localhost:/d+',
-        '127.0.0.1:/d+'
+        'localhost:\\d+',
+        '127.0.0.1:\\d+'
     ]
 }
 onDomainNotAllowed(domainLockingOptions, () => {
-    // console.log('Domain is not allowed.')
-    // window.location.href = 'https://google.com'
+    // setTimeout(() => {
+    //     alert('Domain is not allowed.')
+    //     window.location.href = 'https://google.com'
+    // }, 2_500)
 })
 
 /**
