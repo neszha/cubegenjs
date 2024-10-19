@@ -12,6 +12,8 @@
     },
     "exclude": [
         "dist",
+        "docs",
+        "examples",
         "packages",
         "test-e2e",
         "gulpfile.js",

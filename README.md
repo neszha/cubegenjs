@@ -99,8 +99,8 @@ CLI options of `npx cubegen`:
 -h, --help
 
 commands:
-init [options]          building your project to distribution code
-build [options]         asdf
+init [options]          nitialize cubegen configuration
+build [options]         building your project to distribution code
 
 options:
 -r, --root <string>     relative root project directory (default: "./")
