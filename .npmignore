@@ -1,7 +1,12 @@
+docs
+examples
+node_modules
 packages
 src
+test-e2e
 .eslint*
 gulpfile.js
 jest.*
-lerna.json
+lerna*
+run-test.sh
 tsconfig.*
