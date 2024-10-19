@@ -5,11 +5,18 @@
 
 Protecting and Optimizing your JavaScript Source Code.
 
+When do you need this module?
+- Hide keys or secret algorithms in a project.
+- Want to detect if the project source code is changed.
+- Protecting application from illegal distribution.
+- Optimizing nodejs project source code.
+
 ## Table of contents
 
 - [Installation](#installation)
 - [Configuration and Usage](#configuration-and-usage)
 - [Options](#options)
+    - [Cubegen CLI](#cubegen-cli)
     - [Cubegen Builder](#cubegen-builder)
         - [appKey](#appkey)
         - [target](#target)
@@ -22,7 +29,6 @@ Protecting and Optimizing your JavaScript Source Code.
         - [onDomainNotAllowed](#ondomainnotallowed)
         - [onModifiedCode](#onmodifiedcode)
         - [onIntervalCall](#onintervalcall)
-    - [Cubegen CLI](#cubegen-cli)
 - [Support](#support)
 
 ## Installation
@@ -82,6 +88,23 @@ npx cubegen build
 ## Options
 
 The module use `cg.builder.js` and `cb.protector.js` files to define how the module works. Each properties and methods can be set according to your project needs.
+
+### Cubegen CLI
+
+Cubegen provides a terminal interface to manage your project.
+
+CLI options of `npx cubegen`:
+```
+-v, --version
+-h, --help
+
+commands:
+init [options]          building your project to distribution code
+build [options]         asdf
+
+options:
+-r, --root <string>     relative root project directory (default: "./")
+```
 
 ### Cubegen Builder
 
@@ -233,23 +256,6 @@ const intervalCallOptions = {
 onIntervalCall(intervalCallOptions, () => {
     // call monitoring service or do something
 })
-```
-
-### Cubegen CLI
-
-Cubegen provides a terminal interface to manage your project.
-
-CLI options of `npx cubegen`:
-```
--v, --version
--h, --help
-
-commands:
-init [options]          building your project to distribution code
-build [options]         asdf
-
-options:
--r, --root <string>     relative root project directory (default: "./")
 ```
 
 ## Support
