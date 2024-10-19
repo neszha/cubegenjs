@@ -20,7 +20,7 @@ export default {
     /**
      * Bundler option to optimize your code.
      *
-     * See documentation in https://github.com/neszha/cubegenjs
+     * See documentation in https://github.com/neszha/cubegenjs/blob/develop/README.md#codebundlingoptions
      */
     codeBundlingOptions: {
         rootDir: './',
@@ -38,7 +38,7 @@ export default {
     /**
      * Obfuscation option to obfuscate your protector code.
      *
-     * See documentation in https://github.com/neszha/cubegenjs
+     * See documentation in https://github.com/neszha/cubegenjs/blob/develop/README.md#codeobfuscationoptions
      */
     codeObfuscationOptions: {
         // Target Environment
