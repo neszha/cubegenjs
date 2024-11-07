@@ -1,8 +1,8 @@
 # About Project
 
-End to end test for web-protector module CubegenJS for ReactJS framework project.
+End to end test for web-protector module CubegenJS for VueJS framework project.
 
-## Run Test
+## Setup
 
 Install dependencis.
 ```sh
@@ -14,6 +14,8 @@ Run original code.
 npm run dev
 ```
 You can access original program with browser in `http://localhost:5173`
+
+## Build
 
 Build original code to distribution code.
 ```sh

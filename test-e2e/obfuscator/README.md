@@ -1,4 +1,4 @@
-## About Project
+# About Project
 
 End to end test for obfuscator module CubegenJS.
 
