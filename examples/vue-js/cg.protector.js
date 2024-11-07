@@ -27,7 +27,7 @@ onDocumentLoaded(() => {
  */
 const domainLockingOptions = {
     enabled: true,
-    whitlist: [
+    whitelist: [
         'localhost',
         'localhost:\\d+',
         '127.0.0.1:\\d+'

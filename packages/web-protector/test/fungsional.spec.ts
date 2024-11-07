@@ -28,14 +28,14 @@ describe('Test Functional Web Protector Module', () => {
         }, 500)
     })
 
-    it('onDomainNotAllowed called if site host is not in whitlist', async () => {
+    it('onDomainNotAllowed called if site host is not in whitelist', async () => {
         const webProtector = await import('../src/index.js')
         let isCalled = false
         webProtector.customState.inDevelopmentMode = 'distributed'
         webProtector.customState.siteHost = 'example.com'
         const inputOptions: WebProtectorDomainLockingOptions = {
             enabled: true,
-            whitlist: [
+            whitelist: [
                 // 'example.com',
                 'example1.com',
                 'example2.com',
@@ -54,7 +54,7 @@ describe('Test Functional Web Protector Module', () => {
         const webProtector = await import('../src/index.js')
         const inputOptions: WebProtectorDomainLockingOptions = {
             enabled: false,
-            whitlist: []
+            whitelist: []
         }
         let isCalled = false
         webProtector.onDomainNotAllowed(inputOptions, () => {
@@ -70,7 +70,7 @@ describe('Test Functional Web Protector Module', () => {
         webProtector.customState.inDevelopmentMode = 'development'
         const inputOptions: WebProtectorDomainLockingOptions = {
             enabled: true,
-            whitlist: []
+            whitelist: []
         }
         let isCalled = false
         webProtector.onDomainNotAllowed(inputOptions, () => {

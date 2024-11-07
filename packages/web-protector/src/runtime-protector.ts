@@ -56,7 +56,7 @@ export const onDomainNotAllowedCallbackExecution = (options: WebProtectorDomainL
     event.on('exec:on-domain-not-allowed', callback)
     event.on('call:on-domain-not-allowed', () => {
         const siteHostComparation = (): void => {
-            const matchs = options.whitlist.map((pattern): boolean => {
+            const matchs = options.whitelist.map((pattern): boolean => {
                 const regex = new RegExp(pattern)
                 const match = state.siteHost.match(regex)
                 if (match === null) return false
