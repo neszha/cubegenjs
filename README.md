@@ -99,7 +99,7 @@ CLI options of `npx cubegen`:
 -h, --help
 
 commands:
-init [options]          nitialize cubegen configuration
+init [options]          initialize cubegen configuration
 build [options]         building your project to distribution code
 
 options:
