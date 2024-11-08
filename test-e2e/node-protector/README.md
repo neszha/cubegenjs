@@ -1,8 +1,8 @@
 # About Project
 
-End to end test for node-protector module CubegenJS for Fastify project.
+End to end test for node-protector module CubegenJS with express-js project.
 
-## Run Test
+## Setup
 
 Install dependencis.
 ```sh
@@ -14,6 +14,8 @@ Run original code.
 node .
 ```
 You can access original program with browser in `http://localhost:3000`
+
+## Build
 
 Build original code to distribution code.
 ```sh
