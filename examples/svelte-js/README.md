@@ -1,6 +1,6 @@
 # About Project
 
-Protecting react-js project with web-protector module CubegenJS.
+Protecting svelte-js project with web-protector module CubegenJS.
 
 ## Setup
 
@@ -15,7 +15,7 @@ npm run dev
 ```
 You can access original program with browser in `http://localhost:5173`
 
-## Build
+# Build
 
 Build original code to distribution code.
 ```sh

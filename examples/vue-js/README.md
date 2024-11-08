@@ -1,6 +1,6 @@
 # About Project
 
-End to end test for web-protector module CubegenJS for VueJS framework project.
+Protecting vue-js project with web-protector module CubegenJS.
 
 ## Setup
 
