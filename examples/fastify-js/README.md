@@ -1,8 +1,8 @@
 # About Project
 
-Protecting express-js project with node-protector module CubegenJS.
+Protecting fastify-js project with node-protector module CubegenJS.
 
-## Setup 
+## Setup
 
 Install dependencis.
 ```sh
