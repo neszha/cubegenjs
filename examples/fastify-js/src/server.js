@@ -4,6 +4,8 @@ import fastifyStatic from '@fastify/static'
 import apiRouters from './apis.js'
 import '../cg.protector.js'
 
+const startTime = Date.now();
+
 /**
  * Create fastify app.
  */
@@ -28,6 +30,15 @@ fastify.register(apiRouters);
  */
 fastify.listen({ port }, (err, address) => {
     if (err) throw err
+    const endTime = Date.now();
+    const startupTime = endTime - startTime;
     console.log(`Fastify app listening on port http://localhost:${port}`)
+    console.log(`Startup time: ${startupTime} ms`);
+
+    // Get memory usage.
+    setTimeout(() => {
+        const memUsage = process.memoryUsage();
+        console.log(`Memory usage: ${(memUsage.heapUsed / 1024 / 1024).toFixed(2)} MB`);
+    }, 2000);
 })
   
