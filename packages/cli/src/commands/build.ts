@@ -9,16 +9,19 @@ import { type CubegenBuilderOptions } from '../interfaces/Builder'
 import { type CmdBuildOptions } from '../interfaces/Command'
 import { NodeBuilder } from '../services/NodeBuilder.js'
 import { WebBuilder } from '../services/WebBuilder.js'
+import event from '../utils/event.js'
 
 export default {
     cwd: process.cwd(),
     rootProject: '',
+    hashProject: '',
 
     /**
      * Build source code to distribution code.
      */
     async build (options: CmdBuildOptions): Promise<void> {
         this.rootProject = path.join(this.cwd, options.root ?? './')
+        this.hashProject = ''
 
         // Run tasks.
         let startTime: number
@@ -57,6 +60,9 @@ export default {
                 title: 'Building your project',
                 task: async (ctx, task) => {
                     return new Observable((observer: Subscriber<unknown>) => {
+                        event.on('build:hash_project', (hashProject: string) => {
+                            this.hashProject = hashProject
+                        })
                         void delay(500).then(async () => {
                             if (cubegenBuilderConfig.target === 'node') {
                                 const cubegenBuilderConfigForNode = cubegenBuilderConfig as NodeProtectorBuilderOptions
@@ -72,6 +78,16 @@ export default {
                             observer.complete()
                         })
                     })
+                }
+            },
+            {
+                title: '',
+                task: async (ctx, task) => {
+                    if (this.hashProject === '') return
+                    const sliceStart = this.hashProject.slice(0, 16 + 8)
+                    const sliceEnd = this.hashProject.slice(-16)
+                    const mergeHash = sliceStart + '[...]' + sliceEnd
+                    task.title = 'Integrity: ' + chalk.green(mergeHash)
                 }
             },
             {

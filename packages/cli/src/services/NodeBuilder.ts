@@ -10,6 +10,7 @@ import { type CubegenBundlerResponse, type CubegenBundlerOptions } from '@cubege
 import { type NodeBuilderInputOptions } from '../interfaces/Builder'
 import { type CubegenJson } from '../interfaces/CubegenJson'
 import { type FilePath } from '../interfaces/Common'
+import event from '../utils/event.js'
 
 export class NodeBuilder {
     private readonly inputOptions: NodeBuilderInputOptions
@@ -160,6 +161,7 @@ export class NodeBuilder {
         const protectorOutDirPath = path.join(this.cubegenCacheDir, 'protector_obfus')
         const protectorOutFilePath = path.join(protectorOutDirPath, 'cg.protector.js')
         const obfuscator = new CubegenObfuscator(protectorDevBundleWithKeysPath, 'node')
+        obfuscator.setCustomConfig(this.inputOptions.builderConfig.codeObfuscationOptions)
         const result: CubegenObfuscatorResponse = obfuscator.transform()
         await fs.ensureDir(protectorOutDirPath)
         await fs.copyFile(result.outputTempPath, protectorOutFilePath)
@@ -223,5 +225,6 @@ export class NodeBuilder {
         }
         const metaPath = path.join(builderOptions.codeBundlingOptions.outDir, 'cubegen-lock.json')
         fs.writeFileSync(metaPath, JSON.stringify(cubgenMeta, null, 4), 'utf8')
+        event.emit('build:hash_project', cubgenMeta.hashProject)
     }
 }
