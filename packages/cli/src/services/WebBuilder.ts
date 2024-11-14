@@ -109,6 +109,7 @@ export class WebBuilder {
         const protectorOutDirPath = path.join(this.cubegenCacheDir, 'protector_obfus')
         const protectorOutFilePath = path.join(protectorOutDirPath, 'cg.protector.js')
         const obfuscator = new CubegenObfuscator(protectorDevBundleWithKeysPath, 'node')
+        obfuscator.setCustomConfig(this.inputOptions.builderConfig.codeObfuscationOptions)
         const result: CubegenObfuscatorResponse = obfuscator.transform()
         await fs.ensureDir(protectorOutDirPath)
         await fs.copyFile(result.outputTempPath, protectorOutFilePath)
