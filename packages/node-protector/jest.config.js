@@ -14,5 +14,8 @@ module.exports = {
                 useESM: true
             }
         ]
-    }
+    },
+    coveragePathIgnorePatterns: [
+        'code-evaluation.ts'
+    ]
 }
