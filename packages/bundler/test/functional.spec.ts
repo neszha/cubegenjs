@@ -16,7 +16,10 @@ describe('Test Class Cubegen Bundler Module', () => {
             'nested/main.ts',
             'worker/index.js'
         ],
-        staticDirs: ['assets', 'public']
+        staticDirs: [
+            'assets',
+            'public'
+        ]
     }
 
     it('Success initialize bundler class', () => {
@@ -82,7 +85,10 @@ describe('Test Output Project Bundler Module', () => {
             'nested/main.ts',
             'worker/index.js'
         ],
-        staticDirs: ['assets', 'public']
+        staticDirs: [
+            'assets',
+            'public'
+        ]
     }
     const bundler = new CubegenBundler(bundlerOptions)
     const inputOptions = bundler.getInputOptions()

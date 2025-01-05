@@ -144,8 +144,19 @@ export class CubegenBundler {
      * Bundling JavaScript source code with Parcel.
      */
     private async bundingWithParcel (): Promise<BuildSuccessEvent> {
-        const bundler = new Parcel(this.percelOptions)
+        // Validate entries must exist and is a file.
+        if (typeof this.percelOptions.entries === 'string') {
+            if (!fs.existsSync(this.percelOptions.entries)) {
+                throw new Error(`Entry file not found: ${this.percelOptions.entries}`)
+            }
+            if (!fs.statSync(this.percelOptions.entries).isFile()) {
+                throw new Error(`Entry file must be a file: ${this.percelOptions.entries}`)
+            }
+        }
+
+        // Start bundling.
         try {
+            const bundler = new Parcel(this.percelOptions)
             await fs.emptyDir(MODULE_BUNDLER_CACHE_PATH_DIR)
             const buildObject: BuildSuccessEvent = await bundler.run()
             return buildObject
