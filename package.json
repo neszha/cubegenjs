@@ -25,7 +25,9 @@
         "build:bundler": "lerna run build --scope=@cubegenjs/bundler",
         "build:obfuscator": "lerna run build --scope=@cubegenjs/obfuscator",
         "build:web-protector": "lerna run build --scope=@cubegenjs/web-protector",
-        "build:node-protector": "lerna run build --scope=@cubegenjs/node-protector"
+        "build:node-protector": "lerna run build --scope=@cubegenjs/node-protector",
+        "test": "bash jest-test.sh",
+        "test:cov": "bash jest-test-cov.sh"
     },
     "repository": "neszha/cubegenjs",
     "author": "Fanesa Hadi Pramana",

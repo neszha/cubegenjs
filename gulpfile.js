@@ -18,6 +18,7 @@ task('clear:builder-directory', async () => {
         'packages/bundler/.bundler-cache',
         'packages/bundler/.cache',
         'packages/bundler/.test-temp',
+        'packages/bundler/coverage',
         'packages/bundler/dist'
     ], { force: true })
 
@@ -25,23 +26,27 @@ task('clear:builder-directory', async () => {
     await deleteAsync([
         'packages/obfuscator/.obfuscator-cache',
         'packages/obfuscator/.test-temp',
+        'packages/obfuscator/coverage',
         'packages/obfuscator/dist'
     ], { force: true })
 
     // node-protector module.
     await deleteAsync([
         'packages/node-protector/.test-temp',
+        'packages/node-protector/coverage',
         'packages/node-protector/dist'
     ], { force: true })
 
     // web-protector module.
     await deleteAsync([
         'packages/web-protector/.test-temp',
+        'packages/web-protector/coverage',
         'packages/web-protector/dist'
     ], { force: true })
 
     // cli module.
     await deleteAsync([
+        'packages/cli/coverage',
         'packages/cli/dist'
     ], { force: true })
 
