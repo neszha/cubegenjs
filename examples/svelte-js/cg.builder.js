@@ -48,7 +48,7 @@ export default {
 
         // Renaming
         renameGlobals: true, // This option may break your code
-        renameProperties: true, // This option may break your code
+        renameProperties: false, // This option may break your code
         renamePropertiesMode: 'safe',
         identifierNamesGenerator: 'mangled-shuffled',
 

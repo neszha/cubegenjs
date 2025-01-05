@@ -29,6 +29,7 @@ export default {
             'src/main.js'
         ],
         staticDirs: [
+            '.env.example',
             'public',
             'src/static-data'
         ],

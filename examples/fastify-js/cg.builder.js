@@ -30,6 +30,7 @@ export default {
             // Register another your entry file here. Example: 'main.js'
         ],
         staticDirs: [
+            '.env.example',
             'public',
             'src/static-data'
             // Register your static directory here. Example: 'public'
