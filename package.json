@@ -1,6 +1,6 @@
 {
     "name": "cubegenjs",
-    "version": "0.1.11",
+    "version": "0.1.12",
     "description": "Protecting and Optimizing your JavaScript Source Code",
     "main": "index.js",
     "typings": "index.d.js",
@@ -33,7 +33,7 @@
     "author": "Fanesa Hadi Pramana",
     "license": "MIT",
     "dependencies": {
-        "@cubegenjs/bundler": "^0.1.1",
+        "@cubegenjs/bundler": "^0.1.2",
         "@cubegenjs/cli": "^0.2.1",
         "@cubegenjs/node-protector": "^0.1.1",
         "@cubegenjs/obfuscator": "^0.1.1",
