@@ -17,6 +17,7 @@ describe('Test Class Cubegen Bundler Module', () => {
             'worker/index.js'
         ],
         staticDirs: [
+            '.env.example',
             'assets',
             'public'
         ]
@@ -86,6 +87,7 @@ describe('Test Output Project Bundler Module', () => {
             'worker/index.js'
         ],
         staticDirs: [
+            '.env.example',
             'assets',
             'public'
         ]
